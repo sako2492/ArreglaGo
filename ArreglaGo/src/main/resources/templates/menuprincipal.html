@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ArreglaGo — Encuentra profesionales de confianza</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fuente Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Íconos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body style="font-family: 'Inter', sans-serif;">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm py-3 fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center fw-bold brand-color me-3" th:href="@{/}">
+                <img th:src="@{/images/logo.png}" alt="Logo ArreglaGo" width="95" height="95" class="me-2"
+                    onerror="this.src='/images/logo-fallback.png'">
+                <span class="fs-4">ArreglaGo</span>
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="bi bi-list fs-1"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <form class="d-flex mx-auto w-50" role="search">
+                    <div class="input-group">
+                        <input name="q" type="search" class="form-control rounded-start" placeholder="Buscar servicios o profesionales" aria-label="Buscar">
+                        <button class="btn btn-custom"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link brand-color" th:href="@{/}">Inicio</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle brand-color" href="#" id="categoriasDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Categorías</a>
+                        <ul class="dropdown-menu" aria-labelledby="categoriasDropdown">
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Electricista</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Técnico de Gas</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Gasfitero</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Cerrajero</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Pintor</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Carpintero</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Técnico de Refrigeración</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Técnico de Electrodomésticos</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Técnico de Computadoras</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Albañil</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Soldador</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Instalador de Drywall</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Vidrieros</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Jardinero</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Técnico de Televisores</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Fumigador</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Tapicero</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Instalador de pisos</a></li>
+                            <li><a class="dropdown-item" th:href="@{/electricista/listar}">Limpieza</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link brand-color" th:href="@{/proveedores}">Proveedores</a></li>
+
+                    <ul class="navbar-nav ms-auto align-items-center flex-row gap-3">
+                    <li class="nav-item ms-3">
+                        <a class="btn btn-custom" th:href="@{/registro}">
+                            <i class="bi bi-plus-circle me-1"></i> Publicar servicio
+                        </a>
+                    </li>
+                   <li class="nav-item ms-3">
+                    <a class="btn btn-outline-dark px-3 py-2" th:href="@{/login-opciones}">
+                    <i class="bi bi-person-circle me-1"></i> Iniciar sesión
+                    </a>
+                   </li>
+
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero d-flex align-items-center text-center text-white position-relative overflow-hidden">
+        
+        <!-- Carrusel de fondo -->
+        <div id="heroCarousel" class="carousel slide carousel-fade position-absolute w-100 h-100" data-bs-ride="carousel">
+            <div class="carousel-inner h-100">
+                <div class="carousel-item active h-100">
+                    <img th:src="@{/images/hero-bg1.jpg}" class="d-block w-100 h-100 object-fit-cover" alt="Fondo 1">
+                </div>
+                <div class="carousel-item h-100">
+                    <img th:src="@{/images/hero-bg22.jpg}" class="d-block w-100 h-100 object-fit-cover" alt="Fondo 2">
+                </div>
+                <div class="carousel-item h-100">
+                    <img th:src="@{/images/hero-bg33.jpg}" class="d-block w-100 h-100 object-fit-cover" alt="Fondo 3">
+                </div>
+            </div>
+        </div>
+
+        <!-- Capa oscura -->
+        <div class="hero-overlay"></div>
+
+        <!-- Contenido centrado -->
+        <div class="container position-relative z-2">
+            <h1 class="fw-bold display-5 mb-3">Encuentra profesionales de confianza cerca de ti</h1>
+            <p class="lead mb-4">Electricistas, gasfiteros, carpinteros y más — todo en un solo lugar.</p>
+            <div class="d-flex justify-content-center">
+                <div class="input-group input-group-lg w-75 w-md-50">
+                    <input type="text" class="form-control" placeholder="¿Qué servicio necesitas?">
+                    <button class="btn btn-orange px-4">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CATEGORÍAS -->
+    <section class="categories py-5">
+        <div class="container text-center fade-in-section">
+            <h2 class="fw-semibold mb-4">Categorías de Servicios</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-6 col-md-3 col-lg-2" th:each="cat : ${categorias}">
+                    <div class="category-card shadow-sm p-3 rounded-4 h-100">
+                        <i class="bi bi-lightning-charge-fill text-primary fs-2 mb-2"></i>
+                        <h6 th:text="${cat.nombre}">Electricista</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFESIONALES DESTACADOS -->
+    <section class="featured py-5 bg-light">
+        <div class="container fade-in-section">
+            <h2 class="text-center mb-5">Profesionales Destacados</h2>
+            <div class="row g-4">
+                <div class="col-md-4" th:each="p : ${profesionales}">
+                    <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+                        <img th:src="${p.fotoUrl}" class="card-img-top" alt="Foto profesional" onerror="this.src='https://via.placeholder.com/400x250'">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${p.nombre}">Carlos Pérez</h5>
+                            <p class="card-text text-muted" th:text="${p.descripcion}">Electricista certificado con 10 años de experiencia.</p>
+                            <button class="btn btn-orange w-100">Contactar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA -->
+    <section class="how-it-works py-5 text-center">
+        <div class="container fade-in-section">
+            <h2 class="mb-4 fw-semibold">¿Cómo funciona ArreglaGo?</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <i class="bi bi-search fs-1 text-primary mb-3"></i>
+                    <h5>Busca</h5>
+                    <p>Encuentra al profesional que necesitas según su especialidad o ubicación.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="bi bi-chat-dots fs-1 text-primary mb-3"></i>
+                    <h5>Contacta</h5>
+                    <p>Comunícate directamente con los profesionales desde la plataforma.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="bi bi-hand-thumbs-up fs-1 text-primary mb-3"></i>
+                    <h5>Contrata</h5>
+                    <p>Evalúa, califica y contrata servicios de confianza.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="testimonials py-5 bg-light">
+        <div class="container fade-in-section">
+            <h2 class="text-center mb-5">Lo que dicen nuestros clientes</h2>
+            <div class="row g-4 text-center">
+                <div class="col-md-4" th:each="t : ${testimonios}">
+                    <div class="testimonial p-4 bg-white shadow-sm rounded-4 h-100">
+                        <p class="mb-3 fst-italic" th:text="${t.comentario}">“Muy buen servicio, puntual y eficiente.”</p>
+                        <h6 class="fw-semibold text-primary" th:text="${t.nombre}">— Ana Torres</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer bg-dark text-light text-center py-4">
+        <div class="container">
+            <p class="mb-1">&copy; 2025 ArreglaGo. Todos los derechos reservados.</p>
+            <div>
+                <a href="#" class="text-light me-3"><i class="bi bi-facebook fs-5"></i></a>
+                <a href="#" class="text-light me-3"><i class="bi bi-instagram fs-5"></i></a>
+                <a href="#" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL LOGIN -->
+   <!-- <div th:replace="fragments/loginModal :: modal"></div> -->
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JS principal -->
+    <script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

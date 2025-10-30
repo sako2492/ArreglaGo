@@ -1,0 +1,50 @@
+package pe.com.arreglago.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import pe.com.arreglago.entity.*;
+import pe.com.arreglago.service.*;
+
+@Controller
+public class AdministradorController {
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private AdministradorService administradorService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/administrador/registro")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("usuario", new UsuarioEntity());
+        return "administrador-registro";
+    }
+
+    @PostMapping("/administrador/registro")
+    public String registrarAdministrador(@ModelAttribute UsuarioEntity usuario) {
+
+        usuario.setClave(passwordEncoder.encode(usuario.getClave()));
+        usuario.setEstado(true);
+
+        // Rol ADMINISTRADOR
+        RolEntity rolAdmin = new RolEntity();
+        rolAdmin.setCodigo(1L); // Asume que 1 = ADMINISTRADOR
+        usuario.setRol(rolAdmin);
+
+        UsuarioEntity nuevoUsuario = usuarioService.add(usuario);
+
+        AdministradorEntity admin = new AdministradorEntity();
+        admin.setUsuario(nuevoUsuario);
+        admin.setEstado(true);
+        administradorService.add(admin);
+
+        return "redirect:/login-opciones";
+    }
+}

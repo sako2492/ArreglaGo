@@ -1,0 +1,60 @@
+package pe.com.arreglago.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import pe.com.arreglago.entity.ServicioEntity;
+import pe.com.arreglago.repository.ServicioRepository;
+import pe.com.arreglago.service.ServicioService;
+
+@Service
+public class ServicioServiceImpl implements ServicioService {
+
+	@Autowired
+	private ServicioRepository repositorio;
+	
+	@Override
+	public List<ServicioEntity> findAll() {
+		return repositorio.findAll();
+	}
+
+	@Override
+	public List<ServicioEntity> findAllCustom() {
+		return repositorio.findAllCustom();
+	}
+
+	@Override
+	public ServicioEntity findById(Long id) {
+		return repositorio.findById(id).get();
+	}
+
+	@Override
+	public ServicioEntity add(ServicioEntity obj) {
+		return repositorio.save(obj);
+	}
+
+	@Override
+	public ServicioEntity update(ServicioEntity obj, Long id) {
+		ServicioEntity objservicio = repositorio.findById(id).get();
+		BeanUtils.copyProperties(obj, objservicio, "codigo");
+		return repositorio.save(objservicio);
+	}
+
+	@Override
+	public ServicioEntity delete(Long id) {
+		ServicioEntity objservicio = repositorio.findById(id).get();
+		objservicio.setEstado(false);
+		return repositorio.save(objservicio);
+	}
+
+	@Override
+	public ServicioEntity enable(Long id) {
+		ServicioEntity objservicio = repositorio.findById(id).get();
+		objservicio.setEstado(true);
+		return repositorio.save(objservicio);
+	}
+
+}

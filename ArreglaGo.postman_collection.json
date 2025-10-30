@@ -1,0 +1,2073 @@
+{
+	"info": {
+		"_postman_id": "ff3edcc0-6f07-4d89-9e49-0e28ae8346d7",
+		"name": "ArreglaGo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48764224",
+		"_collection_link": "https://elizabeth-tg1206144-6564461.postman.co/workspace/Elizabeth-Gonzales's-Workspace~23b0a0cd-d7f2-43ce-815d-557a3ea4509d/collection/48764224-ff3edcc0-6f07-4d89-9e49-0e28ae8346d7?action=share&source=collection_link&creator=48764224"
+	},
+	"item": [
+		{
+			"name": "distrito",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/distrito",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"distrito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/distrito/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"distrito",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Callao\",\r\n  \"provincia\": \"Callao\",\r\n  \"departamento\": \"Lima\",\r\n  \"estado\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/distrito",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"distrito"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/distrito/43",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"distrito",
+								"43"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Bellavista\",\r\n  \"provincia\": \"Callao\",\r\n  \"departamento\": \"Lima\",\r\n  \"estado\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/distrito/43",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"distrito",
+								"43"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Bellavista\",\r\n  \"provincia\": \"Callao\",\r\n  \"departamento\": \"Lima\",\r\n  \"estado\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/distrito/43",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"distrito",
+								"43"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/distrito/enable/43",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"distrito",
+								"enable",
+								"43"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tipoDocumento",
+			"item": [
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Bellavista\",\r\n  \"provincia\": \"Callao\",\r\n  \"departamento\": \"Lima\",\r\n  \"estado\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/tipoDocumento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"tipoDocumento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/tipoDocumento/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"tipoDocumento",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Licencia de Conducir\",\r\n    \"estado\":\"true\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/tipoDocumento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"tipoDocumento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 2,\r\n    \"urlImagen\": \"imagenes/proveedores/gasfitero1_trabajo1.jpg\",\r\n    \"descripcion\": \"Reparación e instalación de tuberías de agua en baño y cocina.\",\r\n    \"fechaSubida\": \"2025-10-09T15:40:00\",\r\n    \"estado\": true,\r\n    \"proveedor\": {\r\n        \"codigo\": 2,\r\n        \"experiencia\": \"8 años de experiencia en gasfitería y mantenimiento del hogar\",\r\n        \"descripcion\": \"Gasfitero técnico con experiencia en instalaciones sanitarias, detección de fugas y reparación de sistemas domésticos. Servicio rápido y garantizado.\",\r\n        \"estado\": true,\r\n        \"usuario\": {\r\n            \"codigo\": 8,\r\n            \"nombre\": \"Luis\",\r\n            \"apellidoPaterno\": \"García\",\r\n            \"apellidoMaterno\": \"Rojas\",\r\n            \"correo\": \"luis.garcia@gmail.com\",\r\n            \"telefono\": \"998745632\",\r\n            \"direccion\": \"Av. San Felipe 1290\",\r\n            \"nroDocumento\": \"74859612\",\r\n            \"fechaNacimiento\": \"1992-03-12\",\r\n            \"clave\": \"$2y$10$hashedpassword045\",\r\n            \"fotoPerfil\": \"imagenes/usuarios/luis_garcia.jpg\",\r\n            \"estado\": true,\r\n            \"fechaRegistro\": \"2025-10-09T12:15:00\",\r\n            \"distrito\": {\r\n                \"codigo\": 14,\r\n                \"nombre\": \"Magdalena del Mar\",\r\n                \"provincia\": \"Lima\",\r\n                \"departamento\": \"Lima\",\r\n                \"estado\": true\r\n            },\r\n            \"rol\": {\r\n                \"codigo\": 3,\r\n                \"nombre\": \"Proveedor\",\r\n                \"estado\": true\r\n            },\r\n            \"tipodocumento\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"DNI\",\r\n                \"estado\": true\r\n            }\r\n        },\r\n        \"categoria\": {\r\n            \"codigo\": 2,\r\n            \"nombre\": \"Gasfitero\",\r\n            \"descripcion\": \"Reparación e instalación de sistemas de agua, desagüe y gas.\",\r\n            \"estado\": true\r\n        }\r\n    }\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/tipoDocumento/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"tipoDocumento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 4,\r\n    \"nombre\": \"Soporte\",\r\n    \"estado\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/tipoDocumento/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"tipoDocumento",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"fechaFin\": \"2025-12-31\",\r\n        \"fechaInicio\": \"2025-01-01\",\r\n        \"estado\": \"activo\",\r\n        \"monto\": 150.00,\r\n        \"metodoPago\": \"Tarjeta de crédito\",\r\n        \"proveedor\": {\r\n            \"codigo\": 1,\r\n            \"experiencia\": \"10 años de experiencia\",\r\n            \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n            \"estado\": true,\r\n            \"usuario\": {\r\n                \"codigo\": 6,\r\n                \"nombre\": \"Ana Maria\",\r\n                \"apellidoPaterno\": \"Torres\",\r\n                \"apellidoMaterno\": \"Morales\",\r\n                \"correo\": \"ana.torres@yahoo.com\",\r\n                \"telefono\": \"954321876\",\r\n                \"direccion\": \"Av. Universitaria 2345\",\r\n                \"nroDocumento\": \"70345678\",\r\n                \"fechaNacimiento\": \"1995-11-30\",\r\n                \"clave\": \"$2y$10$hashedpassword012\",\r\n                \"fotoPerfil\": null,\r\n                \"estado\": true,\r\n                \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                \"distrito\": {\r\n                    \"codigo\": 17,\r\n                    \"nombre\": \"Los Olivos\",\r\n                    \"provincia\": \"Lima\",\r\n                    \"departamento\": \"Lima\",\r\n                    \"estado\": true\r\n                },\r\n                \"rol\": {\r\n                    \"codigo\": 2,\r\n                    \"nombre\": \"Cliente\",\r\n                    \"estado\": true\r\n                },\r\n                \"tipodocumento\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"DNI\",\r\n                    \"estado\": true\r\n                }\r\n            },\r\n            \"categoria\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"Electricista\",\r\n                \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n                \"estado\": true\r\n            }\r\n        }\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/tipoDocumento/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"tipoDocumento",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/tipoDocumento/enable/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"tipoDocumento",
+								"enable",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rol",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/rol",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"rol"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/rol/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"rol",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Sporte\",\r\n    \"estado\":\"true\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/rol",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"rol"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/rol/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"rol",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"nombre\": \"Administrador\",\r\n        \"estado\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/rol/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"rol",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"fechaFin\": \"2025-12-31\",\r\n        \"fechaInicio\": \"2025-01-01\",\r\n        \"estado\": \"activo\",\r\n        \"monto\": 150.00,\r\n        \"metodoPago\": \"Tarjeta de crédito\",\r\n        \"proveedor\": {\r\n            \"codigo\": 1,\r\n            \"experiencia\": \"10 años de experiencia\",\r\n            \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n            \"estado\": true,\r\n            \"usuario\": {\r\n                \"codigo\": 6,\r\n                \"nombre\": \"Ana Maria\",\r\n                \"apellidoPaterno\": \"Torres\",\r\n                \"apellidoMaterno\": \"Morales\",\r\n                \"correo\": \"ana.torres@yahoo.com\",\r\n                \"telefono\": \"954321876\",\r\n                \"direccion\": \"Av. Universitaria 2345\",\r\n                \"nroDocumento\": \"70345678\",\r\n                \"fechaNacimiento\": \"1995-11-30\",\r\n                \"clave\": \"$2y$10$hashedpassword012\",\r\n                \"fotoPerfil\": null,\r\n                \"estado\": true,\r\n                \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                \"distrito\": {\r\n                    \"codigo\": 17,\r\n                    \"nombre\": \"Los Olivos\",\r\n                    \"provincia\": \"Lima\",\r\n                    \"departamento\": \"Lima\",\r\n                    \"estado\": true\r\n                },\r\n                \"rol\": {\r\n                    \"codigo\": 2,\r\n                    \"nombre\": \"Cliente\",\r\n                    \"estado\": true\r\n                },\r\n                \"tipodocumento\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"DNI\",\r\n                    \"estado\": true\r\n                }\r\n            },\r\n            \"categoria\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"Electricista\",\r\n                \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n                \"estado\": true\r\n            }\r\n        }\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/rol/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"rol",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/rol/enable/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"rol",
+								"enable",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categoria",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/categoria",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"categoria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/categoria/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"categoria",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Limpieza\",\r\n    \"descripcion\":\"Servicios de limpieza para hogares, oficinas, locales comerciales y espacios públicos.\",\r\n    \"estado\":\"true\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/categoria",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"categoria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/categoria/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"categoria",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"codigo\": 16,\r\n        \"nombre\": \"Técnico de Gas\",\r\n        \"descripcion\": \"Instalación y reparación de sistemas de gas doméstico\",\r\n        \"estado\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/categoria/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"categoria",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"fechaFin\": \"2025-12-31\",\r\n        \"fechaInicio\": \"2025-01-01\",\r\n        \"estado\": \"activo\",\r\n        \"monto\": 150.00,\r\n        \"metodoPago\": \"Tarjeta de crédito\",\r\n        \"proveedor\": {\r\n            \"codigo\": 1,\r\n            \"experiencia\": \"10 años de experiencia\",\r\n            \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n            \"estado\": true,\r\n            \"usuario\": {\r\n                \"codigo\": 6,\r\n                \"nombre\": \"Ana Maria\",\r\n                \"apellidoPaterno\": \"Torres\",\r\n                \"apellidoMaterno\": \"Morales\",\r\n                \"correo\": \"ana.torres@yahoo.com\",\r\n                \"telefono\": \"954321876\",\r\n                \"direccion\": \"Av. Universitaria 2345\",\r\n                \"nroDocumento\": \"70345678\",\r\n                \"fechaNacimiento\": \"1995-11-30\",\r\n                \"clave\": \"$2y$10$hashedpassword012\",\r\n                \"fotoPerfil\": null,\r\n                \"estado\": true,\r\n                \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                \"distrito\": {\r\n                    \"codigo\": 17,\r\n                    \"nombre\": \"Los Olivos\",\r\n                    \"provincia\": \"Lima\",\r\n                    \"departamento\": \"Lima\",\r\n                    \"estado\": true\r\n                },\r\n                \"rol\": {\r\n                    \"codigo\": 2,\r\n                    \"nombre\": \"Cliente\",\r\n                    \"estado\": true\r\n                },\r\n                \"tipodocumento\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"DNI\",\r\n                    \"estado\": true\r\n                }\r\n            },\r\n            \"categoria\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"Electricista\",\r\n                \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n                \"estado\": true\r\n            }\r\n        }\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/categoria/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"categoria",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/categoria/enable/16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"categoria",
+								"enable",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "usuario",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/usuario/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"usuario",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 2,\r\n    \"nombre\": \"Carlos\",\r\n    \"apellidoPaterno\": \"Ramírez\",\r\n    \"apellidoMaterno\": \"Salazar\",\r\n    \"correo\": \"carlos.ramirez@servired.com\",\r\n    \"telefono\": \"998877665\",\r\n    \"direccion\": \"Jr. Las Magnolias 450, Surco\",\r\n    \"nroDocumento\": \"87654321\",\r\n    \"fechaNacimiento\": \"1990-08-22\",\r\n    \"clave\": \"carlitos90\",\r\n    \"fotoPerfil\": \"imagenes/usuarios/carlos.jpg\",\r\n    \"estado\": true,\r\n    \"fechaRegistro\": \"2025-10-09T10:30:00\",\r\n    \"distrito\": {\r\n        \"codigo\": 34,\r\n        \"nombre\": \"Santiago de Surco\",\r\n        \"provincia\": \"Lima\",\r\n        \"departamento\": \"Lima\",\r\n        \"estado\": true\r\n    },\r\n    \"rol\": {\r\n        \"codigo\": 2,\r\n        \"nombre\": \"Proveedor\",\r\n        \"estado\": true\r\n    },\r\n    \"tipodocumento\": {\r\n        \"codigo\": 2,\r\n        \"nombre\": \"Carnet de extranjería\",\r\n        \"estado\": true\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/usuario/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"nombre\": \"Elizabeth\",\r\n        \"apellidoPaterno\": \"Trigoso\",\r\n        \"apellidoMaterno\": \"Gonzales\",\r\n        \"correo\": \"elizabethtg@servired.com\",\r\n        \"telefono\": \"987654321\",\r\n        \"direccion\": \"Av. Los Alamos 1564\",\r\n        \"nroDocumento\": \"71234567\",\r\n        \"fechaNacimiento\": \"1985-05-15\",\r\n        \"clave\": \"password123\",\r\n        \"fotoPerfil\": null,\r\n        \"estado\": true,\r\n        \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n        \"distrito\": {\r\n            \"codigo\": 21,\r\n            \"nombre\": \"Miraflores\",\r\n            \"provincia\": \"Lima\",\r\n            \"departamento\": \"Lima\",\r\n            \"estado\": true\r\n        },\r\n        \"rol\": {\r\n            \"codigo\": 1,\r\n            \"nombre\": \"Administrador\",\r\n            \"estado\": true\r\n        },\r\n        \"tipodocumento\": {\r\n            \"codigo\": 1,\r\n            \"nombre\": \"DNI\",\r\n            \"estado\": true\r\n        }\r\n    },",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/usuario/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"fechaFin\": \"2025-12-31\",\r\n        \"fechaInicio\": \"2025-01-01\",\r\n        \"estado\": \"activo\",\r\n        \"monto\": 150.00,\r\n        \"metodoPago\": \"Tarjeta de crédito\",\r\n        \"proveedor\": {\r\n            \"codigo\": 1,\r\n            \"experiencia\": \"10 años de experiencia\",\r\n            \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n            \"estado\": true,\r\n            \"usuario\": {\r\n                \"codigo\": 6,\r\n                \"nombre\": \"Ana Maria\",\r\n                \"apellidoPaterno\": \"Torres\",\r\n                \"apellidoMaterno\": \"Morales\",\r\n                \"correo\": \"ana.torres@yahoo.com\",\r\n                \"telefono\": \"954321876\",\r\n                \"direccion\": \"Av. Universitaria 2345\",\r\n                \"nroDocumento\": \"70345678\",\r\n                \"fechaNacimiento\": \"1995-11-30\",\r\n                \"clave\": \"$2y$10$hashedpassword012\",\r\n                \"fotoPerfil\": null,\r\n                \"estado\": true,\r\n                \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                \"distrito\": {\r\n                    \"codigo\": 17,\r\n                    \"nombre\": \"Los Olivos\",\r\n                    \"provincia\": \"Lima\",\r\n                    \"departamento\": \"Lima\",\r\n                    \"estado\": true\r\n                },\r\n                \"rol\": {\r\n                    \"codigo\": 2,\r\n                    \"nombre\": \"Cliente\",\r\n                    \"estado\": true\r\n                },\r\n                \"tipodocumento\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"DNI\",\r\n                    \"estado\": true\r\n                }\r\n            },\r\n            \"categoria\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"Electricista\",\r\n                \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n                \"estado\": true\r\n            }\r\n        }\r\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/usuario/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"usuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/usuario/enable/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"usuario",
+								"enable",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cliente",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/cliente/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"cliente",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 2,\r\n    \"estado\": true,\r\n    \"usuario\": {\r\n        \"codigo\": 3,\r\n        \"nombre\": \"Mariana\",\r\n        \"apellidoPaterno\": \"Quispe\",\r\n        \"apellidoMaterno\": \"Lozano\",\r\n        \"correo\": \"mariana.quispe@servired.com\",\r\n        \"telefono\": \"986745321\",\r\n        \"direccion\": \"Av. Javier Prado Este 5020\",\r\n        \"nroDocumento\": \"75643219\",\r\n        \"fechaNacimiento\": \"1995-03-22\",\r\n        \"clave\": \"marianaQ2025\",\r\n        \"fotoPerfil\": \"imagenes/usuarios/mariana.jpg\",\r\n        \"estado\": true,\r\n        \"fechaRegistro\": \"2025-10-09T11:00:00\",\r\n        \"distrito\": {\r\n            \"codigo\": 25,\r\n            \"nombre\": \"San Borja\",\r\n            \"provincia\": \"Lima\",\r\n            \"departamento\": \"Lima\",\r\n            \"estado\": true\r\n        },\r\n        \"rol\": {\r\n            \"codigo\": 3,\r\n            \"nombre\": \"Cliente\",\r\n            \"estado\": true\r\n        },\r\n        \"tipodocumento\": {\r\n            \"codigo\": 2,\r\n            \"nombre\": \"Pasaporte\",\r\n            \"estado\": true\r\n        }\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/cliente/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"cliente",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"estado\": true,\r\n        \"usuario\": {\r\n            \"codigo\": 2,\r\n            \"nombre\": \"Valeria\",\r\n            \"apellidoPaterno\": \"Alfonzo\",\r\n            \"apellidoMaterno\": \"Carruyo\",\r\n            \"correo\": \"valeriaac@servired.com\",\r\n            \"telefono\": \"985558547\",\r\n            \"direccion\": \"Av. Trujillo 1884\",\r\n            \"nroDocumento\": \"72345678\",\r\n            \"fechaNacimiento\": \"1998-07-17\",\r\n            \"clave\": \"password0124\",\r\n            \"fotoPerfil\": null,\r\n            \"estado\": true,\r\n            \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n            \"distrito\": {\r\n                \"codigo\": 13,\r\n                \"nombre\": \"La Molina\",\r\n                \"provincia\": \"Lima\",\r\n                \"departamento\": \"Lima\",\r\n                \"estado\": true\r\n            },\r\n            \"rol\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"Administrador\",\r\n                \"estado\": true\r\n            },\r\n            \"tipodocumento\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"DNI\",\r\n                \"estado\": true\r\n            }\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/cliente/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"cliente",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/cliente/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"cliente",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/cliente/enable/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"cliente",
+								"enable",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "proveedor",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/proveedor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"proveedor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/proveedor/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"proveedor",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 2,\r\n    \"experiencia\": \"8 años de experiencia en mantenimiento general y gasfitería.\",\r\n    \"descripcion\": \"Gasfitero profesional con amplia experiencia en instalación y reparación de tuberías, sanitarios y calefacción. Trabajo rápido y garantizado.\",\r\n    \"estado\": true,\r\n    \"usuario\": {\r\n        \"codigo\": 7,\r\n        \"nombre\": \"Carlos\",\r\n        \"apellidoPaterno\": \"Ramírez\",\r\n        \"apellidoMaterno\": \"Huamán\",\r\n        \"correo\": \"carlos.ramirez@gmail.com\",\r\n        \"telefono\": \"987654789\",\r\n        \"direccion\": \"Jr. Los Rosales 458\",\r\n        \"nroDocumento\": \"74589632\",\r\n        \"fechaNacimiento\": \"1990-04-18\",\r\n        \"clave\": \"$2y$10$hashedpassword123\",\r\n        \"fotoPerfil\": \"imagenes/usuarios/carlos_ramirez.jpg\",\r\n        \"estado\": true,\r\n        \"fechaRegistro\": \"2025-10-09T12:00:00\",\r\n        \"distrito\": {\r\n            \"codigo\": 19,\r\n            \"nombre\": \"San Martín de Porres\",\r\n            \"provincia\": \"Lima\",\r\n            \"departamento\": \"Lima\",\r\n            \"estado\": true\r\n        },\r\n        \"rol\": {\r\n            \"codigo\": 2,\r\n            \"nombre\": \"Proveedor\",\r\n            \"estado\": true\r\n        },\r\n        \"tipodocumento\": {\r\n            \"codigo\": 1,\r\n            \"nombre\": \"DNI\",\r\n            \"estado\": true\r\n        }\r\n    },\r\n    \"categoria\": {\r\n        \"codigo\": 3,\r\n        \"nombre\": \"Gasfitero\",\r\n        \"descripcion\": \"Instalación y mantenimiento de sistemas de agua, gas y saneamiento.\",\r\n        \"estado\": true\r\n    }\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/proveedor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"proveedor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/proveedor/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"proveedor",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"experiencia\": \"10 años de experiencia\",\r\n        \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n        \"estado\": true,\r\n        \"usuario\": {\r\n            \"codigo\": 6,\r\n            \"nombre\": \"Ana Maria\",\r\n            \"apellidoPaterno\": \"Torres\",\r\n            \"apellidoMaterno\": \"Morales\",\r\n            \"correo\": \"ana.torres@yahoo.com\",\r\n            \"telefono\": \"954321876\",\r\n            \"direccion\": \"Av. Universitaria 2345\",\r\n            \"nroDocumento\": \"70345678\",\r\n            \"fechaNacimiento\": \"1995-11-30\",\r\n            \"clave\": \"$2y$10$hashedpassword012\",\r\n            \"fotoPerfil\": null,\r\n            \"estado\": true,\r\n            \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n            \"distrito\": {\r\n                \"codigo\": 17,\r\n                \"nombre\": \"Los Olivos\",\r\n                \"provincia\": \"Lima\",\r\n                \"departamento\": \"Lima\",\r\n                \"estado\": true\r\n            },\r\n            \"rol\": {\r\n                \"codigo\": 2,\r\n                \"nombre\": \"Cliente\",\r\n                \"estado\": true\r\n            },\r\n            \"tipodocumento\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"DNI\",\r\n                \"estado\": true\r\n            }\r\n        },\r\n        \"categoria\": {\r\n            \"codigo\": 1,\r\n            \"nombre\": \"Electricista\",\r\n            \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n            \"estado\": true\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/proveedor/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"proveedor",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/proveedor/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"proveedor",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/proveedor/enable/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"proveedor",
+								"enable",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "servicio",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/servicio",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"servicio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/servicio/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"servicio",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 2,\r\n    \"titulo\": \"Reparación de fugas de agua y cambio de tuberías\",\r\n    \"descripcion\": \"Servicio especializado en detección y reparación de fugas de agua, cambio de grifería y mantenimiento de instalaciones sanitarias. Atención rápida y garantizada.\",\r\n    \"estado\": true,\r\n    \"fechaPublicacion\": \"2025-10-09T14:25:00\",\r\n    \"proveedor\": {\r\n        \"codigo\": 2,\r\n        \"experiencia\": \"8 años de experiencia en instalaciones y mantenimiento sanitario.\",\r\n        \"descripcion\": \"Gasfitero técnico con experiencia en sistemas de agua potable, desagüe y calefacción. Trabajo limpio y seguro.\",\r\n        \"estado\": true,\r\n        \"usuario\": {\r\n            \"codigo\": 7,\r\n            \"nombre\": \"Carlos\",\r\n            \"apellidoPaterno\": \"Ramírez\",\r\n            \"apellidoMaterno\": \"Huamán\",\r\n            \"correo\": \"carlos.ramirez@gmail.com\",\r\n            \"telefono\": \"987654789\",\r\n            \"direccion\": \"Jr. Los Rosales 458\",\r\n            \"nroDocumento\": \"74589632\",\r\n            \"fechaNacimiento\": \"1990-04-18\",\r\n            \"clave\": \"$2y$10$hashedpassword123\",\r\n            \"fotoPerfil\": \"imagenes/usuarios/carlos_ramirez.jpg\",\r\n            \"estado\": true,\r\n            \"fechaRegistro\": \"2025-10-09T12:00:00\",\r\n            \"distrito\": {\r\n                \"codigo\": 19,\r\n                \"nombre\": \"San Martín de Porres\",\r\n                \"provincia\": \"Lima\",\r\n                \"departamento\": \"Lima\",\r\n                \"estado\": true\r\n            },\r\n            \"rol\": {\r\n                \"codigo\": 2,\r\n                \"nombre\": \"Proveedor\",\r\n                \"estado\": true\r\n            },\r\n            \"tipodocumento\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"DNI\",\r\n                \"estado\": true\r\n            }\r\n        },\r\n        \"categoria\": {\r\n            \"codigo\": 3,\r\n            \"nombre\": \"Gasfitero\",\r\n            \"descripcion\": \"Instalación y mantenimiento de sistemas de agua, gas y saneamiento.\",\r\n            \"estado\": true\r\n        }\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/servicio",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"servicio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/servicio/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"servicio",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"titulo\": \"Instalación de lámparas y artefactos eléctricos\",\r\n        \"descripcion\": \"Instalación profesional de lámparas, focos, reflectores y todo tipo de artefactos eléctricos. Incluye materiales básicos.\",\r\n        \"estado\": true,\r\n        \"fechaPublicacion\": \"2025-10-08T22:38:50\",\r\n        \"proveedor\": {\r\n            \"codigo\": 1,\r\n            \"experiencia\": \"11 años de experiencia\",\r\n            \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n            \"estado\": true,\r\n            \"usuario\": {\r\n                \"codigo\": 6,\r\n                \"nombre\": \"Ana\",\r\n                \"apellidoPaterno\": \"Torres\",\r\n                \"apellidoMaterno\": \"Morales\",\r\n                \"correo\": \"ana.torres@yahoo.com\",\r\n                \"telefono\": \"954321876\",\r\n                \"direccion\": \"Av. Universitaria 2345\",\r\n                \"nroDocumento\": \"70345678\",\r\n                \"fechaNacimiento\": \"1995-11-30\",\r\n                \"clave\": \"$2y$10$hashedpassword012\",\r\n                \"fotoPerfil\": null,\r\n                \"estado\": true,\r\n                \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                \"distrito\": {\r\n                    \"codigo\": 17,\r\n                    \"nombre\": \"Los Olivos\",\r\n                    \"provincia\": \"Lima\",\r\n                    \"departamento\": \"Lima\",\r\n                    \"estado\": true\r\n                },\r\n                \"rol\": {\r\n                    \"codigo\": 2,\r\n                    \"nombre\": \"Cliente\",\r\n                    \"estado\": true\r\n                },\r\n                \"tipodocumento\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"DNI\",\r\n                    \"estado\": true\r\n                }\r\n            },\r\n            \"categoria\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"Electricista\",\r\n                \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n                \"estado\": true\r\n            }\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/servicio/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"servicio",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/servicio/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"servicio",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/servicio/enable/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"servicio",
+								"enable",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "contratacion",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/contratacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"contratacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/contratacion/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"contratacion",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 2,\r\n    \"fechaReserva\": \"2025-10-09T15:10:00\",\r\n    \"estado\": \"en_proceso\",\r\n    \"cliente\": {\r\n        \"codigo\": 2,\r\n        \"estado\": true,\r\n        \"usuario\": {\r\n            \"codigo\": 8,\r\n            \"nombre\": \"Luis\",\r\n            \"apellidoPaterno\": \"Quispe\",\r\n            \"apellidoMaterno\": \"Soto\",\r\n            \"correo\": \"lquispe@servired.com\",\r\n            \"telefono\": \"988441256\",\r\n            \"direccion\": \"Av. Los Jazmines 455\",\r\n            \"nroDocumento\": \"73214567\",\r\n            \"fechaNacimiento\": \"1992-03-22\",\r\n            \"clave\": \"password456\",\r\n            \"fotoPerfil\": null,\r\n            \"estado\": true,\r\n            \"fechaRegistro\": \"2025-10-09T10:00:00\",\r\n            \"distrito\": {\r\n                \"codigo\": 11,\r\n                \"nombre\": \"San Miguel\",\r\n                \"provincia\": \"Lima\",\r\n                \"departamento\": \"Lima\",\r\n                \"estado\": true\r\n            },\r\n            \"rol\": {\r\n                \"codigo\": 2,\r\n                \"nombre\": \"Cliente\",\r\n                \"estado\": true\r\n            },\r\n            \"tipodocumento\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"DNI\",\r\n                \"estado\": true\r\n            }\r\n        }\r\n    },\r\n    \"servicio\": {\r\n        \"codigo\": 2,\r\n        \"titulo\": \"Mantenimiento y reparación de grifos y cañerías\",\r\n        \"descripcion\": \"Servicio técnico de gasfitería para reparación de fugas, cambio de grifos y mantenimiento general de cañerías. Atención rápida a domicilio.\",\r\n        \"estado\": true,\r\n        \"fechaPublicacion\": \"2025-10-09T14:30:00\",\r\n        \"proveedor\": {\r\n            \"codigo\": 2,\r\n            \"experiencia\": \"8 años de experiencia en mantenimiento sanitario y fontanería.\",\r\n            \"descripcion\": \"Gasfitero profesional especializado en instalaciones de agua y saneamiento. Trabajo garantizado.\",\r\n            \"estado\": true,\r\n            \"usuario\": {\r\n                \"codigo\": 7,\r\n                \"nombre\": \"Carlos\",\r\n                \"apellidoPaterno\": \"Ramírez\",\r\n                \"apellidoMaterno\": \"Huamán\",\r\n                \"correo\": \"carlos.ramirez@gmail.com\",\r\n                \"telefono\": \"987654789\",\r\n                \"direccion\": \"Jr. Los Rosales 458\",\r\n                \"nroDocumento\": \"74589632\",\r\n                \"fechaNacimiento\": \"1990-04-18\",\r\n                \"clave\": \"$2y$10$hashedpassword123\",\r\n                \"fotoPerfil\": \"imagenes/usuarios/carlos_ramirez.jpg\",\r\n                \"estado\": true,\r\n                \"fechaRegistro\": \"2025-10-09T12:00:00\",\r\n                \"distrito\": {\r\n                    \"codigo\": 19,\r\n                    \"nombre\": \"San Martín de Porres\",\r\n                    \"provincia\": \"Lima\",\r\n                    \"departamento\": \"Lima\",\r\n                    \"estado\": true\r\n                },\r\n                \"rol\": {\r\n                    \"codigo\": 3,\r\n                    \"nombre\": \"Proveedor\",\r\n                    \"estado\": true\r\n                },\r\n                \"tipodocumento\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"DNI\",\r\n                    \"estado\": true\r\n                }\r\n            },\r\n            \"categoria\": {\r\n                \"codigo\": 3,\r\n                \"nombre\": \"Gasfitero\",\r\n                \"descripcion\": \"Instalación y mantenimiento de sistemas de agua, gas y saneamiento.\",\r\n                \"estado\": true\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/contratacion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"contratacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/contratacion/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"contratacion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"fechaReserva\": \"2025-10-08T22:38:56\",\r\n        \"estado\": \"finalizado\",\r\n        \"cliente\": {\r\n            \"codigo\": 1,\r\n            \"estado\": true,\r\n            \"usuario\": {\r\n                \"codigo\": 2,\r\n                \"nombre\": \"Valeria\",\r\n                \"apellidoPaterno\": \"Alfonzo\",\r\n                \"apellidoMaterno\": \"Carruyo\",\r\n                \"correo\": \"valeriaac@servired.com\",\r\n                \"telefono\": \"985558547\",\r\n                \"direccion\": \"Av. Trujillo 1884\",\r\n                \"nroDocumento\": \"72345678\",\r\n                \"fechaNacimiento\": \"1998-07-17\",\r\n                \"clave\": \"password0124\",\r\n                \"fotoPerfil\": null,\r\n                \"estado\": true,\r\n                \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                \"distrito\": {\r\n                    \"codigo\": 13,\r\n                    \"nombre\": \"La Molina\",\r\n                    \"provincia\": \"Lima\",\r\n                    \"departamento\": \"Lima\",\r\n                    \"estado\": true\r\n                },\r\n                \"rol\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"Administrador\",\r\n                    \"estado\": true\r\n                },\r\n                \"tipodocumento\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"DNI\",\r\n                    \"estado\": true\r\n                }\r\n            }\r\n        },\r\n        \"servicio\": {\r\n            \"codigo\": 1,\r\n            \"titulo\": \"Instalación de lámparas y artefactos eléctricos\",\r\n            \"descripcion\": \"Instalación profesional de lámparas, focos, reflectores y todo tipo de artefactos eléctricos. Incluye materiales básicos.\",\r\n            \"estado\": true,\r\n            \"fechaPublicacion\": \"2025-10-08T22:38:50\",\r\n            \"proveedor\": {\r\n                \"codigo\": 1,\r\n                \"experiencia\": \"10 años de experiencia\",\r\n                \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n                \"estado\": true,\r\n                \"usuario\": {\r\n                    \"codigo\": 6,\r\n                    \"nombre\": \"Ana\",\r\n                    \"apellidoPaterno\": \"Torres\",\r\n                    \"apellidoMaterno\": \"Morales\",\r\n                    \"correo\": \"ana.torres@yahoo.com\",\r\n                    \"telefono\": \"954321876\",\r\n                    \"direccion\": \"Av. Universitaria 2345\",\r\n                    \"nroDocumento\": \"70345678\",\r\n                    \"fechaNacimiento\": \"1995-11-30\",\r\n                    \"clave\": \"$2y$10$hashedpassword012\",\r\n                    \"fotoPerfil\": null,\r\n                    \"estado\": true,\r\n                    \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                    \"distrito\": {\r\n                        \"codigo\": 17,\r\n                        \"nombre\": \"Los Olivos\",\r\n                        \"provincia\": \"Lima\",\r\n                        \"departamento\": \"Lima\",\r\n                        \"estado\": true\r\n                    },\r\n                    \"rol\": {\r\n                        \"codigo\": 2,\r\n                        \"nombre\": \"Cliente\",\r\n                        \"estado\": true\r\n                    },\r\n                    \"tipodocumento\": {\r\n                        \"codigo\": 1,\r\n                        \"nombre\": \"DNI\",\r\n                        \"estado\": true\r\n                    }\r\n                },\r\n                \"categoria\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"Electricista\",\r\n                    \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n                    \"estado\": true\r\n                }\r\n            }\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/contratacion/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"contratacion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/contratacion/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"contratacion",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/contratacion/enable/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"contratacion",
+								"enable",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "valoracion",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/valoracion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"valoracion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/valoracion/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"valoracion",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"puntuacion\": 5,\r\n        \"comentario\": \"Excelente servicio, muy profesional y puntual. Totalmente recomendado.\",\r\n        \"fecha\": \"2025-10-08T22:39:02\",\r\n        \"estado\": true,\r\n        \"contratacion\": {\r\n            \"codigo\": 1,\r\n            \"fechaReserva\": \"2025-10-08T22:38:56\",\r\n            \"estado\": \"finalizado\",\r\n            \"cliente\": {\r\n                \"codigo\": 1,\r\n                \"estado\": true,\r\n                \"usuario\": {\r\n                    \"codigo\": 2,\r\n                    \"nombre\": \"Valeria\",\r\n                    \"apellidoPaterno\": \"Alfonzo\",\r\n                    \"apellidoMaterno\": \"Carruyo\",\r\n                    \"correo\": \"valeriaac@servired.com\",\r\n                    \"telefono\": \"985558547\",\r\n                    \"direccion\": \"Av. Trujillo 1884\",\r\n                    \"nroDocumento\": \"72345678\",\r\n                    \"fechaNacimiento\": \"1998-07-17\",\r\n                    \"clave\": \"password124\",\r\n                    \"fotoPerfil\": null,\r\n                    \"estado\": true,\r\n                    \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                    \"distrito\": {\r\n                        \"codigo\": 13,\r\n                        \"nombre\": \"La Molina\",\r\n                        \"provincia\": \"Lima\",\r\n                        \"departamento\": \"Lima\",\r\n                        \"estado\": true\r\n                    },\r\n                    \"rol\": {\r\n                        \"codigo\": 1,\r\n                        \"nombre\": \"Administrador\",\r\n                        \"estado\": true\r\n                    },\r\n                    \"tipodocumento\": {\r\n                        \"codigo\": 1,\r\n                        \"nombre\": \"DNI\",\r\n                        \"estado\": true\r\n                    }\r\n                }\r\n            },\r\n            \"servicio\": {\r\n                \"codigo\": 1,\r\n                \"titulo\": \"Instalación de lámparas y artefactos eléctricos\",\r\n                \"descripcion\": \"Instalación profesional de lámparas, focos, reflectores y todo tipo de artefactos eléctricos. Incluye materiales básicos.\",\r\n                \"estado\": true,\r\n                \"fechaPublicacion\": \"2025-10-08T22:38:50\",\r\n                \"proveedor\": {\r\n                    \"codigo\": 1,\r\n                    \"experiencia\": \"10 años de experiencia\",\r\n                    \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n                    \"estado\": true,\r\n                    \"usuario\": {\r\n                        \"codigo\": 6,\r\n                        \"nombre\": \"Ana\",\r\n                        \"apellidoPaterno\": \"Torres\",\r\n                        \"apellidoMaterno\": \"Morales\",\r\n                        \"correo\": \"ana.torres@yahoo.com\",\r\n                        \"telefono\": \"954321876\",\r\n                        \"direccion\": \"Av. Universitaria 2345\",\r\n                        \"nroDocumento\": \"70345678\",\r\n                        \"fechaNacimiento\": \"1995-11-30\",\r\n                        \"clave\": \"$2y$10$hashedpassword012\",\r\n                        \"fotoPerfil\": null,\r\n                        \"estado\": true,\r\n                        \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                        \"distrito\": {\r\n                            \"codigo\": 17,\r\n                            \"nombre\": \"Los Olivos\",\r\n                            \"provincia\": \"Lima\",\r\n                            \"departamento\": \"Lima\",\r\n                            \"estado\": true\r\n                        },\r\n                        \"rol\": {\r\n                            \"codigo\": 2,\r\n                            \"nombre\": \"Cliente\",\r\n                            \"estado\": true\r\n                        },\r\n                        \"tipodocumento\": {\r\n                            \"codigo\": 1,\r\n                            \"nombre\": \"DNI\",\r\n                            \"estado\": true\r\n                        }\r\n                    },\r\n                    \"categoria\": {\r\n                        \"codigo\": 1,\r\n                        \"nombre\": \"Electricista\",\r\n                        \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n                        \"estado\": true\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/valoracion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"valoracion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/valoracion/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"valoracion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"puntuacion\": 5,\r\n        \"comentario\": \"Excelente servicio, muy profesional y puntual. Totalmente recomendado.\",\r\n        \"fecha\": \"2025-10-08T22:39:02\",\r\n        \"estado\": true,\r\n        \"contratacion\": {\r\n            \"codigo\": 1,\r\n            \"fechaReserva\": \"2025-10-08T22:38:56\",\r\n            \"estado\": \"finalizado\",\r\n            \"cliente\": {\r\n                \"codigo\": 1,\r\n                \"estado\": true,\r\n                \"usuario\": {\r\n                    \"codigo\": 2,\r\n                    \"nombre\": \"Valeria\",\r\n                    \"apellidoPaterno\": \"Alfonzo\",\r\n                    \"apellidoMaterno\": \"Carruyo\",\r\n                    \"correo\": \"valeriaac@servired.com\",\r\n                    \"telefono\": \"985558547\",\r\n                    \"direccion\": \"Av. Trujillo 1884\",\r\n                    \"nroDocumento\": \"72345678\",\r\n                    \"fechaNacimiento\": \"1998-07-17\",\r\n                    \"clave\": \"password0124\",\r\n                    \"fotoPerfil\": null,\r\n                    \"estado\": true,\r\n                    \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                    \"distrito\": {\r\n                        \"codigo\": 13,\r\n                        \"nombre\": \"La Molina\",\r\n                        \"provincia\": \"Lima\",\r\n                        \"departamento\": \"Lima\",\r\n                        \"estado\": true\r\n                    },\r\n                    \"rol\": {\r\n                        \"codigo\": 1,\r\n                        \"nombre\": \"Administrador\",\r\n                        \"estado\": true\r\n                    },\r\n                    \"tipodocumento\": {\r\n                        \"codigo\": 1,\r\n                        \"nombre\": \"DNI\",\r\n                        \"estado\": true\r\n                    }\r\n                }\r\n            },\r\n            \"servicio\": {\r\n                \"codigo\": 1,\r\n                \"titulo\": \"Instalación de lámparas y artefactos eléctricos\",\r\n                \"descripcion\": \"Instalación profesional de lámparas, focos, reflectores y todo tipo de artefactos eléctricos. Incluye materiales básicos.\",\r\n                \"estado\": true,\r\n                \"fechaPublicacion\": \"2025-10-08T22:38:50\",\r\n                \"proveedor\": {\r\n                    \"codigo\": 1,\r\n                    \"experiencia\": \"10 años de experiencia\",\r\n                    \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n                    \"estado\": true,\r\n                    \"usuario\": {\r\n                        \"codigo\": 6,\r\n                        \"nombre\": \"Ana\",\r\n                        \"apellidoPaterno\": \"Torres\",\r\n                        \"apellidoMaterno\": \"Morales\",\r\n                        \"correo\": \"ana.torres@yahoo.com\",\r\n                        \"telefono\": \"954321876\",\r\n                        \"direccion\": \"Av. Universitaria 2345\",\r\n                        \"nroDocumento\": \"70345678\",\r\n                        \"fechaNacimiento\": \"1995-11-30\",\r\n                        \"clave\": \"$2y$10$hashedpassword012\",\r\n                        \"fotoPerfil\": null,\r\n                        \"estado\": true,\r\n                        \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                        \"distrito\": {\r\n                            \"codigo\": 17,\r\n                            \"nombre\": \"Los Olivos\",\r\n                            \"provincia\": \"Lima\",\r\n                            \"departamento\": \"Lima\",\r\n                            \"estado\": true\r\n                        },\r\n                        \"rol\": {\r\n                            \"codigo\": 2,\r\n                            \"nombre\": \"Cliente\",\r\n                            \"estado\": true\r\n                        },\r\n                        \"tipodocumento\": {\r\n                            \"codigo\": 1,\r\n                            \"nombre\": \"DNI\",\r\n                            \"estado\": true\r\n                        }\r\n                    },\r\n                    \"categoria\": {\r\n                        \"codigo\": 1,\r\n                        \"nombre\": \"Electricista\",\r\n                        \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n                        \"estado\": true\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/valoracion/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"valoracion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/valoracion/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"valoracion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/valoracion/enable/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"valoracion",
+								"enable",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "suscripcion",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/suscripcion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"suscripcion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/suscripcion/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"suscripcion",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 2,\r\n    \"fechaInicio\": \"2025-11-01\",\r\n    \"fechaFin\": \"2026-10-31\",\r\n    \"estado\": \"pendiente\",\r\n    \"monto\": 250.00,\r\n    \"metodoPago\": \"Transferencia bancaria\",\r\n    \"proveedor\": {\r\n        \"codigo\": 2,\r\n        \"experiencia\": \"7 años de experiencia en mantenimiento y servicios técnicos\",\r\n        \"descripcion\": \"Técnico especializado en reparaciones eléctricas y gasfitería. Ofrece atención rápida y garantía extendida.\",\r\n        \"estado\": true,\r\n        \"usuario\": {\r\n            \"codigo\": 7,\r\n            \"nombre\": \"Carlos\",\r\n            \"apellidoPaterno\": \"Ramírez\",\r\n            \"apellidoMaterno\": \"Huamán\",\r\n            \"correo\": \"carlos.ramirez@gmail.com\",\r\n            \"telefono\": \"987654789\",\r\n            \"direccion\": \"Jr. Los Rosales 458\",\r\n            \"nroDocumento\": \"74589632\",\r\n            \"fechaNacimiento\": \"1990-04-18\",\r\n            \"clave\": \"$2y$10$hashedpassword123\",\r\n            \"fotoPerfil\": \"imagenes/usuarios/carlos_ramirez.jpg\",\r\n            \"estado\": true,\r\n            \"fechaRegistro\": \"2025-10-09T12:00:00\",\r\n            \"distrito\": {\r\n                \"codigo\": 19,\r\n                \"nombre\": \"San Martín de Porres\",\r\n                \"provincia\": \"Lima\",\r\n                \"departamento\": \"Lima\",\r\n                \"estado\": true\r\n            },\r\n            \"rol\": {\r\n                \"codigo\": 3,\r\n                \"nombre\": \"Proveedor\",\r\n                \"estado\": true\r\n            },\r\n            \"tipodocumento\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"DNI\",\r\n                \"estado\": true\r\n            }\r\n        },\r\n        \"categoria\": {\r\n            \"codigo\": 3,\r\n            \"nombre\": \"Gasfitero\",\r\n            \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas de agua, gas y saneamiento.\",\r\n            \"estado\": true\r\n        }\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/suscripcion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"suscripcion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/suscripcion/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"suscripcion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"fechaFin\": \"2025-12-31\",\r\n        \"fechaInicio\": \"2025-01-01\",\r\n        \"estado\": \"activo\",\r\n        \"monto\": 150.00,\r\n        \"metodoPago\": \"Tarjeta de crédito\",\r\n        \"proveedor\": {\r\n            \"codigo\": 1,\r\n            \"experiencia\": \"10 años de experiencia\",\r\n            \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n            \"estado\": true,\r\n            \"usuario\": {\r\n                \"codigo\": 6,\r\n                \"nombre\": \"Ana Maria\",\r\n                \"apellidoPaterno\": \"Torres\",\r\n                \"apellidoMaterno\": \"Morales\",\r\n                \"correo\": \"ana.torres@yahoo.com\",\r\n                \"telefono\": \"954321876\",\r\n                \"direccion\": \"Av. Universitaria 2345\",\r\n                \"nroDocumento\": \"70345678\",\r\n                \"fechaNacimiento\": \"1995-11-30\",\r\n                \"clave\": \"$2y$10$hashedpassword012\",\r\n                \"fotoPerfil\": null,\r\n                \"estado\": true,\r\n                \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                \"distrito\": {\r\n                    \"codigo\": 17,\r\n                    \"nombre\": \"Los Olivos\",\r\n                    \"provincia\": \"Lima\",\r\n                    \"departamento\": \"Lima\",\r\n                    \"estado\": true\r\n                },\r\n                \"rol\": {\r\n                    \"codigo\": 2,\r\n                    \"nombre\": \"Cliente\",\r\n                    \"estado\": true\r\n                },\r\n                \"tipodocumento\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"DNI\",\r\n                    \"estado\": true\r\n                }\r\n            },\r\n            \"categoria\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"Electricista\",\r\n                \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n                \"estado\": true\r\n            }\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/suscripcion/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"suscripcion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/suscripcion/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"suscripcion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/suscripcion/enable/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"suscripcion",
+								"enable",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "galeriaproveedor",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/galeria",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"galeria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/galeria/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"galeria",
+								"custom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": 2,\r\n    \"urlImagen\": \"imagenes/proveedores/gasfitero1_trabajo1.jpg\",\r\n    \"descripcion\": \"Reparación e instalación de tuberías de agua en baño y cocina.\",\r\n    \"fechaSubida\": \"2025-10-09T15:40:00\",\r\n    \"estado\": true,\r\n    \"proveedor\": {\r\n        \"codigo\": 2,\r\n        \"experiencia\": \"8 años de experiencia en gasfitería y mantenimiento del hogar\",\r\n        \"descripcion\": \"Gasfitero técnico con experiencia en instalaciones sanitarias, detección de fugas y reparación de sistemas domésticos. Servicio rápido y garantizado.\",\r\n        \"estado\": true,\r\n        \"usuario\": {\r\n            \"codigo\": 8,\r\n            \"nombre\": \"Luis\",\r\n            \"apellidoPaterno\": \"García\",\r\n            \"apellidoMaterno\": \"Rojas\",\r\n            \"correo\": \"luis.garcia@gmail.com\",\r\n            \"telefono\": \"998745632\",\r\n            \"direccion\": \"Av. San Felipe 1290\",\r\n            \"nroDocumento\": \"74859612\",\r\n            \"fechaNacimiento\": \"1992-03-12\",\r\n            \"clave\": \"$2y$10$hashedpassword045\",\r\n            \"fotoPerfil\": \"imagenes/usuarios/luis_garcia.jpg\",\r\n            \"estado\": true,\r\n            \"fechaRegistro\": \"2025-10-09T12:15:00\",\r\n            \"distrito\": {\r\n                \"codigo\": 14,\r\n                \"nombre\": \"Magdalena del Mar\",\r\n                \"provincia\": \"Lima\",\r\n                \"departamento\": \"Lima\",\r\n                \"estado\": true\r\n            },\r\n            \"rol\": {\r\n                \"codigo\": 3,\r\n                \"nombre\": \"Proveedor\",\r\n                \"estado\": true\r\n            },\r\n            \"tipodocumento\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"DNI\",\r\n                \"estado\": true\r\n            }\r\n        },\r\n        \"categoria\": {\r\n            \"codigo\": 2,\r\n            \"nombre\": \"Gasfitero\",\r\n            \"descripcion\": \"Reparación e instalación de sistemas de agua, desagüe y gas.\",\r\n            \"estado\": true\r\n        }\r\n    }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/galeria",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"galeria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/galeria/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"galeria",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"codigo\": 1,\r\n        \"urlImagen\": \"imagenes/proveedores/electricista1_trabajo1.jpg\",\r\n        \"descripcion\": \"Instalación de tablero eléctrico residencial\",\r\n        \"fechaSubida\": \"2025-10-08T22:55:59\",\r\n        \"estado\": true,\r\n        \"proveedor\": {\r\n            \"codigo\": 1,\r\n            \"experiencia\": \"10 años de experiencia\",\r\n            \"descripcion\": \"Electricista certificado, especializado en instalaciones residenciales y comerciales. Trabajo con garantía.\",\r\n            \"estado\": true,\r\n            \"usuario\": {\r\n                \"codigo\": 6,\r\n                \"nombre\": \"Ana Maria\",\r\n                \"apellidoPaterno\": \"Torres\",\r\n                \"apellidoMaterno\": \"Morales\",\r\n                \"correo\": \"ana.torres@yahoo.com\",\r\n                \"telefono\": \"954321876\",\r\n                \"direccion\": \"Av. Universitaria 2345\",\r\n                \"nroDocumento\": \"70345678\",\r\n                \"fechaNacimiento\": \"1995-11-30\",\r\n                \"clave\": \"$2y$10$hashedpassword012\",\r\n                \"fotoPerfil\": null,\r\n                \"estado\": true,\r\n                \"fechaRegistro\": \"2025-10-08T22:37:15\",\r\n                \"distrito\": {\r\n                    \"codigo\": 17,\r\n                    \"nombre\": \"Los Olivos\",\r\n                    \"provincia\": \"Lima\",\r\n                    \"departamento\": \"Lima\",\r\n                    \"estado\": true\r\n                },\r\n                \"rol\": {\r\n                    \"codigo\": 2,\r\n                    \"nombre\": \"Cliente\",\r\n                    \"estado\": true\r\n                },\r\n                \"tipodocumento\": {\r\n                    \"codigo\": 1,\r\n                    \"nombre\": \"DNI\",\r\n                    \"estado\": true\r\n                }\r\n            },\r\n            \"categoria\": {\r\n                \"codigo\": 1,\r\n                \"nombre\": \"Electricista\",\r\n                \"descripcion\": \"Instalación, reparación y mantenimiento de sistemas eléctricos residenciales y comerciales\",\r\n                \"estado\": true\r\n            }\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/arreglago/galeria/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"galeria",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/galeria/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"galeria",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enable",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8899/arreglago/galeria/enable/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"arreglago",
+								"galeria",
+								"enable",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

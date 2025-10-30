@@ -1,0 +1,33 @@
+package pe.com.arreglago.webconfig;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class SecurityConfig {
+	@Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/","/inicio","/menuprincipal","login-opciones","/profesional-registro","/profesional/**","/css/**","/js/**","/images/**","/static/**").permitAll() // rutas públicas
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/cliente/**").hasRole("CLIENTE")
+                .requestMatchers("/profesional/**").hasRole("PROFESIONAL")
+                .anyRequest().authenticated()
+            )
+            .formLogin(login -> login
+                .loginPage("/login") // tu página personalizada
+                .defaultSuccessUrl("/menuprincipal", true)
+                .permitAll()
+            )
+            .logout(logout -> logout
+            		.logoutUrl("/logout")
+            	    .logoutSuccessUrl("/menuprincipal")
+            		.permitAll())
+            .csrf(csrf -> csrf.disable()); // desactiva CSRF para pruebas. En producción lo habilitas para evitar ataques de falsificación de peticiones.
+
+        return http.build();
+    }
+}

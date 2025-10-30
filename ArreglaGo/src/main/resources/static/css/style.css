@@ -1,0 +1,372 @@
+   /* =========================================================
+   🎨 ESTILOS GLOBALES - ARREGLAGO
+   Ubicación: src/main/resources/static/css/style.css
+   ========================================================= */
+
+/* ------------------------------
+   🔹 VARIABLES DE COLOR Y FUENTE
+   ------------------------------ */
+:root {
+    --brand-color: #3887B6;
+    --brand-hover: #2f739a;
+    --orange-color: #ff7b00;
+    --orange-hover: #e96e00;
+    --dark-color: #212529;
+    --light-bg: #f8f9fa;
+    --font-family: 'Inter', sans-serif;
+}
+
+/* ------------------------------
+   🔹 CONFIGURACIÓN GLOBAL
+   ------------------------------ */
+body {
+    font-family: var(--font-family);
+    color: var(--dark-color);
+    background-color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ------------------------------
+   🔹 NAVBAR
+   ------------------------------ */
+.navbar {
+    transition: all 0.3s ease;
+}
+
+.navbar-brand img {
+    width: 65px;
+    height: 65px;
+    transition: transform 0.2s ease;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+.navbar-brand span {
+    color: var(--brand-color);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: var(--brand-hover) !important;
+}
+
+.dropdown-menu {
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ------------------------------
+   🔹 BOTONES
+   ------------------------------ */
+.btn {
+    white-space: nowrap;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.btn-custom {
+    background-color: var(--brand-color);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.8rem;
+    font-weight: 500;
+}
+
+.btn-custom:hover {
+    background-color: var(--brand-hover);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.btn-orange {
+    background-color: var(--orange-color);
+    color: #fff;
+    border: none;
+}
+
+.btn-orange:hover {
+    background-color: var(--orange-hover);
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--dark-color);
+    color: #fff;
+}
+
+/* ------------------------------
+   🔹 HERO (BANNER PRINCIPAL)
+   ------------------------------ */
+.hero {
+    height: 90vh;
+    background: url('/images/hero-bg.jpg') center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero h1,
+.hero p {
+    position: relative;
+    z-index: 2;
+}
+
+/* ------------------------------
+   🔹 CATEGORÍAS
+   ------------------------------ */
+.categories h2 {
+    color: var(--brand-color);
+}
+
+.category-card {
+    transition: all 0.25s ease;
+    background-color: #fff;
+    border-radius: 1rem;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    background-color: var(--light-bg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ------------------------------
+   🔹 PROFESIONALES DESTACADOS
+   ------------------------------ */
+.card {
+    border-radius: 1rem;
+}
+
+.card img {
+    object-fit: cover;
+    height: 250px;
+}
+
+.card-title {
+    color: var(--brand-color);
+    font-weight: 600;
+}
+
+/* ------------------------------
+   🔹 SECCIÓN "CÓMO FUNCIONA"
+   ------------------------------ */
+.how-it-works h2 {
+    color: var(--brand-color);
+}
+
+.how-it-works i {
+    color: var(--brand-color);
+    transition: transform 0.2s ease;
+}
+
+.how-it-works i:hover {
+    transform: scale(1.1);
+}
+
+/* ------------------------------
+   🔹 TESTIMONIOS
+   ------------------------------ */
+.testimonials h2 {
+    color: var(--brand-color);
+}
+
+.testimonial {
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+}
+
+/* ------------------------------
+   🔹 FOOTER
+   ------------------------------ */
+.footer {
+    background-color: var(--dark-color);
+    color: #fff;
+}
+
+.footer a {
+    color: #fff;
+    transition: opacity 0.2s ease;
+}
+
+.footer a:hover {
+    opacity: 0.7;
+}
+
+/* ------------------------------
+   🔹 UTILIDADES
+   ------------------------------ */
+.text-brand {
+    color: var(--brand-color) !important;
+}
+
+.bg-brand {
+    background-color: var(--brand-color) !important;
+}
+
+.rounded-4 {
+    border-radius: 1rem !important;
+}
+
+/* ------------------------------
+   🔹 RESPONSIVE
+   ------------------------------ */
+@media (max-width: 768px) {
+    .navbar-brand img {
+        width: 55px;
+        height: 55px;
+    }
+
+    .hero {
+        height: 70vh;
+    }
+
+    .btn-custom {
+        padding: 0.5rem 1.2rem;
+    }
+}
+
+/* Botón scroll-to-top */
+.scroll-top-btn {
+    background-color: var(--brand-color);
+    color: #fff;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-top-btn:hover {
+    background-color: var(--brand-hover);
+    transform: translateY(-3px);
+}
+
+/* Animación de aparición suave */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+    will-change: opacity, transform;
+}
+
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================================
+   🎠 HERO CON CARRUSEL DE IMÁGENES
+   ========================================================= */
+#heroCarousel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+#heroCarousel .carousel-item {
+    height: 100%;
+}
+
+#heroCarousel .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(60%);
+    transition: transform 8s ease-in-out;
+}
+
+#heroCarousel .carousel-item.active img {
+    transform: scale(1.05);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+#heroCarousel .carousel-control-prev,
+#heroCarousel .carousel-control-next {
+    width: 5%;
+    z-index: 3;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+#heroCarousel .carousel-control-prev:hover,
+#heroCarousel .carousel-control-next:hover {
+    opacity: 1;
+}
+
+#heroCarousel .carousel-indicators [data-bs-target] {
+    background-color: #fff;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+#heroCarousel .carousel-indicators .active {
+    background-color: var(--orange-color);
+    opacity: 1;
+}
+
+/* ------------------------------
+   🔹 MODAL DE LOGIN
+   ------------------------------ */
+.modal-content {
+    border-radius: 1.5rem !important;
+    animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header h5 {
+    font-size: 1.5rem;
+}
+
+.modal-body .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+
+

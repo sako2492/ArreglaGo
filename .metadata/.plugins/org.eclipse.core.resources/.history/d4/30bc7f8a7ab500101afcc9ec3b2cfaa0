@@ -1,0 +1,67 @@
+package pe.com.arreglago.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import pe.com.arreglago.entity.*;
+import pe.com.arreglago.service.*;
+
+@Controller
+public class AdministradorController {
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private AdministradorService administradorService;
+
+    @Autowired
+    private TipoDocumentoService tipoDocumentoService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    // ==========================
+    // FORMULARIO DE REGISTRO
+    // ==========================
+    @GetMapping("/administrador/registro")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("usuario", new UsuarioEntity());
+        model.addAttribute("tiposdocumento", tipoDocumentoService.findAllCustom());
+        return "administrador-registro";
+    }
+
+    // ==========================
+    // PROCESAR REGISTRO
+    // ==========================
+    @PostMapping("/administrador/registro")
+    public String registrarAdministrador(@ModelAttribute UsuarioEntity usuario) {
+
+        usuario.setClave(passwordEncoder.encode(usuario.getClave()));
+        usuario.setEstado(true);
+
+        // 🔹 Asignar rol ADMINISTRADOR
+        RolEntity rolAdmin = new RolEntity();
+        rolAdmin.setCodigo(1L); // 1 = ADMINISTRADOR (ajusta según tu tabla)
+        usuario.setRol(rolAdmin);
+
+        // 🔹 Recuperar tipo de documento desde la BD
+        Long idTipoDoc = usuario.getTipodocumento().getCodigo();
+        TipoDocumentoEntity tipoDoc = tipoDocumentoService.findById(idTipoDoc);
+        usuario.setTipodocumento(tipoDoc);
+
+        // 🔹 Guardar usuario primero
+        UsuarioEntity nuevoUsuario = usuarioService.add(usuario);
+
+        // 🔹 Crear administrador asociado
+        AdministradorEntity admin = new AdministradorEntity();
+        admin.setUsuario(nuevoUsuario);
+        admin.setEstado(true);
+        administradorService.add(admin);
+
+        return "redirect:/login-opciones";
+    }
+}
