@@ -1,0 +1,27 @@
+package pe.com.arreglago.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import pe.com.arreglago.entity.ResenaEntity;
+import pe.com.arreglago.repository.ResenaRepository;
+import pe.com.arreglago.service.ResenaService;
+
+@Service
+public class ResenaServiceImpl implements ResenaService {
+
+    @Autowired
+    private ResenaRepository resenaRepository;
+
+    @Override
+    public List<ResenaEntity> listarPorProveedor(Long idProveedor) {
+        return resenaRepository.findByProveedorCodigo(idProveedor);
+    }
+
+    @Override
+    public ResenaEntity agregar(ResenaEntity r) {
+        return resenaRepository.save(r);
+    }
+}

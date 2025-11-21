@@ -1,15 +1,25 @@
 package pe.com.arreglago.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 import pe.com.arreglago.entity.UsuarioEntity;
 import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.entity.ResenaEntity;
 import pe.com.arreglago.entity.RolEntity;
 import pe.com.arreglago.entity.DistritoEntity;
 import pe.com.arreglago.entity.TipoDocumentoEntity;
@@ -19,6 +29,7 @@ import pe.com.arreglago.service.ProveedorService;
 import pe.com.arreglago.service.CategoriaService;
 import pe.com.arreglago.service.DistritoService;
 import pe.com.arreglago.service.TipoDocumentoService;
+import pe.com.arreglago.service.ResenaService;
 
 @Controller
 public class ProfesionalController {
@@ -38,9 +49,13 @@ public class ProfesionalController {
     @Autowired
     private TipoDocumentoService tipoDocumentoService;
 
-    // ==========================
-    // FORMULARIO DE REGISTRO
-    // ==========================
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private ResenaService resenaService;
+
+
     @GetMapping("/profesional/registro")
     public String mostrarFormulario(Model model) {
         model.addAttribute("usuario", new UsuarioEntity());
@@ -49,48 +64,119 @@ public class ProfesionalController {
         model.addAttribute("tiposdocumento", tipoDocumentoService.findAllCustom());
         return "profesional-registro";
     }
+    
+    /* =====================================================
+    🔹 PUNTO 2 — Ver perfil del profesional
+    ===================================================== */
+ @GetMapping("/profesional/{id}")
+ public String verPerfilProfesional(@PathVariable Long id, Model model) {
 
-    // ==========================
-    // PROCESAR EL REGISTRO
-    // ==========================
+     // Obtener proveedor por ID
+     ProveedorEntity proveedor = proveedorService.findById(id);
+
+     if (proveedor == null) {
+         return "redirect:/"; // por si no existe
+     }
+
+     // Usuario del proveedor
+     UsuarioEntity usuario = proveedor.getUsuario();
+
+     // ⭐ Rating promedio
+     Double promedio = resenaService.promedioPorProveedor(id);
+
+     // ⭐ Lista de reseñas
+     List<ResenaEntity> resenas = resenaService.listarPorProveedor(id);
+
+     // Enviar datos a la vista
+     model.addAttribute("proveedor", proveedor);
+     model.addAttribute("usuario", usuario);
+     model.addAttribute("promedio", promedio);
+     model.addAttribute("resenas", resenas);
+
+     return "profesional-detalle";
+ }
+
+
+    /* =====================================================
+       🔹 PUNTO 4 — Método para procesar y redimensionar foto
+       ===================================================== */
+ private String procesarImagen(MultipartFile archivo) throws IOException {
+
+	    if (archivo == null || archivo.isEmpty()) {
+	        return "/images/default-profile.png"; // imagen interna por defecto
+	    }
+
+	    // 📁 Carpeta externa real
+	    String carpeta = "C:/arreglago/images/";
+
+	    String original = archivo.getOriginalFilename().replace(" ", "_");
+	    String nombre = System.currentTimeMillis() + "_" + original;
+
+	    File destino = new File(carpeta + nombre);
+	    destino.getParentFile().mkdirs();
+
+	    Thumbnails.of(archivo.getInputStream())
+	            .size(600, 600)
+	            .keepAspectRatio(true)
+	            .toFile(destino);
+
+	    // ✅ IMPORTANTE: URL PÚBLICA CORRECTA
+	    return "/usuarios/" + nombre;
+	}
+
+
+
+    /* =====================================================
+       🔹 PUNTO 5 — Integración del resize en el registro
+       ===================================================== */
     @PostMapping("/profesional/registro")
     public String registrarProfesional(
             @ModelAttribute UsuarioEntity usuario,
             @RequestParam String experiencia,
             @RequestParam String descripcion,
-            @RequestParam Long idCategoria) {
+            @RequestParam Long idCategoria,
+            @RequestParam("foto") MultipartFile foto,
+            Model model) {
 
-        // 🔹 Recuperar las relaciones desde BD
-        Long idDistrito = usuario.getDistrito().getCodigo();
-        Long idTipoDoc = usuario.getTipodocumento().getCodigo();
+        try {
+            Long idDistrito = usuario.getDistrito().getCodigo();
+            Long idTipoDoc = usuario.getTipodocumento().getCodigo();
 
-        DistritoEntity distrito = distritoService.findById(idDistrito);
-        TipoDocumentoEntity tipoDocumento = tipoDocumentoService.findById(idTipoDoc);
-        CategoriaEntity categoria = categoriaService.findById(idCategoria);
+            DistritoEntity distrito = distritoService.findById(idDistrito);
+            TipoDocumentoEntity tipoDocumento = tipoDocumentoService.findById(idTipoDoc);
+            CategoriaEntity categoria = categoriaService.findById(idCategoria);
 
-        // 🔹 Asignar las relaciones al usuario
-        usuario.setDistrito(distrito);
-        usuario.setTipodocumento(tipoDocumento);
+            usuario.setDistrito(distrito);
+            usuario.setTipodocumento(tipoDocumento);
 
-        // 🔹 Asignar rol profesional (ajusta el ID según tu tabla rol)
-        RolEntity rol = new RolEntity();
-        rol.setCodigo(3L); // Ejemplo: 3 = PROFESIONAL
-        usuario.setRol(rol);
+            RolEntity rol = new RolEntity();
+            rol.setCodigo(3L); // PROFESIONAL
+            usuario.setRol(rol);
 
-        usuario.setEstado(true);
-        usuarioService.add(usuario);
+            usuario.setEstado(true);
+            usuario.setClave(passwordEncoder.encode(usuario.getClave()));
 
-        // 🔹 Crear y vincular proveedor (profesional)
-        ProveedorEntity proveedor = new ProveedorEntity();
-        proveedor.setUsuario(usuario);
-        proveedor.setCategoria(categoria);
-        proveedor.setDescripcion(descripcion);
-        proveedor.setExperiencia(experiencia);
-        proveedor.setEstado(true);
+            /* 📌 Procesar imagen */
+            String rutaImagen = procesarImagen(foto);
+            usuario.setFotoPerfil(rutaImagen);
 
-        proveedorService.add(proveedor);
+            UsuarioEntity nuevoUsuario = usuarioService.add(usuario);
 
-        // 🔹 Redirigir a página de confirmación o login
-        return "redirect:/login-opciones";
+            ProveedorEntity proveedor = new ProveedorEntity();
+            proveedor.setUsuario(nuevoUsuario);
+            proveedor.setCategoria(categoria);
+            proveedor.setDescripcion(descripcion);
+            proveedor.setExperiencia(experiencia);
+            proveedor.setEstado(true);
+
+            proveedorService.add(proveedor);
+
+            return "redirect:/login-opciones";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Error al registrar profesional");
+            return "profesional-registro";
+        }
     }
 }

@@ -1,5 +1,0 @@
-package pe.com.arreglago.service;
-
-public interface AdministradorService {
-
-}

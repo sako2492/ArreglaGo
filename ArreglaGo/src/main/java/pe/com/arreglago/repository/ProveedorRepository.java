@@ -9,6 +9,10 @@ import pe.com.arreglago.entity.ProveedorEntity;
 
 public interface ProveedorRepository extends JpaRepository<ProveedorEntity, Long>  {
 
-	@Query("select p from ProveedorEntity p where p.estado = true")
-	List<ProveedorEntity> findAllCustom();
+    @Query("select p from ProveedorEntity p where p.estado = true")
+    List<ProveedorEntity> findAllCustom();
+
+    // 🔹 proveedores por categoría (solo activos)
+    @Query("select p from ProveedorEntity p where p.estado = true and p.categoria.codigo = :idCategoria")
+    List<ProveedorEntity> findByCategoria(Long idCategoria);
 }

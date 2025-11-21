@@ -5,25 +5,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginController {
-	 // 🔹 Página de selección de tipo de usuario
-    @GetMapping("/login-opciones")
-    public String mostrarOpcionesLogin() {
-        return "login-opciones"; // busca en src/main/resources/templates/login-opciones.html
+
+    // Página de login que usará Spring Security
+    @GetMapping("/login")
+    public String login() {
+        return "index";   // index.html
     }
 
-    // 🔹 (Opcional) Vistas para cada tipo de login
+    // Página de selección de tipo de registro
+    @GetMapping("/login-opciones")
+    public String mostrarOpcionesLogin() {
+        return "login-opciones";
+    }
+
     @GetMapping("/login-profesional")
     public String loginProfesional() {
-        return "login-profesional"; // puedes crear esta plantilla después
+        return "login-profesional";
     }
 
     @GetMapping("/login-cliente")
     public String loginCliente() {
-        return "login-cliente"; // puedes crear esta plantilla después
+        return "login-cliente";
     }
 
     @GetMapping("/login-admin")
     public String loginAdmin() {
-        return "login-admin"; // puedes crear esta plantilla después
+        return "login-admin";
     }
 }

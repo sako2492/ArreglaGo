@@ -9,33 +9,54 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-	@Bean
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/","/inicio","/menuprincipal","/login-opciones","profesional-registro",
-                		"cliente-registro","administrador-registro","/profesional/registro","/cliente/registro","/profesional/**",
-                		"/cliente/**","/administrador/registro", "/administrador/**","/css/**","/js/**","/images/**","/static/**").permitAll() // rutas públicas
- //             .requestMatchers("/admin/**").hasRole("ADMIN")
- //             .requestMatchers("/cliente/**").hasRole("CLIENTE")
- //             .requestMatchers("/profesional/**").hasRole("PROFESIONAL")
-                .anyRequest().authenticated()
+                .requestMatchers(
+
+                    // === PÁGINAS PÚBLICAS ===
+                    "/", 
+                    "/inicio",
+                    "/menuprincipal",
+                    "/login-opciones",
+                    "/profesional/registro",
+                    "/cliente/registro",
+                    "/administrador/registro",
+                    "/categoria/**",
+                    "/proveedores/**",
+
+                    // === RECURSOS ESTÁTICOS ===
+                    "/css/**",
+                    "/js/**",
+                    "/images/**",
+                    "/static/**",
+                    "/favicon.ico"
+
+                ).permitAll()
+
+                .anyRequest().permitAll() // TODO público por ahora
             )
-            .formLogin(login -> login
-                .loginPage("/login") // tu página personalizada
-                .defaultSuccessUrl("/menuprincipal", true)
+
+            .csrf(csrf -> csrf.disable())
+
+            // USAMOS login-opciones COMO PÁGINA DE LOGIN
+            .formLogin(form -> form
+                .loginPage("/login-opciones")
                 .permitAll()
             )
+
             .logout(logout -> logout
-            		.logoutUrl("/logout")
-            	    .logoutSuccessUrl("/menuprincipal")
-            		.permitAll())
-            .csrf(csrf -> csrf.disable()); // desactiva CSRF para pruebas. En producción lo habilitas para evitar ataques de falsificación de peticiones.
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/menuprincipal")
+                .permitAll()
+            );
 
         return http.build();
     }
-	
-	// Bean para encriptar contraseñas con BCrypt
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil Profesional</title>
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${usuario.nombre} + ' ' + ${usuario.apellidoPaterno}"></title>
+
+```
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+
+<style>
+    body {
+        background: #f5f7fa;
+        padding-top: 140px;
+    }
+
+    .perfil-container {
+        max-width: 900px;
+    }
+
+    .perfil-foto {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin: auto;
+        display: block;
+        border: 5px solid #fff;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+
+    .perfil-card {
+        border-radius: 1rem;
+        padding: 30px;
+    }
+
+    .rating {
+        font-size: 1.2rem;
+        color: #f5a623;
+    }
+
+    .info-item {
+        background: #ffffff;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
+</style>
+```
+
+</head>
+<body>
+
+<div class="container perfil-container">
+<div class="card perfil-card shadow-lg">
+    <div class="text-center">
+
+        <img th:src="${usuario.fotoPerfil != null} ? @{${usuario.fotoPerfil}} : '@{/images/default-profile.png}'"
+             class="perfil-foto"
+             alt="Foto profesional">
+
+        <h2 class="fw-bold mt-3"
+            th:text="${usuario.nombre} + ' ' + ${usuario.apellidoPaterno} + ' ' + ${usuario.apellidoMaterno}">
+            Nombre Profesional
+        </h2>
+
+        <span class="badge bg-primary fs-6"
+              th:text="${proveedor.categoria.nombre}">
+        </span>
+
+        <div class="rating mt-2">
+            ⭐ <span th:text="${#numbers.formatDecimal(promedio,1,1)}">0.0</span> / 5
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="info-item">
+                <strong>Experiencia:</strong>
+                <p th:text="${proveedor.experiencia}"></p>
+            </div>
+
+            <div class="info-item">
+                <strong>Descripción:</strong>
+                <p th:text="${proveedor.descripcion}"></p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="info-item">
+                <strong>Email:</strong>
+                <p th:text="${usuario.correo}"></p>
+            </div>
+
+            <div class="info-item">
+                <strong>Teléfono:</strong>
+                <p th:text="${usuario.telefono}"></p>
+            </div>
+
+            <div class="info-item">
+                <strong>Dirección:</strong>
+                <p th:text="${usuario.direccion}"></p>
+            </div>
+
+            <div class="info-item">
+                <strong>Distrito:</strong>
+                <p th:text="${usuario.distrito.nombre}"></p>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <h4 class="fw-bold mb-3">Reseñas de clientes</h4>
+
+    <div th:if="${resenas != null and !resenas.isEmpty()}">
+        <div class="list-group">
+            <div class="list-group-item" th:each="r : ${resenas}">
+                <strong>
+                    ⭐ <span th:text="${r.calificacion}"></span>/5
+                </strong>
+                <p th:text="${r.comentario}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${resenas == null or resenas.isEmpty()}" class="alert alert-info">
+        Este profesional aún no tiene reseñas.
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="javascript:history.back()" class="btn btn-outline-primary px-4">
+            ← Volver
+        </a>
+    </div>
+
+</div>
+```
+
+</div>
+
+</body>
+</html>

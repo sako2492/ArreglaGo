@@ -8,6 +8,7 @@ public interface ProveedorService {
 
 	List<ProveedorEntity> findAll();
 	List<ProveedorEntity> findAllCustom();
+	List<ProveedorEntity> findByCategoria(Long idCategoria);
 	ProveedorEntity findById(Long id); 
 	ProveedorEntity add(ProveedorEntity obj); 
 	ProveedorEntity update(ProveedorEntity obj, Long id); 

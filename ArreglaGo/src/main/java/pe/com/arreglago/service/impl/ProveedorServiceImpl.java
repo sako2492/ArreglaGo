@@ -2,16 +2,15 @@ package pe.com.arreglago.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.exception.ResourceNotFoundException;
 import pe.com.arreglago.repository.ProveedorRepository;
 import pe.com.arreglago.service.ProveedorService;
 
 @Service
-
 public class ProveedorServiceImpl implements ProveedorService{
 
 	@Autowired
@@ -29,33 +28,49 @@ public class ProveedorServiceImpl implements ProveedorService{
 
 	@Override
 	public ProveedorEntity findById(Long id) {
-		return repositorio.findById(id).get();
+	    return repositorio.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado: " + id));
 	}
-
+	
+	@Override
+    public List<ProveedorEntity> findByCategoria(Long idCategoria) {
+        return repositorio.findByCategoria(idCategoria);
+    }
+	
 	@Override
 	public ProveedorEntity add(ProveedorEntity obj) {
+		obj.setEstado(true);
 		return repositorio.save(obj);
 	}
 
 	@Override
 	public ProveedorEntity update(ProveedorEntity obj, Long id) {
-		ProveedorEntity objproveedor = repositorio.findById(id).get();
-		BeanUtils.copyProperties(obj, objproveedor, "codigo");
-		return repositorio.save(objproveedor);
+	    ProveedorEntity existing = repositorio.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado: " + id));
+
+	    // Solo copiamos los atributos reales del Proveedor
+	    existing.setDescripcion(obj.getDescripcion());
+	    existing.setExperiencia(obj.getExperiencia());
+	    existing.setCategoria(obj.getCategoria());
+
+	    return repositorio.save(existing);
 	}
 
 	@Override
 	public ProveedorEntity delete(Long id) {
-		ProveedorEntity objproveedor = repositorio.findById(id).get();
-		objproveedor.setEstado(false);
-		return null;
+	    ProveedorEntity existing = repositorio.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado: " + id));
+
+	    existing.setEstado(false);
+	    return repositorio.save(existing);
 	}
 
 	@Override
 	public ProveedorEntity enable(Long id) {
-		ProveedorEntity objproveedor = repositorio.findById(id).get();
-		objproveedor.setEstado(true);
-		return null;
-	}
+	    ProveedorEntity existing = repositorio.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("Proveedor no encontrado: " + id));
 
+	    existing.setEstado(true);
+	    return repositorio.save(existing);
+	}
 }

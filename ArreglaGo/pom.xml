@@ -97,6 +97,20 @@
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
+        
+        <!-- Dependencia Thumbnailator para manejar imagenes-->
+        <dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.19</version>
+		</dependency>
+		
+		<!-- Compatibilidad con Java 17/21 -->
+		<dependency>
+		    <groupId>com.twelvemonkeys.imageio</groupId>
+		    <artifactId>imageio-jpeg</artifactId>
+		    <version>3.10.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

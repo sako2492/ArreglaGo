@@ -48,7 +48,7 @@ public class ContratacionServiceImpl implements ContratacionService{
 	public ContratacionEntity delete(Long id) {
 	    ContratacionEntity objcontratacion = repositorio.findById(id).orElse(null);
 	    if (objcontratacion != null) {
-	        objcontratacion.setEstado("terminado");
+	        objcontratacion.setEstado("finalizado");
 	        return repositorio.save(objcontratacion);
 	    }
 	    return null;

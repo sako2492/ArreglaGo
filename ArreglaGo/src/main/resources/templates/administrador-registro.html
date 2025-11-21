@@ -3,29 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro de Administrador</title>
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            padding-top: 100px !important;
+            padding-bottom: 100px !important;
+        }
+    </style>
 </head>
 <body class="bg-light">
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3 fixed-top">
+    <div class="container">
+
+        <a class="navbar-brand d-flex align-items-center fw-bold brand-color me-3" th:href="@{/}">
+            <img th:src="@{/images/logo.png}" alt="Logo ArreglaGo" width="80" height="80"
+                 onerror="this.src='/images/logo-fallback.png'">
+            <span class="fs-4 ms-2">ArreglaGo</span>
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+            <span class="bi bi-list fs-1"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+
+            <form class="d-flex mx-auto w-50">
+                <div class="input-group">
+                    <input type="search" name="q" class="form-control" placeholder="Buscar servicios o profesionales">
+                    <button class="btn btn-custom"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link brand-color" th:href="@{/menuprincipal}">Inicio</a></li>
+
+                <!-- TEMPORAL - CATEGORÍAS HARDCODED -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle brand-color" href="#" data-bs-toggle="dropdown">Categorías</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Electricista</a></li>
+                        <li><a class="dropdown-item" href="#">Técnico de Gas</a></li>
+                        <li><a class="dropdown-item" href="#">Gasfitero</a></li>
+                        <li><a class="dropdown-item" href="#">Cerrajero</a></li>
+                        <li><a class="dropdown-item" href="#">Pintor</a></li>
+                        <li><a class="dropdown-item" href="#">Carpintero</a></li>
+                        <li><a class="dropdown-item" href="#">Técnico de Refrigeración</a></li>
+                        <li><a class="dropdown-item" href="#">Técnico de Electrodomésticos</a></li>
+                        <li><a class="dropdown-item" href="#">Técnico de Computadoras</a></li>
+                        <li><a class="dropdown-item" href="#">Albañil</a></li>
+                        <li><a class="dropdown-item" href="#">Soldador</a></li>
+                        <li><a class="dropdown-item" href="#">Instalador de Drywall</a></li>
+                        <li><a class="dropdown-item" href="#">Vidrieros</a></li>
+                        <li><a class="dropdown-item" href="#">Jardinero</a></li>
+                        <li><a class="dropdown-item" href="#">Técnico de Televisores</a></li>
+                        <li><a class="dropdown-item" href="#">Fumigador</a></li>
+                        <li><a class="dropdown-item" href="#">Tapicero</a></li>
+                        <li><a class="dropdown-item" href="#">Instalador de pisos</a></li>
+                        <li><a class="dropdown-item" href="#">Limpieza</a></li>    
+                    </ul>
+                </li>
+
+                <li class="nav-item ms-3">
+                    <a class="btn btn-custom" th:href="@{/registro}">
+                        <i class="bi bi-plus-circle me-1"></i> Publicar servicio
+                    </a>
+                </li>
+
+                <li class="nav-item ms-3">
+                    <a class="btn btn-outline-dark px-3 py-2" th:href="@{/login-opciones}">
+                        <i class="bi bi-person-circle me-1"></i> Iniciar sesión
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<!-- ================= FORMULARIO ================= -->
 <div class="container mt-5 p-4 bg-white rounded shadow">
     <h2 class="text-center mb-4">Registro de Administrador</h2>
 
     <form th:action="@{/administrador/registro}" method="post" th:object="${usuario}">
+
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label>Nombre:</label>
                 <input type="text" class="form-control" th:field="*{nombre}" required>
             </div>
+
             <div class="col-md-4 mb-3">
                 <label>Apellido Paterno:</label>
                 <input type="text" class="form-control" th:field="*{apellidoPaterno}" required>
             </div>
+
             <div class="col-md-4 mb-3">
                 <label>Apellido Materno:</label>
                 <input type="text" class="form-control" th:field="*{apellidoMaterno}" required>
             </div>
         </div>
 
-         <div class="mb-3">
+        <div class="mb-3">
             <label>Fecha de nacimiento:</label>
             <input type="date" class="form-control" th:field="*{fechaNacimiento}" required>
         </div>
@@ -33,12 +124,13 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label>Tipo de Documento:</label>
-                <select class="form-select" th:field="*{tipodocumento}" required>
-                    <option th:each="t : ${tiposdocumento}"
-                            th:value="${t.codigo}"
-                            th:text="${t.nombre}">
-                    </option>
-                </select>
+                    <select class="form-select" th:field="*{tipodocumento}" required>
+                        <option value="" disabled selected>Seleccione...</option>
+                        <option th:each="t : ${tiposdocumento}"
+                                th:value="${t}"
+                                th:text="${t.nombre}">
+                        </option>
+                    </select>
             </div>
 
             <div class="col-md-6 mb-3">
@@ -47,11 +139,13 @@
             </div>
         </div>
 
+
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label>Correo:</label>
                 <input type="email" class="form-control" th:field="*{correo}" required>
             </div>
+
             <div class="col-md-6 mb-3">
                 <label>Contraseña:</label>
                 <input type="password" class="form-control" th:field="*{clave}" required>
@@ -67,11 +161,11 @@
             <div class="col-md-6 mb-3">
                 <label>Distrito:</label>
                 <select class="form-select" th:field="*{distrito}" required>
-                <option value="" disabled selected>Seleccione su distrito</option>
-                <option th:each="d : ${distritos}"
-                        th:value="${d.codigo}"
-                        th:text="${d.nombre}">
-                </option>
+                    <option value="" disabled selected>Seleccione su distrito</option>
+                    <option th:each="d : ${distritos}"
+                            th:value="${d}"
+                            th:text="${d.nombre}">
+                    </option>
                 </select>
             </div>
 
@@ -81,9 +175,10 @@
             </div>
         </div>
 
+        <button type="submit" class="btn btn-outline-dark w-100">Registrar Administrador</button>
 
-        <button type="submit" class="btn btn-primary w-100">Registrar Administrador</button>
     </form>
 </div>
+
 </body>
 </html>

@@ -1,0 +1,94 @@
+package pe.com.arreglago.controller;
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import pe.com.arreglago.entity.ServicioEntity;
+import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.service.ServicioService;
+import pe.com.arreglago.service.ProveedorService;
+import pe.com.arreglago.service.CategoriaService;
+
+@Controller
+public class ServicioController {
+
+    @Autowired
+    private ServicioService servicioService;
+
+    @Autowired
+    private ProveedorService proveedorService;
+
+    @Autowired
+    private CategoriaService categoriaService;
+
+    // Lista pública de servicios
+    @GetMapping({"/servicios","/servicio/listar"})
+    public String listarServicios(Model model) {
+        List<ServicioEntity> servicios = servicioService.findAllCustom();
+        model.addAttribute("servicios", servicios);
+        return "servicio-listar";
+    }
+
+    // Formulario creación
+    @GetMapping("/servicio/nuevo")
+    public String mostrarFormularioCrear(Model model) {
+        model.addAttribute("servicio", new ServicioEntity());
+        // si quieres que el proveedor sea el actual logueado, reemplaza esta lista por el proveedor actual
+        model.addAttribute("proveedores", proveedorService.findAllCustom());
+        model.addAttribute("categorias", categoriaService.findAllCustom());
+        return "servicio-form";
+    }
+
+    // Guardar nuevo servicio
+    @PostMapping("/servicio/guardar")
+    public String guardarServicio(@ModelAttribute("servicio") ServicioEntity servicio,
+                                 @RequestParam Long idProveedor,
+                                 BindingResult result,
+                                 Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("proveedores", proveedorService.findAllCustom());
+            model.addAttribute("categorias", categoriaService.findAllCustom());
+            return "servicio-form";
+        }
+
+        ProveedorEntity proveedor = proveedorService.findById(idProveedor);
+        servicio.setProveedor(proveedor);
+        servicio.setEstado(true);
+        // fechaPublicacion se setea con @PrePersist en la entidad (si está)
+        servicioService.add(servicio);
+
+        return "redirect:/servicios";
+    }
+
+    // Editar (form)
+    @GetMapping("/servicio/editar/{id}")
+    public String mostrarEditar(@PathVariable Long id, Model model) {
+        ServicioEntity s = servicioService.findById(id);
+        model.addAttribute("servicio", s);
+        model.addAttribute("proveedores", proveedorService.findAllCustom());
+        model.addAttribute("categorias", categoriaService.findAllCustom());
+        return "servicio-form";
+    }
+
+    // Eliminar lógico
+    @GetMapping("/servicio/eliminar/{id}")
+    public String eliminar(@PathVariable Long id) {
+        servicioService.delete(id);
+        return "redirect:/servicios";
+    }
+
+    // Ver detalle
+    @GetMapping("/servicio/{id}")
+    public String verDetalle(@PathVariable Long id, Model model) {
+        ServicioEntity s = servicioService.findById(id);
+        model.addAttribute("servicio", s);
+        return "servicio-detalle";
+    }
+}

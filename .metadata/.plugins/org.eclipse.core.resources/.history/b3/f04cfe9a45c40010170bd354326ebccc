@@ -1,0 +1,109 @@
+package pe.com.arreglago.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.entity.UsuarioEntity;
+import pe.com.arreglago.repository.ProveedorRepository;
+import pe.com.arreglago.service.ProveedorService;
+
+@Service
+
+public class ProveedorServiceImpl implements ProveedorService{
+
+	@Autowired
+	private ProveedorRepository repositorio;
+	
+	@Override
+	public List<ProveedorEntity> findAll() {
+		return repositorio.findAll();
+	}
+
+	@Override
+	public List<ProveedorEntity> findAllCustom() {
+		return repositorio.findAllCustom();
+	}
+
+	@Override
+	public ProveedorEntity findById(Long id) {
+		return repositorio.findById(id).orElse(null);
+	}
+
+	@Override
+	public ProveedorEntity add(ProveedorEntity obj) {
+		obj.setEstado(true);
+		return repositorio.save(obj);
+	}
+
+	@Override
+	public ProveedorEntity update(ProveedorEntity obj, Long id) {
+
+	    ProveedorEntity existing = repositorio.findById(id).orElse(null);
+
+	    if (existing == null) {
+	        return null; // o throw new RuntimeException("Proveedor no encontrado");
+	    }
+
+	    // ======================================
+	    // 1. Actualizar datos del PROVEEDOR
+	    // ======================================
+	    existing.setExperiencia(obj.getExperiencia());
+	    existing.setDescripcion(obj.getDescripcion());
+	    existing.setCategoria(obj.getCategoria());
+
+	    // ======================================
+	    // 2. Actualizar datos del USUARIO
+	    // ======================================
+	    UsuarioEntity oldUser = existing.getUsuario();
+	    UsuarioEntity newUser = obj.getUsuario();
+
+	    if (oldUser != null && newUser != null) {
+
+	        oldUser.setNombre(newUser.getNombre());
+	        oldUser.setApellidoPaterno(newUser.getApellidoPaterno());
+	        oldUser.setApellidoMaterno(newUser.getApellidoMaterno());
+	        oldUser.setCorreo(newUser.getCorreo());
+	        oldUser.setTelefono(newUser.getTelefono());
+	        oldUser.setDireccion(newUser.getDireccion());
+	        oldUser.setNroDocumento(newUser.getNroDocumento());
+	        oldUser.setFechaNacimiento(newUser.getFechaNacimiento());
+	        oldUser.setFotoPerfil(newUser.getFotoPerfil());
+	        
+	        // Relaciones
+	        oldUser.setDistrito(newUser.getDistrito());
+	        oldUser.setRol(newUser.getRol());
+	        oldUser.setTipodocumento(newUser.getTipodocumento());
+	    }
+
+	    return repositorio.save(existing);
+	}
+
+
+	@Override
+	public ProveedorEntity delete(Long id) {
+		ProveedorEntity existing = repositorio.findById(id).orElse(null);
+
+        if (existing == null) {
+            return null;
+        }
+
+        existing.setEstado(false);
+        return repositorio.save(existing);
+    }
+
+	@Override
+	public ProveedorEntity enable(Long id) {
+		ProveedorEntity existing = repositorio.findById(id).orElse(null);
+
+        if (existing == null) {
+            return null;
+        }
+
+        existing.setEstado(true);
+        return repositorio.save(existing);
+    }
+
+}

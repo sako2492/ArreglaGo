@@ -7,6 +7,22 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ ArreglaGo UI cargado correctamente.");
 
+     /* =========================================================
+       🔧 AJUSTE DINÁMICO DEL PADDING-TOP DEL BODY
+       (Evita que el navbar fijo tape el contenido)
+       ========================================================= */
+    function ajustarPaddingBody() {
+        const nav = document.querySelector(".navbar.fixed-top") || document.querySelector(".navbar");
+        if (!nav) return;
+
+        const altura = nav.getBoundingClientRect().height;
+        document.body.style.paddingTop = altura + "px";
+    }
+
+    // Ejecutar al inicio y cada vez que cambie el tamaño de pantalla
+    ajustarPaddingBody();
+    window.addEventListener("resize", ajustarPaddingBody);
+
     // 🔹 Navbar con efecto sticky al hacer scroll
     const navbar = document.querySelector(".navbar");
     if (navbar) {

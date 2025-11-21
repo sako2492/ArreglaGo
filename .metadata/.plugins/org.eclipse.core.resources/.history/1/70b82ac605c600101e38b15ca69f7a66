@@ -1,0 +1,14 @@
+package pe.com.arreglago.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import pe.com.arreglago.entity.ResenaEntity;
+
+@Repository
+public interface ResenaRepository extends JpaRepository<ResenaEntity, Long> {
+
+    List<ResenaEntity> findByProveedorCodigo(Long idProveedor);
+}

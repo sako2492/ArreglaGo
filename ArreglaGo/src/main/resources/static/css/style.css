@@ -21,10 +21,11 @@
    ------------------------------ */
 body {
     font-family: var(--font-family);
-    color: var(--dark-color);
+    color: var(--brand-hover);
     background-color: #fff;
     line-height: 1.6;
     overflow-x: hidden;
+
 }
 
 /* ------------------------------
@@ -156,8 +157,7 @@ body {
 }
 
 .card img {
-    object-fit: cover;
-    height: 250px;
+    object-fit: unset !important;
 }
 
 .card-title {
@@ -233,6 +233,9 @@ body {
    🔹 RESPONSIVE
    ------------------------------ */
 @media (max-width: 768px) {
+    body {
+        padding-top: 260px !important; /* En móviles tu navbar crece más */
+    }
     .navbar-brand img {
         width: 55px;
         height: 55px;
@@ -368,5 +371,119 @@ body {
     font-weight: 500;
 }
 
+/* =========================================================
+   🎨 ESTILOS AÑADIDOS - REGISTRO PROFESIONAL
+   ========================================================= */
+
+/* Fondo degradado general (usa tus colores de marca) */
+body {
+    background: linear-gradient(to bottom right, #f8f9fa, #d7ecf7);
+    min-height: 100vh;
+}
+
+/* Título con degradado usando tus colores */
+.title-gradient {
+    background: linear-gradient(90deg, var(--brand-color), var(--brand-hover));
+
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+/* Espacio adicional al final del formulario */
+.form-wrapper {
+    margin-bottom: 80px !important;
+}
+
+.card .img-profesional {
+    width: 90%;              /* NO llena todo el ancho */
+    height: 240px;           /* alto uniforme */
+    margin: 0 auto;          /* centra la imagen */
+    display: block;          /* necesario para margin auto */
+    object-fit: cover;       /* recorta sin deformar */
+    object-position: top;    /* muestra la cara */
+    border-radius: 12px;     /* borde elegante */
+    background-color: #f8f8f8;
+}
+
+/* ============================================
+   ⭐ NUEVO DISEÑO - Categorías de Servicios
+   ============================================ */
+
+.category-box {
+    background: #ffffff;
+    border-radius: 16px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: 1px solid #e4e4e4;
+}
+
+.category-box:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+    border-color: transparent;
+}
+
+/* Ícono circular más grande */
+.icon-wrapper {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: #e8f3fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-wrapper i {
+    font-size: 32px;
+    color: #3887B6;
+}
+
+/* Texto */
+.category-box h6 {
+    font-size: 1rem;
+    color: var(--brand-color);
+    margin-top: 8px;
+}
+
+/* =========================================================
+   🎨 PROFESIONALES DESTACADOS PREMIUM (NUEVO)
+   ========================================================= */
+
+.professional-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    margin: 20px auto 10px auto;
+    border: 4px solid #f1f1f1;
+}
 
 
+.verified-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #0d6efd;
+    color: white;
+    padding: 6px 8px;
+    border-radius: 50%;
+    font-size: 1rem;
+}
+
+.professional-card {
+    transition: all 0.25s ease;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.professional-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.stars {
+    letter-spacing: 2px;
+}

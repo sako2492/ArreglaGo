@@ -1,0 +1,144 @@
+package pe.com.arreglago.controller;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import net.coobird.thumbnailator.Thumbnails;
+
+import pe.com.arreglago.entity.UsuarioEntity;
+import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.entity.RolEntity;
+import pe.com.arreglago.entity.DistritoEntity;
+import pe.com.arreglago.entity.TipoDocumentoEntity;
+import pe.com.arreglago.entity.CategoriaEntity;
+import pe.com.arreglago.service.UsuarioService;
+import pe.com.arreglago.service.ProveedorService;
+import pe.com.arreglago.service.CategoriaService;
+import pe.com.arreglago.service.DistritoService;
+import pe.com.arreglago.service.TipoDocumentoService;
+
+@Controller
+public class ProfesionalController {
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private ProveedorService proveedorService;
+
+    @Autowired
+    private CategoriaService categoriaService;
+
+    @Autowired
+    private DistritoService distritoService;
+
+    @Autowired
+    private TipoDocumentoService tipoDocumentoService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/profesional/registro")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("usuario", new UsuarioEntity());
+        model.addAttribute("categorias", categoriaService.findAllCustom());
+        model.addAttribute("distritos", distritoService.findAllCustom());
+        model.addAttribute("tiposdocumento", tipoDocumentoService.findAllCustom());
+        return "profesional-registro";
+    }
+
+    /* =====================================================
+       🔹 PUNTO 4 — Método para procesar y redimensionar foto
+       ===================================================== */
+    private String procesarImagen(MultipartFile archivo) throws IOException {
+
+        if (archivo.isEmpty()) {
+            return "/images/default-profile.png";
+        }
+
+        // Carpeta externa
+        String carpeta = "C:/arreglago/images/";
+
+        // nombre único limpio
+        String original = archivo.getOriginalFilename().replace(" ", "_");
+        String nombre = System.currentTimeMillis() + "_" + original;
+
+        File destino = new File(carpeta + nombre);
+
+        destino.getParentFile().mkdirs();
+
+        // Resize a 600x600 limpio
+        Thumbnails.of(archivo.getInputStream())
+                .size(600, 600)
+                .keepAspectRatio(true)
+                .toFile(destino);
+
+        // Esta ruta es la que sirve el navegador vía WebConfig
+        return "/images/" + nombre;
+    }
+
+
+    /* =====================================================
+       🔹 PUNTO 5 — Integración del resize en el registro
+       ===================================================== */
+    @PostMapping("/profesional/registro")
+    public String registrarProfesional(
+            @ModelAttribute UsuarioEntity usuario,
+            @RequestParam String experiencia,
+            @RequestParam String descripcion,
+            @RequestParam Long idCategoria,
+            @RequestParam("foto") MultipartFile foto,
+            Model model) {
+
+        try {
+            Long idDistrito = usuario.getDistrito().getCodigo();
+            Long idTipoDoc = usuario.getTipodocumento().getCodigo();
+
+            DistritoEntity distrito = distritoService.findById(idDistrito);
+            TipoDocumentoEntity tipoDocumento = tipoDocumentoService.findById(idTipoDoc);
+            CategoriaEntity categoria = categoriaService.findById(idCategoria);
+
+            usuario.setDistrito(distrito);
+            usuario.setTipodocumento(tipoDocumento);
+
+            RolEntity rol = new RolEntity();
+            rol.setCodigo(3L); // PROFESIONAL
+            usuario.setRol(rol);
+
+            usuario.setEstado(true);
+            usuario.setClave(passwordEncoder.encode(usuario.getClave()));
+
+            /* 📌 Procesar imagen */
+            String rutaImagen = procesarImagen(foto);
+            usuario.setFotoPerfil(rutaImagen);
+
+            UsuarioEntity nuevoUsuario = usuarioService.add(usuario);
+
+            ProveedorEntity proveedor = new ProveedorEntity();
+            proveedor.setUsuario(nuevoUsuario);
+            proveedor.setCategoria(categoria);
+            proveedor.setDescripcion(descripcion);
+            proveedor.setExperiencia(experiencia);
+            proveedor.setEstado(true);
+
+            proveedorService.add(proveedor);
+
+            return "redirect:/login-opciones";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Error al registrar profesional");
+            return "profesional-registro";
+        }
+    }
+}

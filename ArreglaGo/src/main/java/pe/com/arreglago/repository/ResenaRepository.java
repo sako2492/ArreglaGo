@@ -1,0 +1,17 @@
+package pe.com.arreglago.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import pe.com.arreglago.entity.ResenaEntity;
+
+public interface ResenaRepository extends JpaRepository<ResenaEntity, Long> {
+
+    @Query("SELECT r FROM ResenaEntity r WHERE r.proveedor.codigo = :idProveedor AND r.estado = true")
+    List<ResenaEntity> listarPorProveedor(Long idProveedor);
+
+    @Query("SELECT AVG(r.calificacion) FROM ResenaEntity r WHERE r.proveedor.codigo = :idProveedor AND r.estado = true")
+    Double promedioPorProveedor(Long idProveedor);
+}

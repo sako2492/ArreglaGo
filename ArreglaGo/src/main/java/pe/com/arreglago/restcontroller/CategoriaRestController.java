@@ -16,7 +16,7 @@ import pe.com.arreglago.entity.CategoriaEntity;
 import pe.com.arreglago.service.CategoriaService;
 
 @RestController
-@RequestMapping("/categoria")
+@RequestMapping("/api/categoria")
 
 public class CategoriaRestController {
 

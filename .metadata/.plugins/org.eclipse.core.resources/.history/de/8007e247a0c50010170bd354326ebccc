@@ -1,0 +1,39 @@
+package pe.com.arreglago.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import pe.com.arreglago.entity.CategoriaEntity;
+import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.service.CategoriaService;
+import pe.com.arreglago.service.ProveedorService;
+
+@Controller
+@RequestMapping("/categoria")
+public class CategoriaProveedorController {
+
+	 @Autowired
+	    private ProveedorService proveedorService;
+
+	    @Autowired
+	    private CategoriaService categoriaService;
+
+	    // Página dinámica para cualquier categoría
+	    @GetMapping("/{id}/proveedor")
+	    public String listarPorCategoria(@PathVariable Long id, Model model) {
+
+	        CategoriaEntity categoria = categoriaService.findById(id);
+	        List<ProveedorEntity> lista = proveedorService.findByCategoria(id);
+
+	        model.addAttribute("categoria", categoria);
+	        model.addAttribute("proveedor", lista);
+
+	        return "categoria-detalle"; // llama al archivo HTML 
+	    }
+}
