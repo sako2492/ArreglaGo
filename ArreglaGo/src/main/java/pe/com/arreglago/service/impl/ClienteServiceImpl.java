@@ -57,6 +57,12 @@ public class ClienteServiceImpl implements ClienteService{
 		objcliente.setEstado(true);
 		return repositorio.save(objcliente);
 	}
+	
+	@Override
+	public ClienteEntity buscarPorUsuario(Long idUsuario){
+	    return repositorio.buscarPorUsuario(idUsuario);
+	}
+
 
 	
 }

@@ -1,14 +1,20 @@
 package pe.com.arreglago.service.impl;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import pe.com.arreglago.entity.ProveedorEntity;
 import pe.com.arreglago.entity.SuscripcionEntity;
 import pe.com.arreglago.repository.SuscripcionRepository;
+import pe.com.arreglago.service.ProveedorService;
 import pe.com.arreglago.service.SuscripcionService;
+
 
 @Service
 
@@ -16,6 +22,34 @@ public class SuscripcionServiceImpl implements SuscripcionService{
 
 	@Autowired
 	private SuscripcionRepository repositorio;
+	
+	//@Autowired
+    //private SuscripcionRepository suscripcionRepository; // 👈 INYECTAR REPOSITORIO
+	
+	@Autowired 
+	private ProveedorService proveedorService; // Asegúrate de que este servicio exista
+	//
+	
+	@Transactional
+    @Override
+    public SuscripcionEntity registrarSuscripcionExitosa(Integer idProveedor, BigDecimal monto, String metodoPago) {
+		
+		ProveedorEntity proveedor = proveedorService.findById(idProveedor.longValue()); // Convertir a Long
+		
+		LocalDate fechaInicio = LocalDate.now();
+		// Suscripción de 1 año (12 meses)
+		LocalDate fechaFin = fechaInicio.plusYears(1).minusDays(1);
+
+		SuscripcionEntity nuevaSuscripcion = new SuscripcionEntity(); //USAR LA ENTIDAD CORRECTA
+		nuevaSuscripcion.setProveedor(proveedor);// Usando ID directo de la tabla
+		nuevaSuscripcion.setFechaInicio(fechaInicio);
+		nuevaSuscripcion.setFechaFin(fechaFin);
+		nuevaSuscripcion.setMonto(monto);
+		nuevaSuscripcion.setMetodoPago(metodoPago);
+		nuevaSuscripcion.setEstado("activo");
+		
+		return repositorio.save(nuevaSuscripcion); // ✅ Ya no estará en rojo
+		}
 	
 	@Override
 	public List<SuscripcionEntity> findAll() {
@@ -56,6 +90,19 @@ public class SuscripcionServiceImpl implements SuscripcionService{
 		SuscripcionEntity objsuscripcion = repositorio.findById(id).get();
 		objsuscripcion.setEstado("activo");
 		return repositorio.save(objsuscripcion);
+	}
+	
+	@Override
+	public boolean existeSuscripcionActiva(Long idProveedor) {
+	    // Implementa la lógica para buscar si hay una suscripción activa
+	    // Ejemplo: return repositorio.existsByProveedorCodigoAndEstado("activo");
+	    // O una consulta personalizada:
+	    // return repositorio.findByProveedorAndEstadoActivo(idProveedor).size() > 0;
+	    
+	    // Si no tienes el método en el repositorio, usa una consulta:
+	    List<SuscripcionEntity> activas = repositorio.findActiveByProveedorId(idProveedor); // Asume que findAllCustom busca activos
+	    // Esto es un placeholder; la implementación real debe ser eficiente.
+	    return activas != null && !activas.isEmpty();
 	}
 	
 }

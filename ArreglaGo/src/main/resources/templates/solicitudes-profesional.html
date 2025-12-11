@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitudes recibidas | ArreglaGo</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<!-- NAVBAR -->
+<div th:replace="~{fragments/navbar :: navbar(categorias=${categorias})}"></div>
+
+<div class="container mt-5">
+
+    <h3 class="fw-bold text-brand mb-4">
+        <i class="bi bi-bell-fill me-2"></i> Solicitudes recibidas
+    </h3>
+
+    <!-- Cuando NO hay solicitudes -->
+    <div th:if="${solicitudes == null or solicitudes.isEmpty()}" 
+         class="alert alert-info shadow-sm">
+        No tienes solicitudes por el momento.
+    </div>
+
+    <!-- Cuando SÍ hay solicitudes -->
+    <div th:if="${solicitudes != null and !solicitudes.isEmpty()}">
+        <table class="table table-hover shadow-sm bg-white rounded-4 overflow-hidden">
+            <thead class="table-primary">
+            <tr>
+                <th>Cliente</th>
+                <th>Detalle del Servicio</th> <th>Estado</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="c : ${solicitudes}">
+                <td>
+                    <strong th:text="${c.cliente.usuario.nombre}"></strong>
+                    <br>
+                    <span class="text-muted small"
+                          th:text="${c.cliente.usuario.correo}"></span>
+                </td>
+
+                <td>
+                    <span th:text="${c.detalleServicio}"></span>
+                    <br>
+                    <span class="text-muted small"
+                            th:text="'(' + ${c.proveedor.categoria.nombre} + ')'"></span>
+                </td>
+
+                <td>
+                    <span class="badge"
+                        th:classappend="${c.estado == 'pendiente'} ? 'bg-warning text-dark' :
+                                        ${c.estado == 'aceptada'} ? 'bg-success' :
+                                        'bg-danger'"
+                        th:text="${c.estado}">
+                    </span>
+                </td>
+
+                <td class="text-center">
+
+                    <!-- ACEPTAR -->
+                    <a class="btn btn-success btn-sm"
+                       th:if="${c.estado == 'pendiente'}"
+                       th:href="@{/contratacion/estado/{id}/aceptada(id=${c.codigo})}">
+                        <i class="bi bi-check-circle"></i>
+                    </a>
+
+                    <!-- RECHAZAR -->
+                    <a class="btn btn-danger btn-sm"
+                       th:if="${c.estado == 'pendiente'}"
+                       th:href="@{/contratacion/estado/{id}/rechazada(id=${c.codigo})}">
+                        <i class="bi bi-x-circle"></i>
+                    </a>
+
+                    <!-- FINALIZAR -->
+                    <a class="btn btn-primary btn-sm"
+                       th:if="${c.estado == 'aceptada'}"
+                       th:href="@{/contratacion/estado/{id}/finalizada(id=${c.codigo})}">
+                        <i class="bi bi-check2-all"></i>
+                    </a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script principal -->
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

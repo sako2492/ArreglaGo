@@ -1,0 +1,108 @@
+package pe.com.arreglago.webconfig;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import pe.com.arreglago.security.CustomSuccessHandler;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    // 1. Declaramos las variables como 'final' (inmutables)
+    private final UserDetailsService usuarioDetailsService;
+    private final CustomSuccessHandler customSuccessHandler;
+
+    // 2. INYECCIÓN POR CONSTRUCTOR (Esto elimina la advertencia de @Autowired)
+    public SecurityConfig(UserDetailsService usuarioDetailsService, CustomSuccessHandler customSuccessHandler) {
+        this.usuarioDetailsService = usuarioDetailsService;
+        this.customSuccessHandler = customSuccessHandler;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    // 3. Pasamos PasswordEncoder como parámetro (Elimina la advertencia de llamada a método)
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(PasswordEncoder encoder) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(usuarioDetailsService);
+        authProvider.setPasswordEncoder(encoder);
+        return authProvider;
+    }
+
+ // ... (El resto de la clase SecurityConfig, incluyendo los Beans y el constructor, es correcto)
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> auth
+            
+            // =======================================================
+            // 🔓 1. RECURSOS PÚBLICOS (Staticos, Landing y Registros)
+            // =======================================================
+        	.requestMatchers("/usuarios/**", "/galeria/**").permitAll() // <-- RUTA DE RECURSOS EXTERNOS (Fotos de Perfil y Galería)	
+            .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+            .requestMatchers("/", "/index", "/menuprincipal", "/login-opciones", "/login", "/buscar").permitAll()
+            .requestMatchers("/categoria/**").permitAll()
+            .requestMatchers("/profesional/registro", "/profesional/nuevoperfil").permitAll()
+            .requestMatchers("/cliente/registro", "/cliente/nuevoperfil").permitAll()
+            .requestMatchers("/administrador/registro").permitAll()
+            .requestMatchers("/api/**").permitAll()
+            .requestMatchers("/profesional/validar-codigo", "/profesional/guardar-perfil-final").permitAll()
+            .requestMatchers("/cliente/validar-codigo", "/cliente/guardar-perfil-final").permitAll()
+            .requestMatchers("/profesional/{id:\\d+}").permitAll() // ✅ Perfil Público Detalle por ID
+
+            // =======================================================
+            // 🔒 2. RUTAS PROTEGIDAS ESPECÍFICAS (Acceso al perfil propio)
+            // =======================================================
+            
+            .requestMatchers("/profesional/contratar-form/{idProveedor}").hasRole("CLIENTE")
+            .requestMatchers("/profesional/confirmar-contratacion/{idProveedor}").hasRole("CLIENTE")
+            
+            // Acceso al perfil propio y rutas clave de cada rol.
+            .requestMatchers("/cliente/perfil", "/cliente/mis-contrataciones").hasRole("CLIENTE")
+            .requestMatchers("/profesional/perfil", "/profesional/solicitudes").hasRole("PROFESIONAL")
+            .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
+            
+            // =======================================================
+            // ⚠️ 3. REGLA CATCH-ALL (Captura el resto de URL /rol/...)
+            // =======================================================
+            // Esta regla DEBE ir después de las rutas específicas.
+            // Si hay rutas como /cliente/editar/10, las protege con el rol genérico.
+            .requestMatchers("/cliente/**").hasRole("CLIENTE")
+            .requestMatchers("/profesional/**").hasRole("PROFESIONAL")
+            
+            // 4. Cualquier otra URL que no coincida con las anteriores, requiere autenticación
+            .anyRequest().authenticated()
+        )
+        // ... (El resto de formLogin y logout es idéntico y correcto)
+        .formLogin(login -> login
+            .loginPage("/index")
+            .defaultSuccessUrl("/dashboard-redirect", true)
+            .loginProcessingUrl("/login")
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .successHandler(customSuccessHandler)
+            .failureUrl("/index?error=true")
+            .permitAll()
+        )
+        .logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/index?logout=true")
+            .deleteCookies("JSESSIONID")
+            .permitAll()
+        )
+        .csrf(csrf -> csrf.disable());
+
+        return http.build();
+    }
+}

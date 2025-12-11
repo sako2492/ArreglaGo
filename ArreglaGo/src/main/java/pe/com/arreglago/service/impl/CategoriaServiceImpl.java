@@ -18,7 +18,7 @@ public class CategoriaServiceImpl implements CategoriaService{
 	
 	@Override
 	public List<CategoriaEntity> findAll() {
-		return repositorio.findAll();
+		return repositorio.findAllCustom();
 	}
 
 	@Override

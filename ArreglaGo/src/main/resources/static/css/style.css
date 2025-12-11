@@ -1,4 +1,5 @@
-   /* =========================================================
+
+/* =========================================================
    🎨 ESTILOS GLOBALES - ARREGLAGO
    Ubicación: src/main/resources/static/css/style.css
    ========================================================= */
@@ -14,6 +15,182 @@
     --dark-color: #212529;
     --light-bg: #f8f9fa;
     --font-family: 'Inter', sans-serif;
+}
+
+/* ------------------------------
+   🔹 CONFIGURACIÓN GLOBAL
+   ------------------------------ */
+body {
+    padding-top: 120px;
+    font-family: var(--font-family);
+    color: var(--brand-hover);
+    background: linear-gradient(to bottom right, #f8f9fa, #d7ecf7);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* ------------------------------
+   🔹 NAVBAR
+   ------------------------------ */
+.navbar {
+    transition: all 0.3s ease;
+}
+
+.navbar-brand img {
+    width: 65px;
+    height: 65px;
+    transition: transform 0.2s ease;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+.navbar-brand span {
+    color: var(--brand-color);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: var(--brand-hover) !important;
+}
+
+.dropdown-menu {
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ------------------------------
+   🔹 BOTONES
+   ------------------------------ */
+.btn {
+    white-space: nowrap;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.btn-custom {
+    background-color: var(--brand-color);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.8rem;
+    font-weight: 500;
+}
+
+.btn-custom:hover {
+    background-color: var(--brand-hover);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.btn-orange {
+    background-color: var(--orange-color);
+    color: #fff;
+    border: none;
+}
+
+.btn-orange:hover {
+    background-color: var(--orange-hover);
+}
+
+/* =========================================================
+   ✅ NUEVO: PERFIL PROFESIONAL MODERNO
+   ========================================================= */
+
+body.perfil-profesional-page {
+    background: linear-gradient(to bottom right, #f8f9fa, #d7ecf7);
+    padding-top: 120px;
+}
+
+.perfil-container {
+    max-width: 950px;
+    margin: auto;
+}
+
+.perfil-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.perfil-foto {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    display: block;
+    border: 5px solid #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.perfil-badge {
+    background: var(--brand-color);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.rating {
+    font-size: 1.2rem;
+    color: #f5a623;
+    margin: 8px 0;
+}
+
+.info-item {
+    background: #f9fbfd;
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border-left: 4px solid var(--brand-color);
+}
+
+.info-item strong {
+    color: var(--brand-color);
+}
+
+.btn-contratar {
+    background: linear-gradient(45deg, var(--orange-color), var(--orange-hover));
+    color: white;
+    font-weight: 600;
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: none;
+}
+
+.btn-contratar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.reseñas-box {
+    background: #e7f3fb;
+    padding: 16px;
+    border-radius: 12px;
+    border-left: 5px solid var(--brand-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    body.perfil-profesional-page {
+        padding-top: 200px;
+    }
+
+    .perfil-foto {
+        width: 150px;
+        height: 150px;
+    }
 }
 
 /* ------------------------------
@@ -184,34 +361,119 @@ body {
 /* ------------------------------
    🔹 TESTIMONIOS
    ------------------------------ */
-.testimonials h2 {
-    color: var(--brand-color);
+/* =========================================================
+   TESTIMONIOS (CARRUSEL)
+   ========================================================= */
+.testimonial-card {
+    background: white; padding: 2rem; border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); height: 100%;
 }
+.testimonial-quote { font-size: 3rem; color: rgba(255, 123, 0, 0.2); margin-bottom: 1rem; }
+.testimonial-text { color: #6c757d; font-style: italic; margin-bottom: 1.5rem; }
+.testimonial-author { display: flex; align-items: center; gap: 1rem; }
+.author-avatar {
+    width: 50px; height: 50px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: white; flex-shrink: 0;
+}
+.author-name { font-weight: 600; margin: 0; color: var(--dark-color); }
+.author-role { font-size: 0.85rem; color: #999; margin: 0; }
 
-.testimonial {
-    border-radius: 1rem;
-    transition: all 0.2s ease;
+.testimonial-carousel-btn {
+    background-color: var(--brand-color); width: 40px; height: 40px;
+    border-radius: 50%; top: 50%; transform: translateY(-50%); opacity: 1;
 }
-
-.testimonial:hover {
-    transform: translateY(-5px);
-}
+.testimonial-carousel-btn:hover { background-color: var(--brand-hover); }
+.carousel-control-prev { left: -60px; }
+.carousel-control-next { right: -60px; }
+@media (max-width: 992px) { .carousel-control-prev { left: 0; } .carousel-control-next { right: 0; } }
 
 /* ------------------------------
    🔹 FOOTER
    ------------------------------ */
-.footer {
-    background-color: var(--dark-color);
-    color: #fff;
+
+.footer { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); }
+.footer-title { font-weight: 700; margin-bottom: 1.5rem; }
+
+.site-footer {
+    background-color: #111111; /* Fondo casi negro */
+    color: #ffffff;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+    font-size: 0.95rem;
 }
 
-.footer a {
-    color: #fff;
-    transition: opacity 0.2s ease;
+/* Logo Box en el footer */
+.footer-logo-box {
+    background-color: var(--brand-color); /* Azul */
+    color: white;
+    font-weight: 800;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
 }
 
-.footer a:hover {
-    opacity: 0.7;
+/* Iconos Sociales */
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: var(--orange-color); /* Naranja al pasar el mouse */
+    transform: translateY(-3px);
+}
+
+/* Enlaces del Footer */
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #b0b0b0; /* Gris claro */
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: var(--brand-color); /* Azul al pasar el mouse */
+    transform: translateX(5px); /* Pequeño movimiento a la derecha */
+}
+
+/* Contacto */
+.footer-contact li {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+    color: #b0b0b0;
+}
+
+/* Color Naranja para iconos de contacto */
+.text-orange {
+    color: var(--orange-color) !important;
+}
+
+/* Línea divisoria */
+.footer-divider {
+    border-color: rgba(255, 255, 255, 0.1);
+    margin: 3rem 0 1.5rem 0;
 }
 
 /* ------------------------------
@@ -486,4 +748,292 @@ body {
 
 .stars {
     letter-spacing: 2px;
+}
+
+.category-click {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.category-click:hover {
+    transform: translateY(-6px);
+    background: #fcac60;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* =========================================================
+   PERFIL PROFESIONAL - ESTILOS EXCLUSIVOS
+   ========================================================= */
+
+body.perfil-profesional-page {
+    background: #f5f7fa;
+    padding-top: 120px;
+}
+
+/* Contenedor principal */
+.perfil-container {
+    max-width: 900px;
+}
+
+/* Foto perfil */
+.perfil-foto {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: auto;
+    display: block;
+    border: 5px solid #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Card principal */
+.perfil-card {
+    border-radius: 1rem;
+    padding: 30px;
+}
+
+/* Rating */
+.rating {
+    font-size: 1.2rem;
+    color: #f5a623;
+}
+
+/* Items de información */
+.info-item {
+    background: #ffffff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+/* Ajustes finos del navbar SOLO para perfil */
+body.perfil-profesional-page .navbar {
+    height: 90px;
+}
+
+body.perfil-profesional-page .navbar-brand img {
+    height: 60px;
+}
+
+body.perfil-profesional-page .navbar .form-control {
+    height: 45px;
+}
+
+body.perfil-profesional-page .navbar .btn {
+    height: 45px;
+    display: flex;
+    align-items: center;
+}
+
+/* Espaciado superior elegante */
+body.perfil-profesional-page .perfil-container {
+    margin-top: 20px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    body.perfil-profesional-page {
+        padding-top: 200px;
+    }
+}
+/* =========================================================
+   ⭐ SECCIÓN DE TESTIMONIOS
+   ========================================================= */
+.testimonials-section {
+    background: #f2f7fb;
+    padding: 70px 0;
+}
+
+.testimonial-card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    transition: all 0.25s ease;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.testimonial-stars {
+    color: #ffb400;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+}
+
+.testimonial-text {
+    color: #555;
+    font-size: 0.95rem;
+    margin: 15px 0;
+}
+
+.testimonial-user {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.testimonial-avatar {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.testimonial-name {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.testimonial-role {
+    font-size: 0.8rem;
+    color: gray;
+}
+
+/* ======================
+   NUEVO ESTILO UNIFORME DE SECCIONES DE FORMULARIO
+   ====================== */
+.section-box {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0px 2px 8px rgba(0, 77, 154, 0.08);
+}
+
+/* Título de sección con línea azul */
+.section-title {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 15px;
+    color: #0055A4; /* ✅ Color de texto unificado */
+    border-bottom: 3px solid #0055A4; /* ✅ Color de línea unificado */
+    padding-bottom: 6px;
+}
+
+/* Más profesional */
+.section-title i {
+    font-size: 19px;
+    margin-right: 8px;
+    color: #0055A4;
+}
+
+/* Tono azul tenue global */
+.text-brand {
+    color: #0055A4 !important;
+}
+
+/* Botón con color corporativo ArreglaGo */
+.btn-brand {
+    background-color: #0074D9 !important;
+    color: #fff !important;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-brand:hover {
+    background-color: #005bb5 !important;
+    transform: scale(1.01);
+}
+
+/* Sombras más suaves */
+.shadow-lg, .shadow {
+    box-shadow: 0px 4px 14px rgba(0,0,0,0.08) !important;
+}
+
+/* Mejora inputs */
+.form-control, .form-select {
+    border-radius: 8px;
+}
+
+/* Mensajes de ayuda más visibles */
+.form-text {
+    font-size: 12px;
+    color: #6c757d !important;
+}
+
+/* =========================================================
+   🔧 CORRECCIÓN MENU LATERAL PERFIL (Bootstrap Override)
+   ========================================================= */
+
+/* Cambia el fondo azul fuerte por tu color de marca */
+.list-group-item.active {
+    background-color: var(--brand-color) !important;
+    border-color: var(--brand-color) !important;
+    font-weight: 600; /* Un poco más grueso para resaltar */
+}
+
+/* Efecto hover sobre el elemento activo */
+.list-group-item.active:hover {
+    background-color: var(--brand-hover) !important;
+    border-color: var(--brand-hover) !important;
+}
+
+/* Color del texto y los íconos cuando NO están activos */
+.list-group-item {
+    color: var(--brand-color); /* Texto azul corporativo */
+    transition: all 0.2s ease;
+}
+
+/* Efecto hover suave en los items inactivos */
+.list-group-item:hover {
+    background-color: #f0f8ff; /* Un azul muy clarito al pasar el mouse */
+    color: var(--brand-hover);
+}
+
+
+/* =========================================================
+   ESTILOS Y ANIMACIONES DEL SPLASH SCREEN
+   ========================================================= */
+
+/* 1. Definición de la Animación de Zoom y Vuelta */
+@keyframes zoomIn {
+    0% { 
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    30% { 
+        transform: scale(1.3); /* Máximo agrandamiento */
+        opacity: 1;
+    }
+    100% { 
+        transform: scale(1.0); /* Vuelve al tamaño normal */
+    }
+}
+
+/* 2. Definición de la Animación de Sombra/Contorno */
+@keyframes neon-pulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 1px rgba(0, 85, 164, 0.5)) drop-shadow(0 0 5px rgba(0, 85, 164, 0.4));
+    }
+    50% {
+        filter: drop-shadow(0 0 5px rgba(0, 85, 164, 0.8)) drop-shadow(0 0 10px rgba(0, 85, 164, 0.6));
+    }
+}
+
+
+/* 3. Clase para el Logo (Aplicar Animaciones y Contorno) */
+.splash-logo {
+    width: 150px; /* Tamaño normal del logo */
+    filter: drop-shadow(0 0 1px #0055A4) 
+            drop-shadow(0 0 5px #0055A4); /* Esto ayuda a teñir la imagen */
+    animation: 
+        zoomIn 3s ease-out forwards, /* 3s para el zoom */
+        neon-pulse 1.5s ease-in-out infinite; /* Contorno pulsante */
+}
+
+/* 4. Clase para el Texto (Si quieres que el texto también se anime) */
+.splash-text {
+    color: #0055A4; 
+    font-size: 2.5rem;
+    font-weight: 700;
+    animation: zoomIn 3s ease-out forwards;
 }

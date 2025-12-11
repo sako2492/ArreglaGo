@@ -10,11 +10,13 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
+    	// Mapeo para fotos de perfil y registro:
         registry.addResourceHandler("/usuarios/**")
-                .addResourceLocations("file:///C:/arreglago/images/")
-                .setCachePeriod(0);
+                .addResourceLocations("file:///C:/arreglago/images/"); // La carpeta de fotos de perfil
 
-        registry.addResourceHandler("/images/**")
-                .addResourceLocations("classpath:/static/images/");
+        // Mapeo para la Galería de trabajos:
+        registry.addResourceHandler("/galeria/**")
+                .addResourceLocations("file:///C:/arreglago/galeria/"); // La carpeta de la galería
     }
+
 }

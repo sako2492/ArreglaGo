@@ -1,0 +1,100 @@
+package pe.com.arreglago.webconfig;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import pe.com.arreglago.security.CustomSuccessHandler;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Autowired
+    private UserDetailsService usuarioDetailsService;
+
+    @Autowired
+    private CustomSuccessHandler customSuccessHandler;
+
+    // 1. BEAN PARA ENCRIPTAR CONTRASEÑAS
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    // 2. BEAN PARA VINCULAR EL SERVICIO DE USUARIOS Y LA ENCRIPTACIÓN
+    // (Esto es lo que te faltaba para que el login verifique bien la clave)
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(usuarioDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http.authorizeHttpRequests(auth -> auth
+            // =======================================================
+            // 🔓 ZONA PÚBLICA (Cualquiera puede entrar)
+            // =======================================================
+            // 1. Recursos estáticos (CSS, JS, Imágenes)
+            .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+
+            // 2. Vistas generales y Login
+            .requestMatchers("/", "/index", "/menuprincipal", "/login-opciones", "/login", "/buscar").permitAll()
+            .requestMatchers("/categoria/**").permitAll() // Para ver categorías sin loguearse
+
+            // 3. Formularios de Registro (Solo las URLs específicas, NO todo el /**)
+            .requestMatchers("/profesional/registro", "/profesional/nuevoperfil").permitAll()
+            .requestMatchers("/cliente/registro", "/cliente/nuevoperfil").permitAll()
+            .requestMatchers("/administrador/registro").permitAll()
+
+            // 4. Flujos de verificación (Códigos de correo y contraseña)
+            .requestMatchers("/profesional/validar-codigo", "/profesional/guardar-perfil-final").permitAll()
+            .requestMatchers("/cliente/validar-codigo", "/cliente/guardar-perfil-final").permitAll()
+
+            // 5. APIs públicas (Ej: Consulta RENIEC)
+            .requestMatchers("/api/**").permitAll()
+
+            // =======================================================
+            // 🔒 ZONA PRIVADA (Requiere Login y Rol específico)
+            // =======================================================
+            // El orden importa: Primero las públicas arriba, y aquí bloqueamos el resto
+            .requestMatchers("/cliente/**").hasRole("CLIENTE")
+            .requestMatchers("/profesional/**").hasRole("PROFESIONAL") // Aquí entra perfil, solicitudes, etc.
+            .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")     // O "ADMIN" según tu BD
+
+            // Cualquier otra cosa requiere estar logueado
+            .anyRequest().authenticated()
+        )
+
+        .formLogin(login -> login
+            .loginPage("/index")            // Tu página de login (que es el index/modal)
+            .loginProcessingUrl("/login")   // Url interna de Spring Security para procesar
+            .usernameParameter("username")  // name="username" en tu HTML
+            .passwordParameter("password")  // name="password" en tu HTML
+            .successHandler(customSuccessHandler) // Redirección inteligente por rol
+            .failureUrl("/index?error=true") // Si falla, vuelve al index con error
+            .permitAll()
+        )
+
+        .logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/index?logout=true")
+            .deleteCookies("JSESSIONID")
+            .permitAll()
+        )
+
+        .csrf(csrf -> csrf.disable()); // Deshabilitado para desarrollo
+
+        return http.build();
+    }
+}

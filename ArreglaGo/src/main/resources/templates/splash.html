@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>¡Bienvenido a ArreglaGo!</title>
+    
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Estilos para centrar el contenido y ocupar toda la pantalla */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f8ff; /* Fondo muy claro, puedes usar tu color principal */
+            flex-direction: column;
+            font-family: 'Inter', sans-serif;
+            opacity: 0; /* Empieza invisible para el efecto de fade-in */
+            transition: opacity 0.5s ease-in; /* Transición suave de visibilidad */
+        }
+        
+        /* Asegura que el cuerpo sea visible después de la carga inicial */
+        body.visible {
+            opacity: 1;
+        }
+
+        /* Opcional: Loader básico de Bootstrap */
+        .spinner-grow {
+            color: #0074D9; /* Usando tu color de botón */
+        }
+    </style>
+</head>
+<body id="splashBody">
+
+    <img th:src="@{/images/logo.png}" alt="Logo ArreglaGo" class="splash-logo">
+    <div class="splash-text">ArreglaGo</div>
+    
+    <div class="spinner-grow" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+
+    <script th:inline="javascript">
+        // Capturamos la URL base /arreglago/menuprincipal de forma dinámica
+        // Esto asume que el método /menuprincipal existe.
+        const MENU_PRINCIPAL_URL = /*[[@{/menuprincipal}]]*/ '';
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            const body = document.getElementById('splashBody');
+            
+            // 1. Mostrar la pantalla de bienvenida con fade-in
+            setTimeout(() => {
+                body.classList.add('visible');
+            }, 100); 
+
+            // 2. Temporizador para redirigir después de 6 segundos (6000 milisegundos)
+            const REDIRECT_DELAY = 6000;
+            
+            setTimeout(() => {
+                // Redirigir usando la URL capturada por Thymeleaf: /arreglago/menuprincipal
+                window.location.href = MENU_PRINCIPAL_URL; 
+            }, REDIRECT_DELAY);
+        });
+    </script>
+
+</body>
+</html>

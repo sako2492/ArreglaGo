@@ -56,5 +56,5 @@ public class ServicioServiceImpl implements ServicioService {
 		objservicio.setEstado(true);
 		return repositorio.save(objservicio);
 	}
-
+	
 }

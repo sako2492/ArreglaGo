@@ -1,0 +1,14 @@
+package pe.com.arreglago.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import pe.com.arreglago.entity.SuscripcionEntity;
+
+
+public interface SuscripcionRepository extends JpaRepository<SuscripcionEntity, Long>{
+
+	@Query("select s from SuscripcionEntity s where s.estado = 'activo'")
+	List<SuscripcionEntity> findAllCustom();
+}

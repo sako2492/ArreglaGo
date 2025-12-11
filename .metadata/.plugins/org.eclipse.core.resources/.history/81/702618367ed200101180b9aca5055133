@@ -1,0 +1,83 @@
+package pe.com.arreglago.controller;
+
+import java.security.Principal;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import pe.com.arreglago.entity.ClienteEntity;
+import pe.com.arreglago.entity.ContratacionEntity;
+import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.entity.UsuarioEntity;
+import pe.com.arreglago.service.ClienteService;
+import pe.com.arreglago.service.ContratacionService;
+import pe.com.arreglago.service.ProveedorService;
+import pe.com.arreglago.service.UsuarioService;
+
+@Controller
+@RequestMapping("/contratacion")
+public class ContratacionController {
+
+    @Autowired
+    private ContratacionService contratacionService;
+
+    @Autowired
+    private ProveedorService proveedorService;
+
+    @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    
+    /* FORMULARIO DE CONTRATACIÓN */
+    /*
+    @GetMapping("/nuevo/{idProveedor}")
+    public String mostrarFormulario(@PathVariable Long idProveedor, Model model) {
+
+        model.addAttribute("proveedor", proveedorService.findById(idProveedor));
+        model.addAttribute("contratacion", new ContratacionEntity());
+
+        return "contratacion-form";
+    }
+    */
+    
+    
+    /* GUARDAR CONTRATACIÓN */
+    @PostMapping("/guardar")
+    public String guardar(@ModelAttribute ContratacionEntity contratacion,
+                          @RequestParam Long idProveedor,
+                          Principal principal) {
+
+        UsuarioEntity usuario = usuarioService.findByCorreo(principal.getName());
+        ClienteEntity cliente = clienteService.buscarPorUsuario(usuario.getCodigo());
+        ProveedorEntity proveedor = proveedorService.findById(idProveedor);
+
+        contratacion.setCliente(cliente);
+        contratacion.setProveedor(proveedor);
+        contratacion.setEstado("pendiente");
+
+        contratacionService.add(contratacion);
+
+        return "redirect:/cliente/mis-contrataciones";
+    }
+    
+    @GetMapping("/estado/{id}/{estado}")
+    public String cambiarEstado(@PathVariable Long id,
+                                @PathVariable String estado){
+
+        contratacionService.cambiarEstado(id, estado);
+        return "redirect:/profesional/solicitudes";
+    }
+
+
+}
+

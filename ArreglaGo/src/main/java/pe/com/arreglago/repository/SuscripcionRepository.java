@@ -4,11 +4,20 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
 import pe.com.arreglago.entity.SuscripcionEntity;
+
 
 public interface SuscripcionRepository extends JpaRepository<SuscripcionEntity, Long>{
 
 	@Query("select s from SuscripcionEntity s where s.estado = 'activo'")
 	List<SuscripcionEntity> findAllCustom();
+	
+	/*
+     * Busca suscripciones activas para un proveedor específico.
+     */
+    @Query("SELECT s FROM SuscripcionEntity s WHERE s.proveedor.codigo = :idProveedor AND s.estado = 'activo'")
+    List<SuscripcionEntity> findActiveByProveedorId(Long idProveedor);
+    
+    // O una forma más simple si usas JPA Naming Conventions:
+    // boolean existsByProveedorCodigoAndEstado(Long proveedorCodigo, String estado);
 }

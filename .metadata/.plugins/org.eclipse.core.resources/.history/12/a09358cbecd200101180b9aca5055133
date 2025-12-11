@@ -1,0 +1,402 @@
+package pe.com.arreglago.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.time.temporal.ChronoUnit;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.servlet.http.HttpSession;
+import net.coobird.thumbnailator.Thumbnails;
+
+import pe.com.arreglago.entity.ClienteEntity;
+import pe.com.arreglago.entity.ContratacionEntity;
+import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.entity.ReniecEntity;
+import pe.com.arreglago.entity.RolEntity;
+import pe.com.arreglago.entity.UsuarioEntity;
+import pe.com.arreglago.entity.ValoracionEntity;
+
+import pe.com.arreglago.service.ClienteService;
+import pe.com.arreglago.service.ContratacionService;
+import pe.com.arreglago.service.DistritoService;
+import pe.com.arreglago.service.EmailService;
+import pe.com.arreglago.service.ProveedorService;
+import pe.com.arreglago.service.ReniecService;
+import pe.com.arreglago.service.RolService;
+import pe.com.arreglago.service.TipoDocumentoService;
+import pe.com.arreglago.service.UsuarioService;
+import pe.com.arreglago.service.ValoracionService;
+
+@Controller
+@RequestMapping("/cliente")
+public class ClienteController {
+
+	// ----------------------------------------------------
+	// INYECCIÓN DE DEPENDENCIAS
+	// ----------------------------------------------------
+	@Autowired private UsuarioService usuarioService;
+	@Autowired private ClienteService clienteService;
+	@Autowired private DistritoService distritoService;
+	@Autowired private TipoDocumentoService tipoDocumentoService;
+	@Autowired private ReniecService reniecService;
+	@Autowired private EmailService emailService;
+	@Autowired private ContratacionService contratacionService;
+	@Autowired private ValoracionService valoracionService;
+	@Autowired private ProveedorService proveedorService;
+	@Autowired private RolService rolService;
+
+    // ====================================================
+    // 🥇 FLUJO DE REGISTRO
+    // ====================================================
+
+	// ----------------------------------------------------
+	// PUNTO 1 — FORMULARIO DE REGISTRO GET
+	// ----------------------------------------------------
+	@GetMapping("/registro")
+	public String mostrarFormulario(@ModelAttribute(name = "usuario") UsuarioEntity flashUsuario,
+									Model model) {
+
+		if (model.getAttribute("usuario") == null) {
+			model.addAttribute("usuario", new UsuarioEntity());
+		}
+
+		model.addAttribute("tiposdocumento", tipoDocumentoService.findAll());
+		model.addAttribute("distritos", distritoService.findAll());
+
+		return "cliente-registro";
+		}
+
+	// ----------------------------------------------------
+	// PUNTO 2 — PROCESAR REGISTRO + VALIDAR RENIEC + ENVIAR CÓDIGO
+	// ----------------------------------------------------
+	@PostMapping("/nuevoperfil")
+	public String registrarCliente(
+			@ModelAttribute UsuarioEntity usuario,
+			@RequestParam Long idTipoDocumento,
+			@RequestParam Long idDistrito,
+			@RequestParam("foto") MultipartFile foto,
+			HttpSession session,
+			RedirectAttributes redirect) {
+		
+		// ------------------ 0. VALIDACIÓN: CORREO DUPLICADO ------------------
+	    if (usuarioService.findByCorreo(usuario.getCorreo()) != null) {
+	        redirect.addFlashAttribute("errorReniec", "❌ Este correo electrónico ya se encuentra registrado. Por favor, usa uno diferente.");
+	        redirect.addFlashAttribute("usuario", usuario);
+	        return "redirect:/cliente/registro";
+	    }
+	    
+	 	// 🛑 NUEVA VALIDACIÓN: MAYOR DE 18 AÑOS 🛑
+	    LocalDate fechaNacimiento = usuario.getFechaNacimiento(); // Asume que este campo existe en UsuarioEntity
+	    LocalDate hoy = LocalDate.now();
+
+	    // Calcula la edad en años
+	    long edad = ChronoUnit.YEARS.between(fechaNacimiento, hoy);
+
+	    if (edad < 18) {
+	        redirect.addFlashAttribute("errorReniec", "❌ Debes ser mayor de 18 años para registrarte como cliente.");
+	        redirect.addFlashAttribute("usuario", usuario); // Para repoblar el formulario
+	        return "redirect:/cliente/registro";
+	    }
+
+	    // ------------------ 1. VALIDACIÓN DNI/RENIEC ------------------
+		if (idTipoDocumento != 1L || usuario.getNroDocumento().length() != 8) {
+			redirect.addFlashAttribute("errorReniec", "❌ DNI inválido para consulta RENIEC.");
+			return "redirect:/cliente/registro";
+		}
+
+		ReniecEntity datosReniec = reniecService.consultarDni(usuario.getNroDocumento());
+		if (datosReniec == null || datosReniec.getNombres() == null) {
+			redirect.addFlashAttribute("errorReniec", "Error consultando RENIEC.");
+			redirect.addFlashAttribute("usuario", usuario);
+			return "redirect:/cliente/registro";
+		}
+
+		if (!usuario.getNombre().trim().equalsIgnoreCase(datosReniec.getNombres())
+				|| !usuario.getApellidoPaterno().trim().equalsIgnoreCase(datosReniec.getApellidoPaterno())
+				|| !usuario.getApellidoMaterno().trim().equalsIgnoreCase(datosReniec.getApellidoMaterno())) {
+			
+			redirect.addFlashAttribute("errorReniec",
+					"❌ Los nombres y apellidos no coinciden con RENIEC.");
+			redirect.addFlashAttribute("usuario", usuario);
+			return "redirect:/cliente/registro";
+		}
+
+		usuario.setTipodocumento(tipoDocumentoService.findById(idTipoDocumento));
+		usuario.setDistrito(distritoService.findById(idDistrito));
+
+		session.setAttribute("usuarioTemp", usuario);
+		session.setAttribute("fotoTemp", foto);
+
+		String codigo = generarCodigo();
+		session.setAttribute("codigoVerificacion", codigo);
+
+		emailService.enviarCorreo(
+				usuario.getCorreo(),
+				"Código de verificación",
+				"Tu código es: " + codigo);
+
+		session.setAttribute("passwordAction", "/cliente/validar-codigo");
+
+		return "verificacion";
+		}
+
+	// ----------------------------------------------------
+	// PUNTO 3 — VALIDACIÓN DE CÓDIGO
+	// ----------------------------------------------------
+	private String generarCodigo() {
+		return String.valueOf((int) (Math.random() * 900000) + 100000);
+		}
+
+	@PostMapping("/validar-codigo")
+	public String validarCodigo(@RequestParam String codigoIngresado,
+			HttpSession session,
+			Model model) {
+
+		String codigoGuardado = (String) session.getAttribute("codigoVerificacion");
+
+		if (codigoGuardado != null && codigoGuardado.equals(codigoIngresado)) {
+			session.setAttribute("passwordAction", "/cliente/guardar-perfil-final");
+			return "crear-password";
+			}
+
+		model.addAttribute("error", "Código incorrecto.");
+		return "verificacion";
+		}
+
+	// ----------------------------------------------------
+	// PUNTO 4 — GUARDAR PERFIL FINAL
+	// ----------------------------------------------------
+	@PostMapping("/guardar-perfil-final")
+	public String guardarPerfilFinal(@RequestParam String password,
+									@RequestParam String password2,
+									HttpSession session,
+									RedirectAttributes redirect) {
+
+		if (!password.equals(password2)) {
+			redirect.addFlashAttribute("error", "Las contraseñas no coinciden.");
+			return "redirect:/cliente/validar-codigo";
+		}
+
+		UsuarioEntity usuario = (UsuarioEntity) session.getAttribute("usuarioTemp");
+		MultipartFile foto = (MultipartFile) session.getAttribute("fotoTemp");
+
+		if (usuario == null || foto == null) {
+			return "redirect:/cliente/registro?error=sesionperdida";
+		}
+
+		try {
+            // Se usa el método auxiliar local (simplificado)
+			String rutaImagen = procesarImagen(foto); 
+			usuario.setFotoPerfil(rutaImagen);
+
+			RolEntity rol = rolService.findByNombre("CLIENTE");
+			usuario.setRol(rol);
+
+			usuario.setClave(password);
+			usuario.setEstado(true);
+
+			UsuarioEntity nuevoUsuario = usuarioService.add(usuario);
+
+			ClienteEntity cliente = new ClienteEntity();
+			cliente.setUsuario(nuevoUsuario);
+			cliente.setEstado(true);
+			clienteService.add(cliente);
+
+			session.invalidate();
+			redirect.addFlashAttribute("success", "Registro exitoso.");
+
+			return "redirect:/login";
+
+		} catch (IOException e) {
+			redirect.addFlashAttribute("error", "Error guardando imagen.");
+			return "redirect:/cliente/validar-codigo";
+			}
+		}
+
+    // ====================================================
+    // 🥈 LÓGICA DE PERFIL Y CONTRATACIÓN
+    // ====================================================
+
+	// ----------------------------------------------------
+	// PERFIL DEL CLIENTE - SE MUESTRA TRAS LOGIN
+	// ----------------------------------------------------
+	@GetMapping("/perfil")
+	public String verPerfilCliente(Principal principal, Model model) {
+
+		if (principal == null) {
+			return "redirect:/login";
+		}
+
+		UsuarioEntity usuario = usuarioService.findByCorreo(principal.getName());
+
+		// Verificar si es cliente
+		ClienteEntity cliente = clienteService.buscarPorUsuario(usuario.getCodigo());
+
+		if (cliente == null) {
+			// Si no es cliente, redirigir a su perfil profesional (si existe)
+			return "redirect:/profesional/" + usuario.getCodigo();
+		}
+
+		// Cargar contrataciones del cliente
+		List<ContratacionEntity> contrataciones = contratacionService.listarPorCliente(cliente.getCodigo());
+
+		// Cargar valoraciones (puedes filtrar después si lo deseas)
+		List<ValoracionEntity> valoraciones = valoracionService.findAllCustom();
+
+		// Datos a la vista
+		model.addAttribute("usuario", usuario);
+		model.addAttribute("cliente", cliente);
+		model.addAttribute("contrataciones", contrataciones);
+		model.addAttribute("valoraciones", valoraciones);
+
+		return "cliente-detalle";
+		}
+
+		// ----------------------------------------------------
+		// CONTRATACIONES ENVIADAS POR EL CLIENTE
+		// ----------------------------------------------------
+	@GetMapping("/mis-contrataciones")
+	public String listarContratacionesCliente(Principal principal, Model model) {
+
+		if (principal == null) {
+			return "redirect:/login";
+		}
+
+		UsuarioEntity usuario = usuarioService.findByCorreo(principal.getName());
+		ClienteEntity cliente = clienteService.buscarPorUsuario(usuario.getCodigo());
+
+		if (cliente == null) {
+			// Si por alguna razón no tiene perfil de cliente (es solo profesional), redirigir
+			return "redirect:/profesional/perfil";
+		}
+
+		List<ContratacionEntity> contrataciones = contratacionService.listarPorCliente(cliente.getCodigo());
+		model.addAttribute("usuario", usuario);
+		model.addAttribute("cliente", cliente);
+		model.addAttribute("contrataciones", contrataciones);
+		
+		return "mis-contrataciones"; 
+		}
+
+	// ----------------------------------------------------
+	// MÉTODO AUXILIAR — Guardado de Imagen (Alineado con ProfesionalController)
+	// ----------------------------------------------------
+	private String procesarImagen(MultipartFile archivo) throws IOException {
+
+		if (archivo == null || archivo.isEmpty()) {
+			return "/images/default-profile.png";
+		}
+
+		String carpeta = "C:/arreglago/images/";
+		String original = archivo.getOriginalFilename().replace(" ", "_");
+		String nombre = System.currentTimeMillis() + "_" + original;
+
+		File destino = new File(carpeta + nombre);
+		destino.getParentFile().mkdirs();
+
+        // Aplicamos redimensionamiento (asumiendo que esto es lo que quieres)
+		Thumbnails.of(archivo.getInputStream())
+					.size(600, 600)
+					.keepAspectRatio(true)
+					.toFile(destino);
+
+		return "/usuarios/" + nombre;
+		}
+	
+	// ----------------------------------------------------
+	// CONTRATACIÓN 1: Mostrar Formulario
+	// ----------------------------------------------------
+	@GetMapping("/nuevo/{idProveedor}")
+	public String mostrarFormularioContratacion(@PathVariable Long idProveedor, Model model, Principal principal) {
+		
+		if (principal == null) {
+				return "redirect:/login"; // ✅ CORREGIDO
+		}
+
+		model.addAttribute("proveedor", proveedorService.findById(idProveedor));
+		model.addAttribute("contratacion", new ContratacionEntity());
+
+		return "contratacion-form";
+		}
+	
+	// ----------------------------------------------------
+	// CONTRATACIÓN 2: Confirmar y Guardar Solicitud
+	// ----------------------------------------------------
+	@PostMapping("/confirmar-contratacion/{idProveedor}")
+	public String confirmarContratacion(@PathVariable Long idProveedor,
+										@RequestParam String detalle, 
+										@RequestParam String fecha,
+										Principal principal,
+										RedirectAttributes redirect) {
+
+	if (principal == null) {
+		return "redirect:/login";
+	}
+
+UsuarioEntity usuario = usuarioService.findByCorreo(principal.getName());
+
+	// 1. Verificar que el usuario logueado sea un cliente
+	if (!usuario.getRol().getNombre().equals("CLIENTE")) {
+		redirect.addFlashAttribute("error", "Solo los clientes pueden contratar servicios.");
+		return "redirect:/menuprincipal";
+	}
+
+	ClienteEntity cliente = clienteService.buscarPorUsuario(usuario.getCodigo());
+	ProveedorEntity proveedor = proveedorService.findById(idProveedor);
+	
+	 // 1. VERIFICACIÓN CRÍTICA: CLIENTE OBLIGATORIO
+	if (cliente == null) {
+		redirect.addFlashAttribute("error", "❌ Tu perfil de usuario no está registrado como Cliente activo. No puedes contratar.");
+		return "redirect:/cliente/perfil";
+	}
+
+	// 2. VERIFICACIÓN DE SEGURIDAD: PROVEEDOR OBLIGATORIO
+	if (proveedor == null) {
+			redirect.addFlashAttribute("error", "❌ El profesional que intentas contratar no existe o ya no está disponible.");
+			return "redirect:/menuprincipal";
+		}
+
+	// 2. CREACIÓN Y ASIGNACIÓN DE LA CONTRATACIÓN
+		ContratacionEntity contratacion = new ContratacionEntity();
+		contratacion.setCliente(cliente);
+		contratacion.setProveedor(proveedor);
+		contratacion.setDetalleServicio(detalle); 
+		contratacion.setEstado("pendiente");
+       // NOTA: EL id_servicio se asigna como NULL. Esto fallará si la columna es NOT NULL en la BD.
+
+		try {
+			LocalDate fechaTentativa = LocalDate.parse(fecha, DateTimeFormatter.ISO_DATE);
+			contratacion.setFechaTentativa(fechaTentativa);
+		} catch (Exception e) {
+			System.err.println("Error parseando fecha: " + e.getMessage());
+		}
+
+		try {
+			// 🚩 INTENTAR GUARDAR
+			contratacionService.add(contratacion);
+			
+			redirect.addFlashAttribute("success", "✅ Solicitud enviada correctamente.");
+			return "redirect:/cliente/mis-contrataciones";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			redirect.addFlashAttribute("error", "❌ Fallo al guardar la solicitud. Error: " + e.getMessage());
+	return "redirect:/cliente/nuevo/" + idProveedor; // ✅ CORREGIDA REDIRECCIÓN
+		}
+	}
+}

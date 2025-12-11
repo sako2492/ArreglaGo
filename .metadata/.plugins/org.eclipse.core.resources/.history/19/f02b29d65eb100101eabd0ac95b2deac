@@ -1,0 +1,54 @@
+package pe.com.arreglago.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import pe.com.arreglago.entity.UsuarioEntity;
+import pe.com.arreglago.repository.UsuarioRepository;
+
+@Controller
+public class LoginController {
+	 @Autowired
+	    private UsuarioRepository usuarioRepository;
+
+	    // Mostrar vistas
+	    @GetMapping("/login-cliente")
+	    public String mostrarLoginCliente() {
+	        return "login-cliente";
+	    }
+
+	    @GetMapping("/login-proveedor")
+	    public String mostrarLoginProveedor() {
+	        return "login-proveedor";
+	    }
+
+	    // Validar login
+	    @PostMapping("/login-validar")
+	    public String validarLogin(
+	            @RequestParam String nroDocumento,
+	            @RequestParam String clave,
+	            Model model) {
+
+	        UsuarioEntity usuario = usuarioRepository.findByNroDocumentoAndClave(nroDocumento, clave);
+
+	        if (usuario != null) {
+	            String nombreRol = usuario.getRol().getNombre().toLowerCase(); // Asumiendo que tu RolEntity tiene un campo "nombre"
+
+	            if (nombreRol.contains("cliente")) {
+	                return "redirect:/home-cliente";
+	            } else if (nombreRol.contains("proveedor")) {
+	                return "redirect:/home-proveedor";
+	            } else {
+	                model.addAttribute("error", "Rol no reconocido para este usuario");
+	                return "login-cliente";
+	            }
+	        } else {
+	            model.addAttribute("error", "Documento o contraseña incorrectos");
+	            return "login-cliente";
+	        }
+	    }
+}

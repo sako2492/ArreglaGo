@@ -16,7 +16,7 @@ import pe.com.arreglago.entity.ClienteEntity;
 import pe.com.arreglago.service.ClienteService;
 
 @RestController 
-@RequestMapping ("/cliente")
+@RequestMapping ("/api/cliente")
 
 public class ClienteRestController {
 

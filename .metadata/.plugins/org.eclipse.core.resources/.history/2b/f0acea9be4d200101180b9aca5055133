@@ -1,0 +1,67 @@
+package pe.com.arreglago.controller;
+
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import pe.com.arreglago.entity.CategoriaEntity;
+import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.service.CategoriaService;
+import pe.com.arreglago.service.ProveedorService;
+
+@Controller
+public class InicioController {
+
+    @Autowired
+    private CategoriaService categoriaService;
+
+    @Autowired
+    private ProveedorService proveedorService;
+
+    @GetMapping("/")
+    	public String showSplash() {
+    		// Asume que la plantilla con el temporizador JS ahora se llama index.html
+    			return "index";
+    			}
+    
+    // ----------------------------------------------------
+    // 🥈 MENÚ PRINCIPAL
+    // Esta es la página a la que te lleva el temporizador JS después de 4 segundos
+    // ----------------------------------------------------
+    @GetMapping("/menuprincipal")
+    public String mostrarMenuPrincipal(Model model) { // Mantén el Model para cargar datos
+
+        List<CategoriaEntity> categorias = categoriaService.findAllCustom();
+
+        // 👉 Contador de profesionales por categoría
+        for (CategoriaEntity cat : categorias) {
+            Long total = proveedorService.contarPorCategoria(cat.getCodigo());
+            cat.setTotalProveedores(total);
+        }
+
+        model.addAttribute("categorias", categorias);
+        model.addAttribute("profesionales", proveedorService.findAllCustom());
+        model.addAttribute("testimonios", Collections.emptyList());
+
+        return "menuprincipal";
+    }
+    
+    @GetMapping("/buscar")
+    public String buscar(@RequestParam("q") String query, Model model) {
+
+        String texto = query.trim().toLowerCase();
+
+        List<ProveedorEntity> resultados = proveedorService.buscarGeneral(texto);
+
+        model.addAttribute("resultados", resultados);
+        model.addAttribute("busqueda", query);
+
+        return "resultado-busqueda";
+    }
+
+}

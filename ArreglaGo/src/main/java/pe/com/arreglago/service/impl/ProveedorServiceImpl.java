@@ -1,5 +1,6 @@
 package pe.com.arreglago.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,4 +74,38 @@ public class ProveedorServiceImpl implements ProveedorService{
 	    existing.setEstado(true);
 	    return repositorio.save(existing);
 	}
+	
+	@Override
+	public List<ProveedorEntity> buscarGeneral(String texto) {
+
+	    String[] palabras = texto.toLowerCase().trim().split("\\s+");
+
+	    List<ProveedorEntity> resultados = null;
+
+	    for (String palabra : palabras) {
+
+	        List<ProveedorEntity> parciales = repositorio.buscarCoincidenciaGeneral(palabra);
+
+	        if (resultados == null) {
+	            resultados = parciales;
+	        } else {
+	            resultados.retainAll(parciales); // INTERSECCIÓN
+	        }
+	    }
+
+	    return resultados == null ? new ArrayList<>() : resultados;
+	}
+	
+	@Override
+	public Long contarPorCategoria(Long idCategoria) {
+	    return repositorio.contarPorCategoria(idCategoria);
+	}
+	
+	@Override
+	public ProveedorEntity buscarPorUsuario(Long idUsuario){
+	    return repositorio.buscarPorUsuario(idUsuario);
+	}
+
+
+
 }

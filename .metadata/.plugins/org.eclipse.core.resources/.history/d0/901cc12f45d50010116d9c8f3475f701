@@ -1,0 +1,131 @@
+package pe.com.arreglago.service.impl;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import net.coobird.thumbnailator.Thumbnails; // Necesitas esta dependencia en tu pom.xml
+
+import pe.com.arreglago.entity.GaleriaProveedorEntity;
+import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.repository.GaleriaProveedorRepository;
+import pe.com.arreglago.service.GaleriaProveedorService;
+
+
+@Service
+public class GaleriaProveedorServiceImpl implements GaleriaProveedorService{
+
+	@Autowired
+	private GaleriaProveedorRepository repositorio;
+	
+	// Carpeta donde se guardarán las fotos. Debe existir en el sistema.
+    private final String CARPETA_BASE = "C:/arreglago/galeria/";
+    
+ // ===================================
+    // 🛑 MÉTODOS CRUD (Implementación Requerida por la Interfaz)
+    // ===================================
+
+    @Override
+    public List<GaleriaProveedorEntity> findAll() {
+        return repositorio.findAll();
+    }
+
+    @Override
+    public List<GaleriaProveedorEntity> findAllCustom() {
+        // Asumo que tienes un método custom para listar todos los activos
+        return repositorio.findAll(); 
+    }
+
+    @Override
+    public GaleriaProveedorEntity findById(Long id) {
+        return repositorio.findById(id).orElse(null);
+    }
+
+    @Override
+    public GaleriaProveedorEntity add(GaleriaProveedorEntity obj) {
+        return repositorio.save(obj);
+    }
+
+    @Override
+    public GaleriaProveedorEntity update(GaleriaProveedorEntity obj, Long id) {
+        GaleriaProveedorEntity objGaleria = repositorio.findById(id).get();
+        BeanUtils.copyProperties(obj, objGaleria, "codigo");
+        return repositorio.save(objGaleria);
+    }
+
+    @Override
+    public GaleriaProveedorEntity delete(Long id) {
+        GaleriaProveedorEntity objGaleria = repositorio.findById(id).get();
+        objGaleria.setEstado(false);
+        return repositorio.save(objGaleria);
+    }
+
+    @Override
+    public GaleriaProveedorEntity enable(Long id) {
+        GaleriaProveedorEntity objGaleria = repositorio.findById(id).get();
+        objGaleria.setEstado(true);
+        return repositorio.save(objGaleria);
+    }
+
+    
+    // ===================================
+    // MÉTODOS ESPECÍFICOS DE GALERÍA
+    // ===================================
+    
+    @Override
+    public List<GaleriaProveedorEntity> listarPorProveedor(Long idProveedor) {
+    	return repositorio.findByProveedorAndEstadoActivo(idProveedor);
+    	}
+    
+    @Override
+    public GaleriaProveedorEntity addImagen(ProveedorEntity proveedor, String descripcion, 
+    										MultipartFile archivo) throws IOException {
+        
+        //Tu lógica para guardar el archivo físico y registrar en BD)
+    	if (archivo == null || archivo.isEmpty()) {
+            throw new IllegalArgumentException("El archivo de imagen no puede estar vacío.");
+        }
+
+        // 1. Procesar y Guardar Archivo Físico
+        String nombreArchivo = generarNombreArchivo(archivo, proveedor.getCodigo());
+        File destino = new File(CARPETA_BASE + nombreArchivo);
+        destino.getParentFile().mkdirs();
+
+        Thumbnails.of(archivo.getInputStream())
+                    .size(800, 600) 
+                    .keepAspectRatio(true)
+                    .toFile(destino);
+
+        // 2. Registrar en la Base de Datos
+        GaleriaProveedorEntity nuevaImagen = new GaleriaProveedorEntity();
+        nuevaImagen.setProveedor(proveedor);
+        nuevaImagen.setDescripcion(descripcion);
+        nuevaImagen.setUrlImagen("/galeria/" + nombreArchivo); 
+        nuevaImagen.setFechaSubida(LocalDateTime.now());
+        nuevaImagen.setEstado(true);
+        
+        return repositorio.save(nuevaImagen);
+    }
+    
+    @Override
+    public void deleteImagen(Long idImagen) {
+    	// Implementación de eliminación lógica ya definida
+    	GaleriaProveedorEntity imagen = repositorio.findById(idImagen)
+            .orElseThrow(() -> new RuntimeException("Imagen no encontrada"));
+        
+        imagen.setEstado(false); 
+        repositorio.save(imagen); // <-- Aquí se guarda el cambio de estado, pero NO se retorna.
+    }
+    
+    private String generarNombreArchivo(MultipartFile archivo, Long idProveedor) {
+        String original = archivo.getOriginalFilename().replace(" ", "_");
+        String extension = original.substring(original.lastIndexOf("."));
+        return "prov_" + idProveedor + "_" + System.currentTimeMillis() + extension;
+    }
+}

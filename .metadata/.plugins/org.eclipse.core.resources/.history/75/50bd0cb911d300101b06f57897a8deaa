@@ -1,0 +1,37 @@
+package pe.com.arreglago;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import pe.com.arreglago.service.UsuarioService;
+import pe.com.arreglago.service.impl.UsuarioServiceImpl;
+
+@SpringBootApplication
+public class ArreglaGoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ArreglaGoApplication.class, args);
+	}
+
+	// 🛑 Bean que se ejecuta al inicio de la aplicación 🛑
+    @Bean
+    public CommandLineRunner runAdminHashGenerator(UsuarioService usuarioService) {
+        return args -> {
+            // Asegúrate de castear el servicio a la implementación si no tienes la interfaz
+            // con el método generateAdminHash.
+            UsuarioServiceImpl usuarioServiceImpl = (UsuarioServiceImpl) usuarioService;
+            
+            String plainPassword = "admin123";
+            String hashedPassword = usuarioServiceImpl.generateAdminHash(plainPassword);
+            
+            // 🚨 COPIA EL HASH QUE APARECE EN LA CONSOLA 🚨
+            System.out.println("==========================================================");
+            System.out.println("           🔑 HASH GENERADO PARA 'admin123' 🔑           ");
+            System.out.println("           COPIA ESTE HASH EN TU COMANDO SQL:           ");
+            System.out.println("HASH: " + hashedPassword);
+            System.out.println("==========================================================");
+        };
+    }
+}

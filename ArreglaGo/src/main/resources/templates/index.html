@@ -5,8 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Arregla Go | Ingreso al Sistema</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <!-- Fuente Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Íconos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- TU CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
@@ -14,30 +21,51 @@
     align-items-center vh-100">
         <!-- inicio del login -->
         <div class="p-5 rounded-5 shadow-lg" style="max-width: 450px; background-color: white;">
-            <h1 class="text-center">Ingreso al Sistema</h1>
+            <h1 class="text-center mb-4">Ingreso al Sistema</h1>
+
+            <!-- Bloque de Mensajes de Éxito (tras registro exitoso) -->
+            <div th:if="${param.success}" class="alert alert-success text-center">
+                ¡Registro exitoso! Ya puedes iniciar sesión.
+            </div>
+
+            <!-- Bloque de Mensajes de Error (si la autenticación falla) -->
+            <div th:if="${param.error}" class="alert alert-danger text-center">
+                Usuario o contraseña incorrectos.
+            </div>
+
             <!-- inicio del formulario -->
-            <form>
+            <!-- CORRECCIÓN: Agregar method y th:action -->
+            <form method="post" th:action="@{/login}">
                 <div class="mb-3">
-                    <label for="txtUsu" class="form-label">Usuario: </label>
-                    <input type="text" class="form-control" id="txtUsu" name="txtUsu" required
-                        placeholder="Ingrese el usuario">
+                    <label for="username" class="form-label">Usuario (Correo):</label>
+                    <input type="text" class="form-control" id="username" name="username"
+                        required placeholder="Ingresa tu correo electrónico">
                 </div>
                 <div class="mb-3">
-                    <label for="txtCla" class="form-label">Clave: </label>
-                    <input type="password" class="form-control" id="txtCla" name="txtCla" required
-                        placeholder="Ingresa la clave">
-                </div>
-                <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                    <label for="password" class="form-label">Clave:</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                        required placeholder="Ingresa tu clave">
                 </div>
 
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" class="btn btn-custom w-100">Ingresar</button>
+                </div>
             </form>
+
+            <p class="text-center mt-2 mb-0">
+                <small>¿No tienes una cuenta?
+                    <a th:href="@{/login-opciones}">Crear cuenta</a>
+                </small>
+            </p>
+
             <!-- fin del formulario -->
-            <a th:href="@{/menuprincipal}"> Ir a menu principal</a>
+
+            <p class="text-center mt-3 mb-0">
+                <small>¿Eres profesional? <a th:href="@{/profesional/registro}">Regístrate aquí</a></small>
+            </p>
+
         </div>
         <!-- fin del login -->
-
-
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"

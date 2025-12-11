@@ -18,22 +18,28 @@ import pe.com.arreglago.service.ProveedorService;
 @RequestMapping("/categoria")
 public class CategoriaProveedorController {
 
-	 @Autowired
-	    private ProveedorService proveedorService;
+    @Autowired
+    private ProveedorService proveedorService;
 
-	    @Autowired
-	    private CategoriaService categoriaService;
+    @Autowired
+    private CategoriaService categoriaService;
 
-	    // Página dinámica para cualquier categoría
-	    @GetMapping("/{id}/proveedor")
-	    public String listarPorCategoria(@PathVariable Long id, Model model) {
+    // ✅ RUTA PRINCIPAL USADA POR EL NAVBAR
+    @GetMapping("/{id}")
+    public String verCategoria(@PathVariable Long id, Model model) {
 
-	        CategoriaEntity categoria = categoriaService.findById(id);
-	        List<ProveedorEntity> lista = proveedorService.findByCategoria(id);
+        CategoriaEntity categoria = categoriaService.findById(id);
+        List<ProveedorEntity> lista = proveedorService.findByCategoria(id);
 
-	        model.addAttribute("categoria", categoria);
-	        model.addAttribute("proveedores", lista);
+        model.addAttribute("categoria", categoria);
+        model.addAttribute("proveedores", lista);
 
-	        return "categoria-detalle"; // llama al archivo HTML 
-	    }
+        return "categoria-detalle";
+    }
+
+    // ✅ Mantener compatibilidad con URL antigua
+    @GetMapping("/{id}/proveedor")
+    public String listarPorCategoria(@PathVariable Long id, Model model) {
+        return "redirect:/categoria/" + id;
+    }
 }

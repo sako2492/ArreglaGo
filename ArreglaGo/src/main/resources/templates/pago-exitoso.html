@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Suscripción Exitosa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .success-card {
+            max-width: 500px;
+            margin: 50px auto;
+            text-align: center;
+            border-top: 5px solid #198754; /* Color verde de éxito */
+        }
+        .success-icon {
+            color: #198754;
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container">
+    <div class="success-card bg-white p-5 shadow-lg rounded-4">
+        
+        <i class="bi bi-check-circle-fill success-icon"></i>
+
+        <h2 class="fw-bold mb-3 text-success" th:text="${success}">¡Suscripción Activada!</h2>
+        
+        <p class="lead">
+            Tu cuenta Premium ha sido activada correctamente. Ahora puedes recibir solicitudes.
+        </p>
+        
+        <p th:if="${fechaFin}">
+            Vigente hasta el: <strong class="text-primary" th:text="${#temporals.format(fechaFin, 'dd/MM/yyyy')}">31/12/2026</strong>
+        </p>
+        
+        <hr class="my-4">
+
+        <h5 class="mb-3">Siguiente Paso: Potencia tu Perfil</h5>
+
+        <a th:if="${idProveedor}"
+           th:href="@{/profesional/galeria/{id}(id=${idProveedor})}" 
+           class="btn btn-primary w-100 py-2 mb-3 fw-bold">
+            <i class="bi bi-images me-2"></i> Subir Galería de Trabajos
+        </a>
+
+        <a th:href="@{/profesional/perfil}" class="btn btn-outline-secondary w-100 py-2">
+            Volver a mi Perfil
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

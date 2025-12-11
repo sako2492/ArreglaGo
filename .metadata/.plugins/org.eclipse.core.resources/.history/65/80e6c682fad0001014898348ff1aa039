@@ -1,0 +1,92 @@
+package pe.com.arreglago.webconfig;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import pe.com.arreglago.security.CustomSuccessHandler;
+
+@Configuration
+public class SecurityConfig {
+
+    @Autowired
+    private UserDetailsService usuarioDetailsService;
+
+    @Autowired
+    private CustomSuccessHandler customSuccessHandler;
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http
+            .userDetailsService(usuarioDetailsService)
+            .authorizeHttpRequests(auth -> auth
+                // 🔹 Páginas públicas
+                .requestMatchers(
+                    "/", 
+                    "/index",
+                    "/login-opciones",
+                    "/login",
+                    "/categoria/**",
+                    "/css/**",
+                    "/js/**",
+                    "/images/**",
+                    "/static/**",
+                    "/favicon.ico",
+                    
+                    // Registro y verificación
+                    "/profesional/registro",
+                    "/profesional/nuevoperfil",
+                    "/profesional/validar-codigo",
+                    "/profesional/guardar-perfil-final",
+
+                    "/cliente/registro",
+                    "/cliente/nuevoperfil",
+                    "/cliente/validar-codigo",
+                    "/cliente/guardar-perfil-final",
+
+                    "/verificacion",
+                    "/crear-password"
+                ).permitAll()
+
+                // 🔹 Seguridad por roles
+                .requestMatchers("/cliente/**").hasRole("CLIENTE")
+                .requestMatchers("/profesional/**").hasRole("PROFESIONAL")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                // 🔹 Todo lo demás debe estar logueado
+                .anyRequest().authenticated()
+            )
+
+            // 🔐 Login
+            .formLogin(login -> login
+                .loginPage("/login-opciones")   // <- Tu login real
+                .loginProcessingUrl("/login")   // <- Endpoint POST
+                .usernameParameter("txtUsu")
+                .passwordParameter("txtCla")
+                .successHandler(customSuccessHandler)
+                .failureUrl("/login-opciones?error=true")
+                .permitAll()
+            )
+
+            // 🚪 Logout
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login-opciones?logout=true")
+                .permitAll()
+            )
+
+            .csrf(csrf -> csrf.disable());
+
+        return http.build();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}

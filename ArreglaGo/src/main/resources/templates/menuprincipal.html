@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,414 +18,407 @@
 
 <body style="font-family: 'Inter', sans-serif;">
 
-<!-- ========== NAVBAR ========== -->
-<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3 fixed-top">
-    <div class="container">
+    <!-- ================= NAVBAR ================= -->
+    <div th:replace="~{fragments/navbar :: navbar(categorias=${categorias})}"></div>
+    <!-- ================= FIN ================= -->
 
-        <a class="navbar-brand d-flex align-items-center fw-bold brand-color me-3" th:href="@{/}">
-            <img th:src="@{/images/logo.png}" alt="Logo ArreglaGo" width="95" height="95"
-                 onerror="this.src='/images/logo-fallback.png'">
-            <span class="fs-4">ArreglaGo</span>
-        </a>
+    <!-- ========== HERO ========== -->
+    <section class="hero d-flex align-items-center text-center text-white position-relative overflow-hidden">
 
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#mainNavbar">
-            <span class="bi bi-list fs-1"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="mainNavbar">
-
-            <!-- BUSCADOR -->
-            <form class="d-flex mx-auto w-50" role="search">
-                <div class="input-group">
-                    <input name="q" type="search" class="form-control rounded-start"
-                           placeholder="Buscar servicios o profesionales">
-                    <button class="btn btn-custom"><i class="bi bi-search"></i></button>
+        <div id="heroCarousel" class="carousel slide carousel-fade position-absolute w-100 h-100"
+            data-bs-ride="carousel">
+            <div class="carousel-inner h-100">
+                <div class="carousel-item active h-100">
+                    <img th:src="@{/images/hero-bg1.jpg}" class="d-block w-100 h-100 object-fit-cover">
                 </div>
-            </form>
-
-            <!-- OPCIONES DERECHA -->
-            <ul class="navbar-nav ms-auto align-items-center">
-
-                <li class="nav-item">
-                    <a class="nav-link brand-color" th:href="@{/menuprincipal}">Inicio</a>
-                </li>
-
-                <!-- CATEGORÍAS -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle brand-color" href="#" id="categoriasDropdown"
-                       role="button" data-bs-toggle="dropdown">Categorías</a>
-
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 1 + '/proveedor'}">Electricista</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 2 + '/proveedor'}">Gasfitero</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 3 + '/proveedor'}">Cerrajero</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 4 + '/proveedor'}">Pintor</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 5 + '/proveedor'}">Carpintero</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 6 + '/proveedor'}">Técnico de Refrigeración</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 7 + '/proveedor'}">Técnico de Electrodomésticos</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 8 + '/proveedor'}">Albañil</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 9 + '/proveedor'}">Soldador</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 10 + '/proveedor'}">Técnico de Computadoras</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 11 + '/proveedor'}">Instalador de Drywall</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 12 + '/proveedor'}">Vidrieros</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 13 + '/proveedor'}">Jardinero</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 14 + '/proveedor'}">Técnico de Televisores</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 15 + '/proveedor'}">Fumigador</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 16 + '/proveedor'}">Técnico de Gas</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 17 + '/proveedor'}">Tapicero</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 18 + '/proveedor'}">Instalador de pisos</a></li>
-                        <li><a class="dropdown-item" th:href="@{'/categoria/' + 19 + '/proveedor'}">Limpieza</a></li>
-                    </ul>
-                </li>
-
-                <!-- BOTONES DERECHA -->
-                <div class="d-flex align-items-center gap-3 ms-3">
-                    <a class="btn btn-custom" th:href="@{/profesional/registro}">
-                        <i class="bi bi-plus-circle me-1"></i> Publicar servicio
-                    </a>
-
-                    <a class="btn btn-outline-dark px-3 py-2" th:href="@{/login-opciones}">
-                        <i class="bi bi-person-circle me-1"></i> Iniciar sesión
-                    </a>
+                <div class="carousel-item h-100">
+                    <img th:src="@{/images/hero-bg22.jpg}" class="d-block w-100 h-100 object-fit-cover">
                 </div>
-
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<!-- ========== HERO ========== -->
-<section class="hero d-flex align-items-center text-center text-white position-relative overflow-hidden">
-    
-    <div id="heroCarousel" class="carousel slide carousel-fade position-absolute w-100 h-100" data-bs-ride="carousel">
-        <div class="carousel-inner h-100">
-            <div class="carousel-item active h-100">
-                <img th:src="@{/images/hero-bg1.jpg}" class="d-block w-100 h-100 object-fit-cover">
-            </div>
-            <div class="carousel-item h-100">
-                <img th:src="@{/images/hero-bg22.jpg}" class="d-block w-100 h-100 object-fit-cover">
-            </div>
-            <div class="carousel-item h-100">
-                <img th:src="@{/images/hero-bg33.jpg}" class="d-block w-100 h-100 object-fit-cover">
+                <div class="carousel-item h-100">
+                    <img th:src="@{/images/hero-bg33.jpg}" class="d-block w-100 h-100 object-fit-cover">
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="hero-overlay"></div>
+        <div class="hero-overlay"></div>
 
-    <div class="container position-relative z-2">
-        <h1 class="fw-bold display-5 mb-3">Encuentra profesionales de confianza cerca de ti</h1>
-        <p class="lead mb-4">Electricistas, gasfiteros, carpinteros y más — todo en un solo lugar.</p>
+            <div class="container position-relative z-2">
+                <h1 class="fw-bold display-5 mb-3">Encuentra profesionales de confianza cerca de ti</h1>
+                <p class="lead mb-4">Electricistas, gasfiteros, carpinteros y más — todo en un solo lugar.</p>
 
-        <div class="d-flex justify-content-center">
-            <div class="input-group input-group-lg w-75 w-md-50">
-                <input type="text" class="form-control" placeholder="¿Qué servicio necesitas?">
-                <button class="btn btn-orange px-4">Buscar</button>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ========== CATEGORÍAS ========== -->
-<section class="categories py-5">
-    <div class="container text-center fade-in-section">
-
-        <h2 class="fw-bold mb-4 text-brand">Categorías de Servicios</h2>
-        <p class="text-muted mb-5">
-            Encuentra al profesional que necesitas en cualquier categoría
-        </p>
-
-        <div class="row g-4 justify-content-center">
-
-            <!-- 1. Electricista -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-lightning-charge-fill"></i></div>
-                    <h6 class="fw-semibold">Electricista</h6>
-                </div>
-            </div>
-
-            <!-- 2. Gasfitero -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-droplet-fill"></i></div>
-                    <h6 class="fw-semibold">Gasfitero</h6>
-                </div>
-            </div>
-
-            <!-- 3. Cerrajero -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-key-fill"></i></div>
-                    <h6 class="fw-semibold">Cerrajero</h6>
-                </div>
-            </div>
-
-            <!-- 4. Pintor -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-brush-fill"></i></div>
-                    <h6 class="fw-semibold">Pintor</h6>
-                </div>
-            </div>
-
-            <!-- 5. Carpintero -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-hammer"></i></div>
-                    <h6 class="fw-semibold">Carpintero</h6>
-                </div>
-            </div>
-
-            <!-- 6. Técnico de Refrigeración -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-snow2"></i></div>
-                    <h6 class="fw-semibold">Técnico de Refrigeración</h6>
-                </div>
-            </div>
-
-            <!-- 7. Técnico de Electrodomésticos -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-tools"></i></div>
-                    <h6 class="fw-semibold">Técnico de Electrodomésticos</h6>
-                </div>
-            </div>
-
-            <!-- 8. Albañil -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-bricks"></i></div>
-                    <h6 class="fw-semibold">Albañil</h6>
-                </div>
-            </div>
-
-            <!-- 9. Soldador -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-fire"></i></div>
-                    <h6 class="fw-semibold">Soldador</h6>
-                </div>
-            </div>
-
-            <!-- 10. Técnico de Computadoras -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-laptop"></i></div>
-                    <h6 class="fw-semibold">Técnico de Computadoras</h6>
-                </div>
-            </div>
-
-            <!-- 11. Instalador de Drywall -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-border-width"></i></div>
-                    <h6 class="fw-semibold">Instalador de Drywall</h6>
-                </div>
-            </div>
-
-            <!-- 12. Vidrieros -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-window"></i></div>
-                    <h6 class="fw-semibold">Vidrieros</h6>
-                </div>
-            </div>
-
-            <!-- 13. Jardinero -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-tree-fill"></i></div>
-                    <h6 class="fw-semibold">Jardinero</h6>
-                </div>
-            </div>
-
-            <!-- 14. Técnico de Televisores -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-tv-fill"></i></div>
-                    <h6 class="fw-semibold">Técnico de Televisores</h6>
-                </div>
-            </div>
-
-            <!-- 15. Fumigador -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-bug-fill"></i></div>
-                    <h6 class="fw-semibold">Fumigador</h6>
-                </div>
-            </div>
-
-            <!-- 16. Técnico de Gas -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-fuel-pump-fill"></i></div>
-                    <h6 class="fw-semibold">Técnico de Gas</h6>
-                </div>
-            </div>
-
-            <!-- 17. Tapicero -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-sofa"></i></div>
-                    <h6 class="fw-semibold">Tapicero</h6>
-                </div>
-            </div>
-
-            <!-- 18. Instalador de Pisos -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-grid-3x3-gap-fill"></i></div>
-                    <h6 class="fw-semibold">Instalador de Pisos</h6>
-                </div>
-            </div>
-
-            <!-- 19. Limpieza -->
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="category-box shadow-sm p-4 rounded-4 h-100">
-                    <div class="icon-wrapper mb-3"><i class="bi bi-stars"></i></div>
-                    <h6 class="fw-semibold">Limpieza</h6>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-
-
-<!-- ========== PROFESIONALES DESTACADOS ========== -->
-<section class="featured py-5 bg-light">
-    <div class="container fade-in-section">
-        <h2 class="text-center mb-5 fw-bold">Profesionales Destacados</h2>
-
-        <div class="row g-4">
-            <div class="col-md-4" th:each="p : ${profesionales}">
-                <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
-
-                    <!-- FOTO DEL PROFESIONAL -->
-                    <div class="position-relative">
-                    <img class="professional-img"
-                        th:src="${p.usuario.fotoPerfil != null} ? @{${p.usuario.fotoPerfil}} : @{/images/default-profile.png}"
-                        alt="Foto profesional">
-
-
-                        <!-- CALIFICACIÓN (ESTRELLAS) -->
-                        
-                        <div class="position-absolute bottom-0 start-0 m-2 px-2 py-1 bg-dark bg-opacity-50 rounded-3 text-warning small d-flex align-items-center">
-                            <span class="me-1" th:text="${#numbers.formatDecimal(p.promedioCalificacion,1,1)}">4.5</span>
-                            <span>
-                                <i class="bi bi-star-fill"
-                                   th:each="i : ${#numbers.sequence(1, T(java.lang.Math).round(p.promedioCalificacion))}"></i>
-                            </span>
-                        </div>
-                        
-                    </div>
-
-                    <div class="card-body">
-
-                        <!-- NOMBRE -->
-                        <h5 class="card-title mb-1 fw-semibold" th:text="${p.usuario.nombre}">Nombre</h5>
-
-                        <!-- CATEGORÍA -->
-                        <p class="text-primary fw-semibold small mb-1" th:text="${p.categoria.nombre}">
-                            Electricista
-                        </p>
-
-                        <!-- UBICACIÓN -->
-                        <p class="text-muted small mb-2">
-                            <i class="bi bi-geo-alt-fill text-danger me-1"></i>
-                            <span th:text="${p.usuario.distrito.nombre}">Distrito</span>
-                        </p> 
+                <div class="d-flex justify-content-center">
                     
-                        <!-- TRABAJOS REALIZADOS -->
-                       
-                        <p class="text-muted small mb-3">
-                            <i class="bi bi-briefcase-fill text-success me-1"></i>
-                            <span th:text="${p.totalTrabajos}">15</span> trabajos realizados
-                        </p>
-                   
-                        <!-- DESCRIPCIÓN -->
-                        <p class="card-text text-muted small" th:text="${p.descripcion}">
-                            Descripción del profesional.
-                        </p>
+                    <form id="heroSearchForm" th:action="@{/buscar}" method="get" 
+                        class="input-group input-group-lg w-100 w-md-75 w-lg-50" style="max-width: 600px;" onsubmit="return validateHeroSearch();">
+                        
+                        <input 
+                            id="heroSearchInput"
+                            name="q" 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="¿Qué servicio necesitas?"
+                            aria-label="Buscar servicio">
+                        <button class="btn btn-orange px-4" type="submit">
+                            Buscar
+                        </button>
+                    </form>
+                    
+                </div>
+            </div>
+        </section>
 
-                        <!-- BOTÓN -->
-                        <a th:href="@{'/profesional/' + ${p.codigo}}" class="btn btn-orange w-100">
-                            Ver perfil
-                        </a>
+    <!-- ========== CATEGORÍAS ========== -->
+    <section class="categories py-5">
+        <div class="container text-center fade-in-section">
 
+            <h2 class="fw-bold mb-4 text-brand">Categorías de Servicios</h2>
+            <p class="text-muted mb-5">
+                Encuentra al profesional que necesitas en cualquier categoría
+            </p>
+
+            <div class="row g-4 justify-content-center">
+
+                <div class="col-6 col-md-4 col-lg-2" th:each="cat : ${categorias}">
+
+                    <a th:href="@{/categoria/{id}/proveedor(id=${cat.codigo})}" class="text-decoration-none text-dark">
+
+                        <div class="category-box shadow-sm p-4 rounded-4 h-100 category-click">
+
+                            <div class="icon-wrapper mb-2">
+                                <i class="bi" th:classappend="${cat.icono}"></i>
+                            </div>
+
+                            <h6 class="fw-semibold" th:text="${cat.nombre}"></h6>
+
+                            <small class="text-muted">
+                                <span th:text="${cat.totalProveedores}">0</span> profesionales
+                            </small>
+
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== PROFESIONALES DESTACADOS ========== -->
+    <section class="featured py-5 bg-light">
+        <div class="container fade-in-section">
+            <h2 class="text-center mb-5 fw-bold">Profesionales Destacados</h2>
+
+            <div class="row g-4">
+                <div class="col-md-4" th:each="p : ${profesionales}">
+                    <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+
+                        <!-- FOTO DEL PROFESIONAL -->
+                        <div class="position-relative">
+                            <img class="professional-img"
+                                th:src="${p.usuario.fotoPerfil != null} ? @{${p.usuario.fotoPerfil}} : @{/images/default-profile.png}"
+                                alt="Foto profesional">
+
+
+                            <!-- CALIFICACIÓN (ESTRELLAS) -->
+
+                            <div
+                                class="position-absolute bottom-0 start-0 m-2 px-2 py-1 bg-dark bg-opacity-50 rounded-3 text-warning small d-flex align-items-center">
+                                <span class="me-1"
+                                    th:text="${#numbers.formatDecimal(p.promedioCalificacion,1,1)}">4.5</span>
+                                <span>
+                                    <i class="bi bi-star-fill"
+                                        th:each="i : ${#numbers.sequence(1, T(java.lang.Math).round(p.promedioCalificacion))}"></i>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <!-- NOMBRE -->
+                            <h5 class="card-title mb-1 fw-semibold" th:text="${p.usuario.nombre}">Nombre</h5>
+
+                            <!-- CATEGORÍA -->
+                            <p class="text-primary fw-semibold small mb-1" th:text="${p.categoria.nombre}">
+                                Electricista
+                            </p>
+
+                            <!-- UBICACIÓN -->
+                            <p class="text-muted small mb-2">
+                                <i class="bi bi-geo-alt-fill text-danger me-1"></i>
+                                <span th:text="${p.usuario.distrito.nombre}">Distrito</span>
+                            </p>
+
+                            <!-- TRABAJOS REALIZADOS -->
+
+                            <p class="text-muted small mb-3">
+                                <i class="bi bi-briefcase-fill text-success me-1"></i>
+                                <span th:text="${p.totalTrabajos}">15</span> trabajos realizados
+                            </p>
+
+                            <!-- DESCRIPCIÓN -->
+                            <p class="card-text text-muted small" th:text="${p.descripcion}">
+                                Descripción del profesional.
+                            </p>
+
+                            <!-- BOTÓN -->
+                            <a th:href="@{'/profesional/' + ${p.codigo}}" class="btn btn-orange w-100">
+                                Ver perfil
+                            </a>
+
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
+    </section>
 
-    </div>
-</section>
-
-
-
-
-<!-- ========== CÓMO FUNCIONA ========== -->
-<section class="how-it-works py-5 text-center">
-    <div class="container fade-in-section">
-        <h2 class="mb-4 fw-semibold">¿Cómo funciona ArreglaGo?</h2>
-
-        <div class="row g-4">
-            <div class="col-md-4">
-                <i class="bi bi-search fs-1 text-primary mb-3"></i>
-                <h5>Busca</h5>
-                <p>Encuentra al profesional que necesitas según su especialidad o ubicación.</p>
-            </div>
-            <div class="col-md-4">
-                <i class="bi bi-chat-dots fs-1 text-primary mb-3"></i>
-                <h5>Contacta</h5>
-                <p>Comunícate directamente con los profesionales desde la plataforma.</p>
-            </div>
-            <div class="col-md-4">
-                <i class="bi bi-hand-thumbs-up fs-1 text-primary mb-3"></i>
-                <h5>Contrata</h5>
-                <p>Evalúa, califica y contrata servicios de confianza.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ========== TESTIMONIOS ========== -->
-<section class="testimonials py-5 bg-light">
-    <div class="container fade-in-section">
-        <h2 class="text-center mb-5">Lo que dicen nuestros clientes</h2>
-
-        <div class="row g-4 text-center">
-            <div class="col-md-4" th:each="t : ${testimonios}">
-                <div class="testimonial p-4 bg-white shadow-sm rounded-4 h-100">
-                    <p class="mb-3 fst-italic" th:text="${t.comentario}">“Excelente servicio.”</p>
-                    <h6 class="fw-semibold text-primary" th:text="${t.nombre}">— Ana Torres</h6>
+    <!-- ========== CÓMO FUNCIONA ========== -->
+    <section class="how-it-works py-5 text-center">
+        <div class="container fade-in-section">
+            <h2 class="text-center mb-5 fw-bold">¿Cómo funciona ArreglaGo?</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <i class="bi bi-search fs-1 text-primary mb-3"></i>
+                    <h5>Busca</h5>
+                    <p>Encuentra al profesional que necesitas según su especialidad o ubicación.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="bi bi-chat-dots fs-1 text-primary mb-3"></i>
+                    <h5>Contacta</h5>
+                    <p>Comunícate directamente con los profesionales desde la plataforma.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="bi bi-hand-thumbs-up fs-1 text-primary mb-3"></i>
+                    <h5>Contrata</h5>
+                    <p>Evalúa, califica y contrata servicios de confianza.</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+   <!-- ========== TESTIMONIOS ========== -->
+<section class="testimonials-section py-5 bg-light">
+        <div class="container position-relative">
+            <div class="text-center mb-5">
+                <h2 class="text-center mb-5 fw-bold">Lo que dicen nuestros clientes</h2>
+            </div>
+
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    
+                    <div class="carousel-item active">
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="testimonial-card h-100">
+                                    <i class="bi bi-quote testimonial-quote"></i>
+                                    <div class="testimonial-rating text-warning">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "Excelente servicio. Contraté a un electricista y llegó puntual, trabajó muy profesionalmente y dejó todo impecable."
+                                    </p>
+                                    <div class="testimonial-author">
+                                        <div class="author-avatar" style="background-color: #ec4899;">AT</div>
+                                        <div>
+                                            <h6 class="author-name">Ana Torres</h6>
+                                            <p class="author-role">Cliente satisfecha</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="testimonial-card h-100">
+                                    <i class="bi bi-quote testimonial-quote"></i>
+                                    <div class="testimonial-rating text-warning">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "Necesitaba un gasfitero urgente y en menos de 2 horas ya tenía a alguien en mi casa. Resolvió el problema rápidamente."
+                                    </p>
+                                    <div class="testimonial-author">
+                                        <div class="author-avatar" style="background-color: #3b82f6;">JR</div>
+                                        <div>
+                                            <h6 class="author-name">Jorge Ramírez</h6>
+                                            <p class="author-role">Propietario</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="testimonial-card h-100">
+                                    <i class="bi bi-quote testimonial-quote"></i>
+                                    <div class="testimonial-rating text-warning">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "He contratado varios servicios para el edificio que administro. Todos los profesionales han sido excelentes."
+                                    </p>
+                                    <div class="testimonial-author">
+                                        <div class="author-avatar" style="background-color: #a855f7;">LM</div>
+                                        <div>
+                                            <h6 class="author-name">Lucia Mendoza</h6>
+                                            <p class="author-role">Administradora</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="testimonial-card h-100">
+                                    <i class="bi bi-quote testimonial-quote"></i>
+                                    <div class="testimonial-rating text-warning">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "La plataforma es muy fácil de usar y encuentras profesionales verificados rápidamente."
+                                    </p>
+                                    <div class="testimonial-author">
+                                        <div class="author-avatar" style="background-color: #22c55e;">MC</div>
+                                        <div>
+                                            <h6 class="author-name">Miguel Castro</h6>
+                                            <p class="author-role">Dueño de negocio</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="testimonial-card h-100">
+                                    <i class="bi bi-quote testimonial-quote"></i>
+                                    <div class="testimonial-rating text-warning">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "Me ayudó mucho poder ver las reseñas de otros clientes antes de contratar. El trabajo quedó hermoso."
+                                    </p>
+                                    <div class="testimonial-author">
+                                        <div class="author-avatar" style="background-color: #f97316;">PD</div>
+                                        <div>
+                                            <h6 class="author-name">Patricia Díaz</h6>
+                                            <p class="author-role">Ama de casa</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="testimonial-card h-100">
+                                    <i class="bi bi-quote testimonial-quote"></i>
+                                    <div class="testimonial-rating text-warning">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "Como profesional registrado, he conseguido muchos clientes. Es excelente para ambos lados."
+                                    </p>
+                                    <div class="testimonial-author">
+                                        <div class="author-avatar" style="background-color: #14b8a6;">RS</div>
+                                        <div>
+                                            <h6 class="author-name">Roberto Sánchez</h6>
+                                            <p class="author-role">Ingeniero</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="carousel-control-prev testimonial-carousel-btn" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next testimonial-carousel-btn" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+        </div>
+    </section>
 
 <!-- ========== FOOTER ========== -->
-<footer class="footer bg-dark text-light text-center py-4">
-    <div class="container">
-        <p class="mb-1">&copy; 2025 ArreglaGo. Todos los derechos reservados.</p>
-        <div>
-            <a href="#" class="text-light me-3"><i class="bi bi-facebook fs-5"></i></a>
-            <a href="#" class="text-light me-3"><i class="bi bi-instagram fs-5"></i></a>
-            <a href="#" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+<footer class="site-footer">
+        <div class="container">
+            <div class="row gy-5">
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="footer-logo-box">AG</div>
+                        <span class="fw-bold fs-3 text-white ms-2">ArreglaGo</span>
+                    </div>
+                    <p class="text-white-50 mb-4">
+                        La plataforma líder en Lima para conectar hogares con profesionales de confianza. Seguridad, rapidez y garantía en cada servicio.
+                    </p>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h5 class="text-white mb-4">Menú</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a th:href="@{/}">Inicio</a></li>
+                        <li><a th:href="@{/categorias}">Categorías</a></li>
+                        <li><a th:href="@{/buscar-profesional}">Buscar Profesional</a></li>
+                        <li><a th:href="@{/login}">Iniciar Sesión</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-6">
+                    <h5 class="text-white mb-4">Soy Profesional</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a th:href="@{/profesional/registro}">Registrarme</a></li>
+                        <li><a th:href="@{/beneficios}">Beneficios</a></li>
+                        <li><a th:href="@{/ayuda}">Centro de Ayuda</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-4">Contacto</h5>
+                    <ul class="list-unstyled footer-contact">
+                        <li>
+                            <i class="bi bi-geo-alt-fill text-orange"></i>
+                            <span>Av. Javier Prado Este 1234,<br>San Isidro, Lima</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-envelope-fill text-orange"></i>
+                            <span>contacto@arreglago.com</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone-fill text-orange"></i>
+                            <span>(01) 555-0909</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-white-50 small">&copy; 2025 ArreglaGo S.A.C. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                    <a href="#" class="text-white-50 small me-3 text-decoration-none">Términos y Condiciones</a>
+                    <a href="#" class="text-white-50 small text-decoration-none">Política de Privacidad</a>
+                </div>
+            </div>
         </div>
-    </div>
 </footer>
 
-<!-- Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Script principal -->
-<script th:src="@{/js/script.js}"></script>
+    <!-- Script principal -->
+    <script th:src="@{/js/script.js}"></script>
 
 </body>
+
 </html>

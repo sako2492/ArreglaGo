@@ -29,7 +29,7 @@ public class ClienteEntity implements Serializable {
 	@Id 
 	@Column(name="id_cliente")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long codigo;
+	private Long codigo;
 	@Column(name="estado", nullable = false)
 	private boolean estado;
 	

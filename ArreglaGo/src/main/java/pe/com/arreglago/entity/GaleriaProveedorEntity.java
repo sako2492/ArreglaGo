@@ -32,18 +32,18 @@ public class GaleriaProveedorEntity implements Serializable{
 	@Id 
 	@Column(name="id_imagen")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long codigo;
+	private Long codigo;
 	@Column(name = "url_imagen", length = 255, nullable = false)
 	private String urlImagen;	
-	@Column(name="descripcion", length = 200)
+	@Column(name="descripcion", length = 200, nullable = true)
 	private String descripcion;
-	@Column(name = "fecha_subida")
+	@Column(name = "fecha_subida", nullable = true)
 	private LocalDateTime  fechaSubida;	
 	@Column(name="estado", nullable = false)
 	private boolean estado;
 	
 	@ManyToOne
-	@JoinColumn(name="id_proveedor")
+	@JoinColumn(name="id_proveedor", nullable = false)
 	private ProveedorEntity proveedor;
 	
 	@PrePersist

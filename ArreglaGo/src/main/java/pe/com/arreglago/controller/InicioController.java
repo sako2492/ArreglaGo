@@ -1,13 +1,21 @@
 package pe.com.arreglago.controller;
 
+import java.security.Principal;
 import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import pe.com.arreglago.entity.CategoriaEntity;
+import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.entity.UsuarioEntity;
 import pe.com.arreglago.service.CategoriaService;
 import pe.com.arreglago.service.ProveedorService;
+import pe.com.arreglago.service.UsuarioService;
 
 @Controller
 public class InicioController {
@@ -17,24 +25,82 @@ public class InicioController {
 
     @Autowired
     private ProveedorService proveedorService;
+    
+    @Autowired 
+    private UsuarioService usuarioService;
 
-    @GetMapping
-    public String MostrarInicio() {
-        return "index";
+    @GetMapping("/")
+    	public String showSplash() {
+    		// Asume que la plantilla con el temporizador JS ahora se llama index.html
+    			return "splash";
+    			}
+    
+    // ====================================================
+    // 🥇 REDIRECCIÓN POST-LOGIN (Añadir este método)
+    // ====================================================
+    @GetMapping("/dashboard-redirect")
+    public String dashboardRedirect(Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        UsuarioEntity usuario = usuarioService.findByCorreo(principal.getName());
+        String rolNombre = usuario.getRol().getNombre();
+
+        if ("ADMIN".equals(rolNombre)) {
+            return "redirect:/admin/dashboard"; // Redirigir al panel de administración
+        } else if ("CLIENTE".equals(rolNombre)) {
+            return "redirect:/cliente/perfil"; // Redirigir al perfil del cliente
+        } else if ("PROVEEDOR".equals(rolNombre)) {
+            return "redirect:/profesional/perfil"; // Redirigir al perfil del profesional
+        } else {
+            return "redirect:/menuprincipal"; // Rol no reconocido
+        }
     }
-
+    
+    // ----------------------------------------------------
+    // 🥈 MENÚ PRINCIPAL
+    // Esta es la página a la que te lleva el temporizador JS después de 4 segundos
+    // ----------------------------------------------------
     @GetMapping("/menuprincipal")
-    public String MostrarMenuPrincipal(Model model) {
-    	
-        var lista = proveedorService.findAllCustom();
-        System.out.println("PROFESIONALES ENCONTRADOS: " + lista.size());
+    public String mostrarMenuPrincipal(Model model) { // Mantén el Model para cargar datos
 
-        model.addAttribute("categorias", categoriaService.findAllCustom());
+        List<CategoriaEntity> categorias = categoriaService.findAllCustom();
+
+        // 👉 Contador de profesionales por categoría
+        for (CategoriaEntity cat : categorias) {
+            Long total = proveedorService.contarPorCategoria(cat.getCodigo());
+            cat.setTotalProveedores(total);
+        }
+
+        model.addAttribute("categorias", categorias);
         model.addAttribute("profesionales", proveedorService.findAllCustom());
-
-        // si aún no tienes testimonios, mandamos lista vacía
         model.addAttribute("testimonios", Collections.emptyList());
 
         return "menuprincipal";
     }
+    
+    @GetMapping("/buscar")
+    public String buscar(@RequestParam("q") String query, Model model) {
+
+        String texto = query.trim().toLowerCase();
+
+        List<ProveedorEntity> resultados = proveedorService.buscarGeneral(texto);
+
+        model.addAttribute("resultados", resultados);
+        model.addAttribute("busqueda", query);
+
+        return "resultado-busqueda";
+    }
+    
+    @GetMapping("/ayuda")
+    public String mostrarAyuda() {
+        return "ayuda";
+    }
+
+    @GetMapping("/beneficios")
+    public String mostrarBeneficios() {
+        return "beneficios";
+    }
+
 }

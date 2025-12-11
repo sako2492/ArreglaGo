@@ -3,6 +3,40 @@
    Ubicación: src/main/resources/static/js/script.js
    ========================================================= */
 
+// =========================================================
+// ❌ FUNCIÓN DE VALIDACIÓN GLOBAL (DEBE ESTAR FUERA DEL DOMContentLoaded) ❌
+// =========================================================
+function validateHeroSearch() {
+    // 1. Obtener el valor del campo de búsqueda
+    const input = document.getElementById('heroSearchInput');
+    
+    // Si por alguna razón el elemento no existe, permitimos el envío para evitar fallos
+    if (!input) {
+        return true; 
+    }
+
+    const query = input.value.trim();
+
+    // 2. Verificar si está vacío
+    if (query === "") {
+        // Mostrar un mensaje de advertencia
+        alert("❌ Por favor, ingresa el servicio o profesional que necesitas buscar.");
+        
+        // Enfocar el campo para que el usuario pueda escribir
+        input.focus(); 
+        
+        // Retorna false para PREVENIR que el formulario se envíe.
+        return false; 
+    }
+
+    // 3. Si no está vacío, permite que el formulario se envíe
+    return true;
+}
+
+
+// =========================================================
+// ✅ SCRIPT PRINCIPAL (USAR document.addEventListener)
+// =========================================================   
 // Esperar a que el DOM esté listo
 document.addEventListener("DOMContentLoaded", () => {
     console.log("✅ ArreglaGo UI cargado correctamente.");
@@ -125,4 +159,17 @@ document.addEventListener("DOMContentLoaded", () => {
             wrap: true
         });
     }
+
+    // Este script debe estar en tu script.js para que needs-validation funcione.
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) { // Si Bootstrap encuentra un campo required vacío
+                event.preventDefault(); // Detiene el envío
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated'); 
+        }, false);
+    });
+
 });

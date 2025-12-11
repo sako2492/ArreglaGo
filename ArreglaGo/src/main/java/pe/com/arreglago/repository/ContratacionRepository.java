@@ -4,11 +4,70 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import pe.com.arreglago.entity.ContratacionEntity;
 
+@Repository
 public interface ContratacionRepository extends JpaRepository<ContratacionEntity, Long> {
 
-	@Query("select c from ContratacionEntity c where c.estado = 'finalizado'")
-	List<ContratacionEntity> findAllCustom();
+    // --------------------------------------------------------
+    // LISTA PERSONALIZADA (excepto finalizadas)
+    // --------------------------------------------------------
+    @Query("SELECT c FROM ContratacionEntity c WHERE c.estado <> 'finalizada'")
+    List<ContratacionEntity> findAllCustom();
+
+    // --------------------------------------------------------
+    // LISTAR CONTRATACIONES POR CLIENTE
+    // --------------------------------------------------------
+    @Query("SELECT c FROM ContratacionEntity c WHERE c.cliente.codigo = :idCliente ORDER BY c.fechaReserva DESC")
+    List<ContratacionEntity> listarPorCliente(@Param("idCliente") Long idCliente);
+
+    // --------------------------------------------------------
+    // LISTAR CONTRATACIONES POR PROVEEDOR
+    // --------------------------------------------------------
+    @Query("SELECT c FROM ContratacionEntity c WHERE c.proveedor.codigo = :idProveedor ORDER BY c.fechaReserva DESC")
+    List<ContratacionEntity> listarPorProveedor(@Param("idProveedor") Long idProveedor);
+
+    // --------------------------------------------------------
+    // LISTAR SOLO CONTRATACIONES FINALIZADAS (para valoraciones)
+    // --------------------------------------------------------
+    @Query("SELECT c FROM ContratacionEntity c WHERE c.cliente.codigo = :idCliente AND c.estado = 'finalizada'")
+    List<ContratacionEntity> listarFinalizadasCliente(@Param("idCliente") Long idCliente);
+
+    @Query("SELECT c FROM ContratacionEntity c WHERE c.proveedor.codigo = :idProveedor AND c.estado = 'finalizada'")
+    List<ContratacionEntity> listarFinalizadasProveedor(@Param("idProveedor") Long idProveedor);
+
+    // --------------------------------------------------------
+    // Verificar si un cliente ya contrató un proveedor
+    // --------------------------------------------------------
+    @Query("SELECT COUNT(c) FROM ContratacionEntity c WHERE c.cliente.codigo = :idCliente AND c.proveedor.codigo = :idProveedor")
+    Long existeContratacion(@Param("idCliente") Long idCliente, @Param("idProveedor") Long idProveedor);
+
+    // --------------------------------------------------------
+    // Cargar contrataciones con proveedor y usuario incluido (JOIN FETCH)
+    // Evita LazyInitializationException
+    // --------------------------------------------------------
+    @Query("""
+        SELECT c FROM ContratacionEntity c
+        JOIN FETCH c.proveedor p
+        JOIN FETCH p.usuario u
+        WHERE c.cliente.codigo = :idCliente
+        """)
+    List<ContratacionEntity> listarDetalleCliente(@Param("idCliente") Long idCliente);
+	
+	 // --------------------------------------------------------
+	 // Cargar contrataciones con cliente y usuario incluido (JOIN FETCH)
+	 // Evita LazyInitializationException
+	 // --------------------------------------------------------
+	 @Query("""
+	     SELECT c FROM ContratacionEntity c
+	     JOIN FETCH c.cliente cli
+	     JOIN FETCH cli.usuario u
+	     WHERE c.proveedor.codigo = :idProveedor
+	     ORDER BY c.fechaReserva DESC
+	     """)
+	 List<ContratacionEntity> listarDetalleProveedor(@Param("idProveedor") Long idProveedor);
+
 }

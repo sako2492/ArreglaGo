@@ -74,4 +74,5 @@ public class UsuarioEntity implements Serializable {
     protected void onCreate() {
         this.fechaRegistro = LocalDateTime.now();
     }
+
 }

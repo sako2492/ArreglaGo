@@ -1,0 +1,86 @@
+package pe.com.arreglago.webconfig;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import pe.com.arreglago.security.CustomSuccessHandler;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    // 1. Declaramos las variables como 'final' (inmutables)
+    private final UserDetailsService usuarioDetailsService;
+    private final CustomSuccessHandler customSuccessHandler;
+
+    // 2. INYECCIÓN POR CONSTRUCTOR (Esto elimina la advertencia de @Autowired)
+    public SecurityConfig(UserDetailsService usuarioDetailsService, CustomSuccessHandler customSuccessHandler) {
+        this.usuarioDetailsService = usuarioDetailsService;
+        this.customSuccessHandler = customSuccessHandler;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    // 3. Pasamos PasswordEncoder como parámetro (Elimina la advertencia de llamada a método)
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(PasswordEncoder encoder) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(usuarioDetailsService);
+        authProvider.setPasswordEncoder(encoder);
+        return authProvider;
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> auth
+            // RECURSOS PÚBLICOS
+            .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+            .requestMatchers("/", "/index", "/menuprincipal", "/login-opciones", "/login", "/buscar").permitAll()
+            .requestMatchers("/categoria/**").permitAll()
+            // REGISTROS PÚBLICOS
+            .requestMatchers("/profesional/registro", "/profesional/nuevoperfil").permitAll()
+            .requestMatchers("/cliente/registro", "/cliente/nuevoperfil").permitAll()
+            .requestMatchers("/administrador/registro").permitAll()
+            // APIS Y VALIDACIONES
+            .requestMatchers("/api/**").permitAll()
+            .requestMatchers("/profesional/validar-codigo", "/profesional/guardar-perfil-final").permitAll()
+            .requestMatchers("/cliente/validar-codigo", "/cliente/guardar-perfil-final").permitAll()
+            .requestMatchers("/profesional/{id:\\d+}").permitAll()
+            
+            // RUTAS PRIVADAS
+            .requestMatchers("/cliente/**").hasRole("CLIENTE")
+            .requestMatchers("/profesional/**").hasRole("PROFESIONAL")
+            .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
+            
+            .anyRequest().authenticated()
+        )
+        .formLogin(login -> login
+            .loginPage("/index")
+            .loginProcessingUrl("/login")
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .successHandler(customSuccessHandler)
+            .failureUrl("/index?error=true")
+            .permitAll()
+        )
+        .logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/index?logout=true")
+            .deleteCookies("JSESSIONID")
+            .permitAll()
+        )
+        .csrf(csrf -> csrf.disable());
+
+        return http.build();
+    }
+}

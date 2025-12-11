@@ -1,0 +1,41 @@
+package pe.com.arreglago.webconfig;
+
+import jakarta.servlet.MultipartConfigElement;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+    	// Mapeo para fotos de perfil y registro:
+        registry.addResourceHandler("/usuarios/**")
+                .addResourceLocations("file:///C:/arreglago/images/"); // La carpeta de fotos de perfil
+
+        // Mapeo para la Galería de trabajos:
+        registry.addResourceHandler("/galeria/**")
+                .addResourceLocations("file:///C:/arreglago/galeria/"); // La carpeta de la galería
+    }
+    
+ // 🛑 AÑADIR ESTE BEAN PARA FORZAR LA CONFIGURACIÓN DEL TAMAÑO DE ARCHIVO EN TOMCAT
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        // Debes obtener los valores de las propiedades de application.properties
+        
+        // Usaremos los valores literales para asegurar que funciona: 8MB y 10MB
+        long maxFileSize = 8 * 1024 * 1024; // 8 MB
+        long maxRequestSize = 10 * 1024 * 1024; // 10 MB
+
+        jakarta.servlet.MultipartConfigElement element = new jakarta.servlet.MultipartConfigElement(
+                "", // location
+                maxFileSize,
+                maxRequestSize,
+                (int) maxFileSize / 2 // FileSizeThreshold
+        );
+        return element;
+    }
+}

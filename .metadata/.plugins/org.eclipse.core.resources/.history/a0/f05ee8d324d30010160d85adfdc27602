@@ -1,0 +1,72 @@
+package pe.com.arreglago.entity;
+
+import java.io.Serializable;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+
+@Entity(name="CategoriaEntity")
+@Table(name="categoria") 
+public class CategoriaEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id 
+    @Column(name="id_categoria")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long codigo;
+
+    @Column(name="nombre", length = 150, nullable = false)
+    private String nombre;
+
+    @Column(name="descripcion", length = 300, nullable = false)
+    private String descripcion;
+
+    @Column(name = "estado", nullable = false)
+    private boolean estado;
+
+    /* ===== CONTADOR DE PROFESIONALES ===== */
+    @Transient
+    private Long totalProveedores;
+
+    /* ===== ICONO POR CATEGORÍA ===== */
+    @Transient
+    public String getIcono() {
+    	switch ((int) this.codigo) {
+        case 1: return "bi-bricks";                  // Albañil 
+        case 2: return "bi-hammer";                  // Carpintero 
+        case 3: return "bi-key-fill";                // Cerrajero 
+        case 4: return "bi-laptop";                 // Computadoras 
+        case 5: return "bi-border-width";           // Drywall 
+        case 6: return "bi-lightning-charge-fill";   // Electricista 
+        case 7: return "bi-tools";                   // Electrodomésticos 
+        case 8: return "bi-bug-fill";               // Fumigador 
+        case 9: return "bi-droplet-fill";            // Gasfitero 
+        case 10: return "bi-tree-fill";              // Jardinero 
+        case 11: return "bi-stars";                  // Limpieza 
+        case 12: return "bi-brush-fill";              // Pintor 
+        case 13: return "bi-grid-3x3-gap-fill";      // Pisos 
+        case 14: return "bi-snow2";                   // Refrigeración 
+        case 15: return "bi-fire";                    // Soldador 
+        case 16: return "bi-x-diamond-fill";          // Tapicero 
+        case 17: return "bi-fuel-pump-fill";         // Técnico Gas 
+        case 18: return "bi-tv-fill";                // Televisores 
+        case 19: return "bi-window";                 // Vidrieros 
+        default: return "bi-briefcase-fill";
+    }
+    }
+}

@@ -13,4 +13,11 @@ public interface ContratacionService {
 	ContratacionEntity update(ContratacionEntity obj, Long id); 
 	ContratacionEntity delete(Long id); 
 	ContratacionEntity enable(Long id);
+	
+    ContratacionEntity cambiarEstado(Long id, String estado);
+    List<ContratacionEntity> listarPorCliente(Long idCliente);
+    List<ContratacionEntity> listarPorProveedor(Long idProveedor);
+    
+    List<ContratacionEntity> listarDetalleCliente(Long idCliente);
+    List<ContratacionEntity> listarDetalleProveedor(Long idProveedor);
 }

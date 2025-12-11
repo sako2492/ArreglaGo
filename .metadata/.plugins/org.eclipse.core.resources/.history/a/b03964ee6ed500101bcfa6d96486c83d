@@ -1,0 +1,61 @@
+# =========================================
+#CONFIGURACION GENERAL
+# =========================================
+#nombre de la aplicacion
+spring.application.name=ArreglaGo
+#definir el puerto con el que correra la aplicacion
+server.port=8899
+#url del proyecto
+server.servlet.context-path=/arreglago
+
+# =========================================
+# CONEXION A BASE DE DATOS
+# =========================================
+#cadena de conexion
+spring.datasource.url=jdbc:mysql://localhost:3309/arregla_go?useSSL=false&serverTimezone=America/Lima
+#usuario de la bd
+spring.datasource.username=root
+#clave de la bd
+spring.datasource.password=root
+#driver
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# Forzar a Hibernate a respetar tus nombres tal cual están en MySQL
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+# =========================================
+# CONFIGURACION DE JPA / HIBERNATE
+# =========================================
+spring.jpa.hibernate.ddl-auto=none
+# Muestra las consultas SQL en la consola
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+# Dialecto para MySQL 8+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+
+# =========================================
+# CONFIGURACION DE THYMELEAF
+# =========================================
+spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.suffix=.html
+spring.thymeleaf.mode=HTML
+spring.thymeleaf.encoding=UTF-8
+spring.thymeleaf.cache=false
+
+
+# =========================================
+# ZONA HORARIA / LOCALIZACION (Opcional)
+# =========================================
+spring.jackson.time-zone=America/Lima
+spring.jackson.locale=es_PE
+
+# =========================================
+# CONFIGURACION DE GMAIL
+# =========================================
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=arreglago@gmail.com
+spring.mail.password=psaa rwsa gqsc xnrb
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+

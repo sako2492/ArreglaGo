@@ -1,0 +1,80 @@
+package pe.com.arreglago.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import pe.com.arreglago.entity.UsuarioEntity;
+import pe.com.arreglago.entity.ProveedorEntity;
+import pe.com.arreglago.entity.RolEntity;
+import pe.com.arreglago.service.UsuarioService;
+import pe.com.arreglago.service.ProveedorService;
+import pe.com.arreglago.service.CategoriaService;
+import pe.com.arreglago.service.DistritoService;
+import pe.com.arreglago.service.TipoDocumentoService;
+
+@Controller
+public class ProfesionalController {
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private ProveedorService proveedorService;
+
+    @Autowired
+    private CategoriaService categoriaService;
+
+    @Autowired
+    private DistritoService distritoService;
+
+    @Autowired
+    private TipoDocumentoService tipoDocumentoService;
+
+    // ==========================
+    // FORMULARIO DE REGISTRO
+    // ==========================
+    @GetMapping("/profesional-registro")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("usuario", new UsuarioEntity());
+        model.addAttribute("categorias", categoriaService.findAllCustom());
+        model.addAttribute("distritos", distritoService.findAllCustom());
+        model.addAttribute("tiposdocumento", tipoDocumentoService.findAllCustom());
+        return "profesional-registro";
+    }
+
+    // ==========================
+    // PROCESAR EL REGISTRO
+    // ==========================
+    @PostMapping("/profesional/registro")
+    public String registrarProfesional(
+            @ModelAttribute("usuario") UsuarioEntity usuario,
+            String experiencia,
+            String descripcion,
+            Long idCategoria) {
+
+        // Rol profesional (ajusta el ID según tu tabla rol)
+        RolEntity rol = new RolEntity();
+        rol.setCodigo(3L); // Ejemplo: 3 = PROFESIONAL
+
+        usuario.setRol(rol);
+        usuario.setEstado(true);
+        usuarioService.add(usuario);
+
+        // Crear el proveedor vinculado al usuario
+        ProveedorEntity proveedor = new ProveedorEntity();
+        proveedor.setUsuario(usuario);
+        proveedor.setDescripcion(descripcion);
+        proveedor.setExperiencia(experiencia);
+        proveedor.setEstado(true);
+        proveedor.setCategoria(categoriaService.findById(idCategoria));
+
+        proveedorService.add(proveedor);
+
+        // Redirige al login o página de confirmación
+        return "redirect:/login-opciones";
+    }
+}

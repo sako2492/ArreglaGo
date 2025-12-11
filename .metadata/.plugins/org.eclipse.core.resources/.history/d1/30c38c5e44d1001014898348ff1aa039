@@ -1,0 +1,39 @@
+package pe.com.arreglago.security;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails; // <-- Tipo de retorno correcto
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import pe.com.arreglago.entity.UsuarioEntity;
+import pe.com.arreglago.repository.UsuarioRepository;
+
+@Service
+
+public class UsuarioDetailsServiceImpl implements UserDetailsService {
+
+	@Autowired
+    private UsuarioRepository usuarioRepository;
+
+    // CORRECCIÓN: El método debe devolver UserDetails, no UserDetailsService
+	@Override
+	public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
+
+	    UsuarioEntity usuario = usuarioRepository.findByCorreo(correo)
+	            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+	    String rol = usuario.getRol()
+	                        .getNombre()
+	                        .trim()
+	                        .toUpperCase(); // ← AQUÍ LA CLAVE
+
+	    return User.builder()
+	            .username(usuario.getCorreo())
+	            .password(usuario.getClave())
+	            .authorities("ROLE_" + rol) // → ROLE_CLIENTE | ROLE_PROFESIONAL | ROLE_ADMINISTRADOR
+	            .build();
+	}
+
+}

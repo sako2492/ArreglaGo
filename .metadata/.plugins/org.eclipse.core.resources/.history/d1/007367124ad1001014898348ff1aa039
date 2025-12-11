@@ -1,0 +1,66 @@
+package pe.com.arreglago.webconfig;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import pe.com.arreglago.security.CustomSuccessHandler;
+
+@Configuration
+public class SecurityConfig {
+
+
+	  @Autowired
+	    private UserDetailsService usuarioDetailsService;
+
+	    @Autowired
+	    private CustomSuccessHandler customSuccessHandler;
+
+	    @Bean
+	    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+	        http.authorizeHttpRequests(auth -> auth
+	                .requestMatchers("/", "/index", "/login-opciones", "/login",
+	                        "/profesional/registro", "/profesional/**",
+	                        "/cliente/registro", "/cliente/**",
+	                        "/administrador/registro",
+	                        "/css/**", "/js/**", "/images/**"
+	                ).permitAll()
+
+	                .requestMatchers("/cliente/**").hasRole("CLIENTE")
+	                .requestMatchers("/profesional/**").hasRole("PROFESIONAL")
+	                .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
+
+	                .anyRequest().authenticated()
+	        )
+
+	        .formLogin(login -> login
+	                .loginPage("/index")                 // 👈 Tu login real
+	                .loginProcessingUrl("/login")        // URL del POST del formulario
+	                .usernameParameter("username")       // Los name de tu form
+	                .passwordParameter("password")
+	                .successHandler(customSuccessHandler)
+	                .permitAll()
+	        )
+	        .logout(logout -> logout
+	                .logoutUrl("/logout")
+	                .logoutSuccessUrl("/index?logout=true")   // 👈 TAMBIÉN A /index
+	                .permitAll()
+	        )
+
+
+	        .csrf(csrf -> csrf.disable());
+
+	        return http.build();
+	    }
+
+
+	    @Bean
+	    public BCryptPasswordEncoder passwordEncoder() {
+	        return new BCryptPasswordEncoder();
+	    }
+}

@@ -1,0 +1,55 @@
+package pe.com.arreglago.security;
+
+import java.io.IOException;
+import java.util.Collection;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CustomSuccessHandler implements AuthenticationSuccessHandler {
+
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request,
+	                                    HttpServletResponse response,
+	                                    Authentication authentication)
+	        throws IOException, ServletException {
+
+	    System.out.println(">>> 🚀 AUTENTICACIÓN EXITOSA");  // 👈 CONTROL
+	    System.out.println("Usuario: " + authentication.getName());
+
+	    String contextPath = request.getContextPath();
+	    String redirectUrl = contextPath + "/";
+
+	    for (GrantedAuthority auth : authentication.getAuthorities()) {
+	        String role = auth.getAuthority();
+	        System.out.println("Rol detectado: " + role); // 👈 CONTROL
+
+	        switch (role.toUpperCase()) {
+	        case "ROLE_ADMIN":
+	            redirectUrl = contextPath + "/admin/dashboard";
+	            break;
+
+	        case "ROLE_PROFESIONAL":
+	        case "ROLE_PROVEEDOR":  // 👈 SE AGREGA ESTO
+	            redirectUrl = contextPath + "/profesional/solicitudes";
+	            break;
+
+	        case "ROLE_CLIENTE":
+	            redirectUrl = contextPath + "/cliente/perfil";
+	            break;
+	    }
+
+	    }
+
+	    System.out.println("Redirigiendo a: " + redirectUrl); // 👈 CONTROL
+	    response.sendRedirect(redirectUrl);
+	}
+
+}

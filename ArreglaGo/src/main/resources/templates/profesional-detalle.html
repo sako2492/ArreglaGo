@@ -2,151 +2,193 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Perfil Profesional</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!DOCTYPE html>
+    <title th:text="${usuario.nombre} + ' ' + ${usuario.apellidoPaterno}">Perfil Profesional</title>
 
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${usuario.nombre} + ' ' + ${usuario.apellidoPaterno}"></title>
-
-```
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-<link rel="stylesheet" th:href="@{/css/style.css}">
-
-<style>
-    body {
-        background: #f5f7fa;
-        padding-top: 140px;
-    }
-
-    .perfil-container {
-        max-width: 900px;
-    }
-
-    .perfil-foto {
-        width: 200px;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 50%;
-        margin: auto;
-        display: block;
-        border: 5px solid #fff;
-        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    }
-
-    .perfil-card {
-        border-radius: 1rem;
-        padding: 30px;
-    }
-
-    .rating {
-        font-size: 1.2rem;
-        color: #f5a623;
-    }
-
-    .info-item {
-        background: #ffffff;
-        padding: 15px 20px;
-        border-radius: 12px;
-        margin-bottom: 12px;
-    }
-</style>
-```
-
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fuente Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Íconos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- TU CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
+<body class="perfil-profesional-page">
 
-<div class="container perfil-container">
-<div class="card perfil-card shadow-lg">
-    <div class="text-center">
+<!-- ================= NAVBAR ================= -->
+<div th:replace="~{fragments/navbar :: navbar(categorias=${categorias})}"></div>
+<!-- ================= FIN NAVBAR ================= -->
 
-        <img th:src="${usuario.fotoPerfil != null} ? @{${usuario.fotoPerfil}} : '@{/images/default-profile.png}'"
-             class="perfil-foto"
-             alt="Foto profesional">
+<div class="container perfil-container fade-in-section visible">
 
-        <h2 class="fw-bold mt-3"
-            th:text="${usuario.nombre} + ' ' + ${usuario.apellidoPaterno} + ' ' + ${usuario.apellidoMaterno}">
-            Nombre Profesional
-        </h2>
+    <div class="perfil-card shadow-lg bg-white">
 
-        <span class="badge bg-primary fs-6"
-              th:text="${proveedor.categoria.nombre}">
-        </span>
+        <!-- CABECERA PERFIL -->
+        <div class="text-center mb-4">
+            <img th:src="${usuario.fotoPerfil != null} ? @{${usuario.fotoPerfil}} : '@{/images/default-profile.png}'"
+                 class="perfil-foto"
+                 alt="Foto del profesional">
 
-        <div class="rating mt-2">
-            ⭐ <span th:text="${#numbers.formatDecimal(promedio,1,1)}">0.0</span> / 5
-        </div>
-    </div>
+            <h2 class="fw-bold mt-3 text-brand"
+                th:text="${usuario.nombre} + ' ' + ${usuario.apellidoPaterno} + ' ' + ${usuario.apellidoMaterno}">
+                Nombre Profesional
+            </h2>
 
-    <hr>
+            <span class="badge bg-brand px-3 py-2 rounded-4 fs-6 d-inline-block mt-1"
+                  th:text="${proveedor.categoria.nombre}">
+            </span>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="info-item">
-                <strong>Experiencia:</strong>
-                <p th:text="${proveedor.experiencia}"></p>
-            </div>
-
-            <div class="info-item">
-                <strong>Descripción:</strong>
-                <p th:text="${proveedor.descripcion}"></p>
+            <div class="rating mt-2">
+                ⭐ <span th:text="${#numbers.formatDecimal(promedio,1,1)}">0.0</span> / 5
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="info-item">
-                <strong>Email:</strong>
-                <p th:text="${usuario.correo}"></p>
+        <!-- INFORMACIÓN PRINCIPAL -->
+        <div class="row g-3">
+
+            <div class="col-md-6 info-item">
+                <strong>Experiencia</strong>
+                <p class="mb-0" th:text="${proveedor.experiencia}"></p>
             </div>
 
-            <div class="info-item">
-                <strong>Teléfono:</strong>
-                <p th:text="${usuario.telefono}"></p>
+            <div class="col-md-6 info-item">
+                <strong>Descripción</strong>
+                <p class="mb-0" th:text="${proveedor.descripcion}"></p>
             </div>
 
-            <div class="info-item">
-                <strong>Dirección:</strong>
-                <p th:text="${usuario.direccion}"></p>
+            <div class="col-md-6 info-item">
+                <strong>Email</strong>
+                <p class="mb-0" th:text="${usuario.correo}"></p>
             </div>
 
-            <div class="info-item">
-                <strong>Distrito:</strong>
-                <p th:text="${usuario.distrito.nombre}"></p>
+            <div class="col-md-6 info-item">
+                <strong>Teléfono</strong>
+                <p class="mb-0" th:text="${usuario.telefono}"></p>
+            </div>
+
+            <div class="col-md-6 info-item">
+                <strong>Dirección</strong>
+                <p class="mb-0" th:text="${usuario.direccion}"></p>
+            </div>
+
+            <div class="col-md-6 info-item">
+                <strong>Distrito</strong>
+                <p class="mb-0" th:text="${usuario.distrito.nombre}"></p>
+            </div>
+
+        </div>
+
+        <!-- BOTONES DE ACCIÓN -->
+        <div class="text-center mt-4">
+
+            <th:block th:if="${#authentication.name == usuario.correo}">
+                <a th:href="@{/profesional/editar}" 
+                   class="btn btn-orange px-5 py-2 fw-semibold">
+                    <i class="bi bi-pencil-square me-2"></i> Editar mi Perfil
+                </a>
+            </th:block>
+
+
+            <th:block th:if="${#authentication.name != usuario.correo}">
+                
+                        <a th:if="${#authorization.expression('isAuthenticated()')}" 
+                        th:href="@{/cliente/nuevo/{id}(id=${proveedor.codigo})}" 
+                        class="btn btn-orange">
+                            Contratar servicio
+                        </a>
+
+                        <a th:if="${!#authorization.expression('isAuthenticated()')}" 
+                        th:href="@{/login}" 
+                        class="btn btn-orange">
+                            Inicia sesión para contratar
+                        </a>
+                
+            </th:block>
+
+        </div>
+
+        <th:block th:if="${#authentication.name == usuario.correo}">
+            <div th:if="${!estaSuscrito}" class="alert alert-danger text-center shadow-sm mt-5 mb-5 rounded-4">
+                <h4 class="fw-bold"><i class="bi bi-x-octagon-fill me-2"></i> ¡Suscripción Inactiva!</h4>
+                <p>Tu perfil no está visible en los resultados. Activa tu suscripción para recibir solicitudes.</p>
+                <a th:href="@{/profesional/suscripcion/comprar}" class="btn btn-warning fw-bold">
+                    <i class="bi bi-lightning-charge-fill me-2"></i> Activar Suscripción Premium
+                </a>
+            </div>
+            <div th:if="${estaSuscrito}" class="alert alert-success text-center shadow-sm mt-5 mb-5 rounded-4">
+                <h4 class="fw-bold"><i class="bi bi-check-circle-fill me-2"></i> Suscripción Activa</h4>
+                <p>¡Estás listo para recibir solicitudes y aparecer en los primeros resultados!</p>
+            </div>
+        </th:block>
+
+        <div class="card shadow-lg mb-5 mt-5">
+            <div class="card-header bg-dark text-white fw-bold">
+                <i class="bi bi-images me-2"></i> Galería de Trabajos Realizados
+            </div>
+            <div class="card-body">
+                
+                <th:block th:if="${#authentication.name == usuario.correo and estaSuscrito}">
+                     <a th:href="@{/profesional/galeria/{id}(id=${proveedor.codigo})}" 
+                        class="btn btn-custom btn-sm mb-3">
+                        <i class="bi bi-upload me-1"></i> Gestionar/Subir Fotos
+                     </a>
+                </th:block>
+
+                <div class="row g-3">
+                    
+                    <div th:if="${galeria == null or galeria.isEmpty()}" class="col-12">
+                        <div class="alert alert-warning text-center">
+                            Este profesional aún no ha subido trabajos a su galería.
+                        </div>
+                    </div>
+                    
+                    <div th:each="img : ${galeria}" class="col-md-4">
+                        <div class="card h-100 shadow-sm">
+                            <img th:src="@{${img.urlImagen}}" class="card-img-top" style="object-fit: cover; height: 180px;" alt="Trabajo del Proveedor">
+                            <div class="card-body p-2">
+                                <small class="card-text text-muted" th:text="${img.descripcion}">Descripción del trabajo.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
 
-    <hr>
+        <!-- RESEÑAS -->
+        <div class="mt-5">
+            <h4 class="fw-bold text-brand mb-3">Reseñas de clientes</h4>
 
-    <h4 class="fw-bold mb-3">Reseñas de clientes</h4>
+            <div th:if="${resenas != null and !resenas.isEmpty()}">
+                <div class="list-group">
+                    <div class="list-group-item rounded-4 shadow-sm mb-2" th:each="r : ${resenas}">
+                        <div class="d-flex justify-content-between">
+                            <strong class="text-warning">⭐ <span th:text="${r.calificacion}"></span>/5</strong>
+                            <small class="text-muted" th:text="${#temporals.format(r.fecha,'dd/MM/yyyy')}"></small>
+                        </div>
+                        <p class="mt-2 mb-0" th:text="${r.comentario}"></p>
+                    </div>
+                </div>
+            </div>
 
-    <div th:if="${resenas != null and !resenas.isEmpty()}">
-        <div class="list-group">
-            <div class="list-group-item" th:each="r : ${resenas}">
-                <strong>
-                    ⭐ <span th:text="${r.calificacion}"></span>/5
-                </strong>
-                <p th:text="${r.comentario}"></p>
+            <div th:if="${resenas == null or resenas.isEmpty()}" class="alert alert-info rounded-4">
+                Este profesional aún no tiene reseñas.
             </div>
         </div>
-    </div>
 
-    <div th:if="${resenas == null or resenas.isEmpty()}" class="alert alert-info">
-        Este profesional aún no tiene reseñas.
-    </div>
+        <!-- BOTÓN VOLVER -->
+        <div class="text-center mt-4">
+            <a href="javascript:history.back()" class="btn btn-custom px-4">← Volver</a>
+        </div>
 
-    <div class="text-center mt-4">
-        <a href="javascript:history.back()" class="btn btn-outline-primary px-4">
-            ← Volver
-        </a>
     </div>
-
 </div>
-```
 
-</div>
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/script.js}"></script>
 
 </body>
 </html>

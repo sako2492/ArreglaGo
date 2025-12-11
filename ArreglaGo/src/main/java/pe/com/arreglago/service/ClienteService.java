@@ -14,4 +14,5 @@ public interface ClienteService {
 	ClienteEntity update(ClienteEntity obj, Long id); 
 	ClienteEntity delete(Long id); 
 	ClienteEntity enable(Long id);
+	ClienteEntity buscarPorUsuario(Long idUsuario);
 }

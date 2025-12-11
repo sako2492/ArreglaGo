@@ -1,0 +1,264 @@
+package pe.com.arreglago.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.servlet.http.HttpSession;
+import net.coobird.thumbnailator.Thumbnails;
+
+import pe.com.arreglago.entity.ClienteEntity;
+import pe.com.arreglago.entity.ContratacionEntity;
+import pe.com.arreglago.entity.ReniecEntity;
+import pe.com.arreglago.entity.RolEntity;
+import pe.com.arreglago.entity.UsuarioEntity;
+import pe.com.arreglago.entity.ValoracionEntity;
+import pe.com.arreglago.service.ClienteService;
+import pe.com.arreglago.service.ContratacionService;
+import pe.com.arreglago.service.DistritoService;
+import pe.com.arreglago.service.EmailService;
+import pe.com.arreglago.service.ReniecService;
+import pe.com.arreglago.service.RolService;
+import pe.com.arreglago.service.TipoDocumentoService;
+import pe.com.arreglago.service.UsuarioService;
+import pe.com.arreglago.service.ValoracionService;
+
+@Controller
+@RequestMapping("/cliente")
+public class ClienteController {
+
+    // ----------------------------------------------------
+    // INYECCIÓN DE DEPENDENCIAS
+    // ----------------------------------------------------
+    @Autowired private UsuarioService usuarioService;
+    @Autowired private ClienteService clienteService;
+    @Autowired private DistritoService distritoService;
+    @Autowired private TipoDocumentoService tipoDocumentoService;
+    @Autowired private ReniecService reniecService;
+    @Autowired private EmailService emailService;
+    @Autowired private ContratacionService contratacionService;
+    @Autowired private ValoracionService valoracionService;
+    
+    @Autowired private RolService rolService;
+
+    // ----------------------------------------------------
+    // PUNTO 1 — FORMULARIO DE REGISTRO GET
+    // ----------------------------------------------------
+    @GetMapping("/registro")
+    public String mostrarFormulario(@ModelAttribute(name = "usuario") UsuarioEntity flashUsuario,
+                                    Model model) {
+
+        if (model.getAttribute("usuario") == null) {
+            model.addAttribute("usuario", new UsuarioEntity());
+        }
+
+        model.addAttribute("tiposdocumento", tipoDocumentoService.findAll());
+        model.addAttribute("distritos", distritoService.findAll());
+
+        return "cliente-registro";
+    }
+
+    // ----------------------------------------------------
+    // PUNTO 2 — PROCESAR REGISTRO + VALIDAR RENIEC + ENVIAR CÓDIGO
+    // ----------------------------------------------------
+    @PostMapping("/nuevoperfil")
+    public String registrarCliente(
+            @ModelAttribute UsuarioEntity usuario,
+            @RequestParam Long idTipoDocumento,
+            @RequestParam Long idDistrito,
+            @RequestParam("foto") MultipartFile foto,
+            HttpSession session,
+            RedirectAttributes redirect) {
+
+        if (idTipoDocumento != 1L || usuario.getNroDocumento().length() != 8) {
+            redirect.addFlashAttribute("errorReniec", "❌ DNI inválido para consulta RENIEC.");
+            redirect.addFlashAttribute("usuario", usuario);
+            return "redirect:/cliente/registro";
+        }
+
+        ReniecEntity datosReniec = reniecService.consultarDni(usuario.getNroDocumento());
+        if (datosReniec == null || datosReniec.getNombres() == null) {
+            redirect.addFlashAttribute("errorReniec", "Error consultando RENIEC.");
+            redirect.addFlashAttribute("usuario", usuario);
+            return "redirect:/cliente/registro";
+        }
+
+        if (!usuario.getNombre().trim().equalsIgnoreCase(datosReniec.getNombres())
+                || !usuario.getApellidoPaterno().trim().equalsIgnoreCase(datosReniec.getApellidoPaterno())
+                || !usuario.getApellidoMaterno().trim().equalsIgnoreCase(datosReniec.getApellidoMaterno())) {
+
+            redirect.addFlashAttribute("errorReniec",
+                    "❌ Los nombres y apellidos no coinciden con RENIEC.");
+            redirect.addFlashAttribute("usuario", usuario);
+            return "redirect:/cliente/registro";
+        }
+
+        usuario.setTipodocumento(tipoDocumentoService.findById(idTipoDocumento));
+        usuario.setDistrito(distritoService.findById(idDistrito));
+
+        session.setAttribute("usuarioTemp", usuario);
+        session.setAttribute("fotoTemp", foto);
+
+        String codigo = generarCodigo();
+        session.setAttribute("codigoVerificacion", codigo);
+
+        emailService.enviarCorreo(
+                usuario.getCorreo(),
+                "Código de verificación",
+                "Tu código es: " + codigo
+        );
+
+        session.setAttribute("passwordAction", "/cliente/validar-codigo");
+
+        return "verificacion";
+    }
+
+    // ----------------------------------------------------
+    // PUNTO 3 — VALIDACIÓN DE CÓDIGO
+    // ----------------------------------------------------
+    private String generarCodigo() {
+        return String.valueOf((int) (Math.random() * 900000) + 100000);
+    }
+
+    @PostMapping("/validar-codigo")
+    public String validarCodigo(@RequestParam String codigoIngresado,
+                                HttpSession session,
+                                Model model) {
+
+        String codigoGuardado = (String) session.getAttribute("codigoVerificacion");
+
+        if (codigoGuardado != null && codigoGuardado.equals(codigoIngresado)) {
+            session.setAttribute("passwordAction", "/cliente/guardar-perfil-final");
+            return "crear-password";
+        }
+
+        model.addAttribute("error", "Código incorrecto.");
+        return "verificacion";
+    }
+
+    // ----------------------------------------------------
+    // PUNTO 4 — GUARDAR PERFIL FINAL
+    // ----------------------------------------------------
+    @PostMapping("/guardar-perfil-final")
+    public String guardarPerfilFinal(@RequestParam String password,
+                                     @RequestParam String password2,
+                                     HttpSession session,
+                                     RedirectAttributes redirect) {
+
+        if (!password.equals(password2)) {
+            redirect.addFlashAttribute("error", "Las contraseñas no coinciden.");
+            return "redirect:/cliente/validar-codigo";
+        }
+
+        UsuarioEntity usuario = (UsuarioEntity) session.getAttribute("usuarioTemp");
+        MultipartFile foto = (MultipartFile) session.getAttribute("fotoTemp");
+
+        if (usuario == null || foto == null) {
+            return "redirect:/cliente/registro?error=sesionperdida";
+        }
+
+        try {
+            String rutaImagen = procesarImagen(foto, false);
+            usuario.setFotoPerfil(rutaImagen);
+
+            RolEntity rol = rolService.findByNombre("CLIENTE");
+            usuario.setRol(rol);
+
+            usuario.setClave(password); 
+            usuario.setEstado(true);
+
+            UsuarioEntity nuevoUsuario = usuarioService.add(usuario);
+
+            ClienteEntity cliente = new ClienteEntity();
+            cliente.setUsuario(nuevoUsuario);
+            cliente.setEstado(true);
+            clienteService.add(cliente);
+
+            session.invalidate();
+            redirect.addFlashAttribute("success", "Registro exitoso.");
+
+            return "redirect:/login";
+
+        } catch (IOException e) {
+            redirect.addFlashAttribute("error", "Error guardando imagen.");
+            return "redirect:/cliente/validar-codigo";
+        }
+    }
+
+ // ----------------------------------------------------
+ // PERFIL DEL CLIENTE - SE MUESTRA TRAS LOGIN
+ // ----------------------------------------------------
+    @GetMapping("/perfil")
+    public String verPerfilCliente(Principal principal, Model model) {
+
+        if (principal == null) {
+            return "redirect:/login-opciones";
+        }
+
+        UsuarioEntity usuario = usuarioService.findByCorreo(principal.getName());
+
+        // Verificar si es cliente
+        ClienteEntity cliente = clienteService.buscarPorUsuario(usuario.getCodigo());
+
+        if (cliente == null) {
+            // Si no es cliente, redirigir a su perfil profesional
+            return "redirect:/profesional/" + usuario.getCodigo();
+        }
+
+        // Cargar contrataciones del cliente
+        List<ContratacionEntity> contrataciones = contratacionService.listarPorCliente(cliente.getCodigo());
+
+        // Cargar valoraciones (puedes filtrar después si lo deseas)
+        List<ValoracionEntity> valoraciones = valoracionService.findAllCustom();
+
+        // Datos a la vista
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("contrataciones", contrataciones);
+        model.addAttribute("valoraciones", valoraciones);
+
+        return "cliente-detalle";
+    }
+
+
+
+    // ----------------------------------------------------
+    // MÉTODO AUXILIAR — Guardado de Imagen
+    // ----------------------------------------------------
+    private String procesarImagen(MultipartFile archivo, boolean resize) throws IOException {
+
+        if (archivo == null || archivo.isEmpty()) {
+            return "/images/default-profile.png";
+        }
+
+        String carpeta = "C:/arreglago/images/";
+        String original = archivo.getOriginalFilename().replace(" ", "_");
+        String nombre = System.currentTimeMillis() + "_" + original;
+
+        File destino = new File(carpeta + nombre);
+        destino.getParentFile().mkdirs();
+
+        if (resize) {
+            Thumbnails.of(archivo.getInputStream())
+                    .size(600, 600)
+                    .keepAspectRatio(true)
+                    .toFile(destino);
+        } else {
+            archivo.transferTo(destino);
+        }
+
+        return "/usuarios/" + nombre;
+    }
+}

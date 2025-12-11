@@ -13,4 +13,7 @@ public interface UsuarioService {
 	UsuarioEntity update(UsuarioEntity obj, Long id); 
 	UsuarioEntity delete(Long id); 
 	UsuarioEntity enable(Long id);
-}
+	UsuarioEntity findByCorreo(String correo);
+	UsuarioEntity findByNroDocumento(String nroDocumento);
+	UsuarioEntity login(String correo, String clave);
+	}
